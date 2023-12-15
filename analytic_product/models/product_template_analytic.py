@@ -50,17 +50,15 @@ class ProductTemplateAnalytic(models.Model):
         _logger.info("Cron: _cron_compute_new Started")
         self.sudo().search([]).unlink()
 
-        # analitic_account_ids = self.env['account.analytic.account'].search([])
-        # product_template_ids = self.env['product.template'].search([])
-
         sale_order_line_ids = self.env['sale.order.line'].search([])
-        customer_move_line_ids = self.env['account.move.line'].search([('move_id.move_type', '=', 'out_invoice')])
+        customer_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in', ['out_invoice', 'out_refund'])])
+        customer_move_line_ids = customer_move_line_ids_all.filtered(lambda x: x.display_type in ['product', 'rounding'])
 
         purchase_order_line_ids = self.env['purchase.order.line'].search([])
-        vendor_move_line_ids = self.env['account.move.line'].search([('move_id.move_type', '=', 'in_invoice')])
+        vendor_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in', ['in_invoice', 'in_refund'])])
+        vendor_move_line_ids = vendor_move_line_ids_all.filtered(lambda x: x.display_type in ['product', 'rounding'])
 
         AAA = self.env['account.analytic.account']
-        AAALine = self.env['account.analytic.line']
 
         data = {}
         # for analitic_account_id in analitic_account_ids:
@@ -86,6 +84,7 @@ class ProductTemplateAnalytic(models.Model):
                     data[analitic_account_id.id] = {}
                 if sale_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id] = self._get_default_values()
+
                 data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_amount'] += sale_line.price_total * (to_this_account / 100)
                 data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_qty'] += sale_line.product_uom_qty * (to_this_account / 100)
 
@@ -101,6 +100,7 @@ class ProductTemplateAnalytic(models.Model):
                     data[analitic_account_id.id] = {}
                 if purchase_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][purchase_line.product_id.product_tmpl_id.id] = self._get_default_values()
+
                 data[analitic_account_id.id][purchase_line.product_id.product_tmpl_id.id]['purchase_amount'] += purchase_line.price_subtotal * (to_this_account / 100)
                 data[analitic_account_id.id][purchase_line.product_id.product_tmpl_id.id]['purchase_qty'] += purchase_line.product_qty * (to_this_account / 100)
 
@@ -116,7 +116,13 @@ class ProductTemplateAnalytic(models.Model):
                     data[analitic_account_id.id] = {}
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] += move_line.price_total * (to_this_account / 100)
+
+                # | elif line.display_type in ('product', 'rounding'):
+                # |     total_untaxed += line.balance
+                # | move.amount_untaxed_signed = -total_untaxed
+
+                # data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] += move_line.price_total * (to_this_account / 100)
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] -= move_line.balance * (to_this_account / 100)
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_qty'] += move_line.quantity * (to_this_account / 100)
 
         for move_line in vendor_move_line_ids:
@@ -131,7 +137,9 @@ class ProductTemplateAnalytic(models.Model):
                     data[analitic_account_id.id] = {}
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] += move_line.price_total * (to_this_account / 100)
+
+                # data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] += move_line.price_total * (to_this_account / 100)
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] -= move_line.balance * (to_this_account / 100)
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_qty'] += move_line.quantity * (to_this_account / 100)
 
 
