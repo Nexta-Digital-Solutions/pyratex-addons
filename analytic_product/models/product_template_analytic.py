@@ -12,6 +12,8 @@ class ProductTemplateAnalytic(models.Model):
 
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     product_template_id = fields.Many2one('product.template', string='Product Template')
+    product_category_id = fields.Many2one('product.category', string='Product Category', related='product_template_id.categ_id', store=True)
+
 
     sale_amount = fields.Float(string='Sale Amount')
     sale_qty = fields.Float(string='Sale Quantity')
