@@ -49,16 +49,25 @@ class ProductTemplateAnalytic(models.Model):
         }
 
     def _cron_compute_new(self):
-        _logger.info("Cron: _cron_compute_new Started")
+        _logger.debug("Cron: Compute New Analytic Started")
         self.sudo().search([]).unlink()
 
         sale_order_line_ids = self.env['sale.order.line'].search([])
-        customer_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in', ['out_invoice', 'out_refund'])])
-        customer_move_line_ids = customer_move_line_ids_all.filtered(lambda x: x.display_type in ['product', 'rounding'])
 
+        customer_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in',
+                                                                            ['out_invoice', 'out_refund'])])
+        customer_move_line_ids = customer_move_line_ids_all.filtered(lambda x:
+                                                                     x.display_type in ['product', 'rounding'] and
+                                                                     x.move_id.state != 'cancelled'
+                                                                     )
         purchase_order_line_ids = self.env['purchase.order.line'].search([])
-        vendor_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in', ['in_invoice', 'in_refund'])])
-        vendor_move_line_ids = vendor_move_line_ids_all.filtered(lambda x: x.display_type in ['product', 'rounding'])
+
+        vendor_move_line_ids_all = self.env['account.move.line'].search([('move_id.move_type', 'in',
+                                                                          ['in_invoice', 'in_refund'])])
+        vendor_move_line_ids = vendor_move_line_ids_all.filtered(lambda x:
+                                                                 x.display_type in ['product', 'rounding'] and
+                                                                 x.move_id.state != 'cancelled'
+                                                                 )
 
         AAA = self.env['account.analytic.account']
 
@@ -161,6 +170,6 @@ class ProductTemplateAnalytic(models.Model):
                     'vendor_bill_qty': data[acc_id][prod_id]['vendor_bill_qty'],
                 })
 
-        _logger.info("Cron: _cron_compute_new Finished")
+        _logger.debug("Cron: Compute New Analytic Finished")
 
 
