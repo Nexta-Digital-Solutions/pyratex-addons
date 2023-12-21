@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Purchase Analytic Account",
+    'name': "Analytic Product",
 
     'summary': """
-        Add analytic account to purchase and purchase report""",
+        Analytics for Products""",
 
     'description': """
-         Add analytic account to purchase and purchase report
+         Analytics for Products
     """,
 
     'author': "NextaDS",
