@@ -10,6 +10,7 @@
                 <tree string="Product Template Analytic">
                     <field name="analytic_account_id"/>
                     <field name="product_template_id"/>
+                    <field name="product_category_id" optional="show"/>
 
                     <field name="sale_amount" optional="show"/>
                     <field name="sale_qty" optional="show"/>
