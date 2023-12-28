@@ -2,9 +2,9 @@
 {
     'name': "Color Attribute",
 
-    'summary': """""",
+    'summary': """Añade el grupo de colores en Productos""",
 
-    'description': """ 
+    'description': """Añade el grupo de colores en Productos
     """,
 
     'author': "NextaDS",
