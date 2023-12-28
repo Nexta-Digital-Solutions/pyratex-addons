@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from . import fiber_family, certifications, properties, usage, product_product
+from . import product_attribute_group, product_attribute_value
 
