@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="attributes_variants" model="ir.ui.view">
+        <field name="name">attributes.variants</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page/field[@name='attribute_line_ids']/tree/field[@name='value_ids']" position="after">
+                <field name="group_ids" widget="many2many_tags"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
