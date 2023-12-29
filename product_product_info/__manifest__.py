@@ -26,6 +26,7 @@
         'views/menuitem_product.xml',
         'views/product_product_custom.xml',
         'views/product_attribute_view.xml',
-        'views/color_group_view.xml'
+        'views/color_group_view.xml',
+        'views/attributes_variants_view.xml'
     ],
 }
