@@ -58,7 +58,7 @@ class ProductTemplateAnalytic(models.Model):
                                                                             ['out_invoice', 'out_refund'])])
         customer_move_line_ids = customer_move_line_ids_all.filtered(lambda x:
                                                                      x.display_type in ['product', 'rounding'] and
-                                                                     x.move_id.state != 'cancelled'
+                                                                     x.move_id.state != 'cancel'
                                                                      )
         purchase_order_line_ids = self.env['purchase.order.line'].search([])
 
@@ -66,19 +66,15 @@ class ProductTemplateAnalytic(models.Model):
                                                                           ['in_invoice', 'in_refund'])])
         vendor_move_line_ids = vendor_move_line_ids_all.filtered(lambda x:
                                                                  x.display_type in ['product', 'rounding'] and
-                                                                 x.move_id.state != 'cancelled'
+                                                                 x.move_id.state != 'cancel'
                                                                  )
 
         AAA = self.env['account.analytic.account']
 
         data = {}
-        # for analitic_account_id in analitic_account_ids:
+
         for sale_line in sale_order_line_ids:
-            # try:
-            #     distribution = json.loads(sale_line.x_studio_composition)
-            # except:
-            #     print(f"No se pudo evaluar {sale_line.x_studio_composition}")
-            #     continue
+
             distribution = sale_line.analytic_distribution
             analitic_account_old_id = sale_line.order_id.analytic_account_id
             if not distribution:
@@ -128,13 +124,14 @@ class ProductTemplateAnalytic(models.Model):
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
 
-                # | elif line.display_type in ('product', 'rounding'):
-                # |     total_untaxed += line.balance
-                # | move.amount_untaxed_signed = -total_untaxed
+                balance = move_line.balance
+                quantity = move_line.quantity
+                # if move_line.move_id.move_type == 'out_refund':
+                #     balance = -1 * balance
+                #     quantity = -1 * quantity
 
-                # data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] += move_line.price_total * (to_this_account / 100)
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] -= move_line.balance * (to_this_account / 100)
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_qty'] += move_line.quantity * (to_this_account / 100)
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] += balance * (to_this_account / 100)
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_qty'] += quantity * (to_this_account / 100)
 
         for move_line in vendor_move_line_ids:
             distribution = move_line.analytic_distribution
@@ -149,9 +146,14 @@ class ProductTemplateAnalytic(models.Model):
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
 
-                # data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] += move_line.price_total * (to_this_account / 100)
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] -= move_line.balance * (to_this_account / 100)
-                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_qty'] += move_line.quantity * (to_this_account / 100)
+                balance = move_line.balance
+                quantity = move_line.quantity
+                # if move_line.move_id.move_type == 'in_refund':
+                #     balance = -1 * balance
+                #     quantity = -1 * quantity
+
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] += balance * (to_this_account / 100)
+                data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_qty'] += quantity * (to_this_account / 100)
 
 
         # pprint.pp(data)
