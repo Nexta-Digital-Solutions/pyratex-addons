@@ -2,10 +2,10 @@
 {
     'name': "Ecommerce Filter",
 
-    'summary': """
+    'summary': """Desplazar las categorias del ecommerce a la izquierda
         """,
 
-    'description': """
+    'description': """Desplazar las categorias del ecommerce a la izquierda
     """,
 
     'author': "NextaDS",
