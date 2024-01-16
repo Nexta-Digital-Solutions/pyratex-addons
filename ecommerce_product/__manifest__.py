@@ -21,9 +21,10 @@
     'data': [
         'security/ir.model.access.csv',
         'views/product_properties_views.xml',
-        'views/product_composition_views.xml',
-        'views/menuitem_product.xml',
-        'views/product_product_views.xml',
+        # 'views/product_composition_views.xml',
+        # 'views/menuitem_product.xml',
+        'views/product_template_form_view_custom.xml',
+        'views/product_attribute_view_form_custom.xml',
     ],
     'demo': [
     ],
