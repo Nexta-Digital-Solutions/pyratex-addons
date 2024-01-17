@@ -1,5 +1,5 @@
 <odoo>
-    <template id="product_properties_custom" inherit_id="website_sale.product" name="Product Properties">
+    <template id="product_properties_nds" inherit_id="website_sale.product">
 
         <!--Mostrar el color-->
         <!--        <xpath expr="//div[@id='product_detail_main']/div" position="inside">-->
@@ -22,6 +22,10 @@
         <!--            </t>-->
         <!--        </xpath>-->
 
+        <xpath expr="//div/h1[@itemprop='name']" position="after">
+            <p t-field="product.description_ecommerce"/>
+        </xpath>
+
         <xpath expr="//p[hasclass('text-muted')]" position="after">
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;"
                  t-if="not user_id.partner_id.name == 'Public user'">
@@ -30,13 +34,13 @@
                         <li>
                             <strong>Weight</strong>
                         </li>
-<!--                        <p t-field="product_variant.weight"/>-->
+                        <p t-field="product.weight"/>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
                             <strong>Width</strong>
                         </li>
-<!--                        <p t-field="product_variant.volume"/>-->
+                        <p t-field="product.width"/>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
@@ -51,14 +55,20 @@
                         </t>
                     </ul>
                     <ul style="list-style: none;">
-<!--                        <li>-->
-<!--                            <strong>Composition</strong>-->
-<!--                        </li>-->
-<!--                        <p t-field="product_variant.composition_id"/>-->
+                        <li>
+                            <strong>Composition</strong>
+                        </li>
+                        <t t-foreach="product.attribute_line_ids" t-as="attribute">
+                            <t t-if="attribute.display_name == 'Composition'">
+                                <t t-foreach="attribute.value_ids" t-as="value">
+                                    <p t-field="value.name"/>
+                                </t>
+                            </t>
+                        </t>
                     </ul>
                 </div>
                 <div style="width: 75%;">
-                    <table class="table">
+                    <table class="table-borderless">
                         <thead>
                             <tr>
                                 <th scope="col">Properties</th>
