@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_attribute_view_form_custom" model="ir.ui.view">
+        <field name="name">product.attribute.view.form.custom</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_custom']" position="after">
+                <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,185 +1,30 @@
-<!--<odoo>-->
-<!--    <template id="product_properties_custom" inherit_id="website_sale.product" name="Product Properties">-->
-
-<!--        &lt;!&ndash;Mostrar el color&ndash;&gt;-->
-<!--        <xpath expr="//div[@id='product_detail_main']/div" position="inside">-->
-<!--                <t t-placeholder="select">-->
-<!--                    <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>-->
-<!--                    <input type="hidden" class="product_template_id" name="product_template_id"-->
-<!--                           t-att-value="product.id"/>-->
-<!--                    <input t-if="product.public_categ_ids.ids" type="hidden" class="product_category_id"-->
-<!--                           name="product_category_id" t-att-value="product.public_categ_ids.ids[0]"/>-->
-<!--                    <input t-if="product.product_tag_ids.ids" type="hidden" class="product_tag_id" name="product_tag_id"-->
-<!--                           t-att-value="product.product_tag_ids.ids[0]"/>-->
-<!--                    <t t-if="combination" t-call="sale.variants">-->
-<!--                        <t t-set="ul_class" t-valuef="flex-column"/>-->
-<!--                        <t t-set="parent_combination" t-value="None"/>-->
-<!--                    </t>-->
-<!--                    <t t-else="">-->
-<!--                        <ul class="d-none js_add_cart_variants mb-0"-->
-<!--                            t-att-data-attribute_exclusions="{'exclusions: []'}"/>-->
-<!--                    </t>-->
-<!--                </t>-->
-<!--        </xpath>-->
-
-<!--        <xpath expr="//p[hasclass('text-muted')]" position="after">-->
-<!--            <div style="display: flex; flex-direction: row; flex-wrap: wrap;"-->
-<!--                 t-if="not user_id.partner_id.name == 'Public user'">-->
-<!--                <div style="width: 25%;">-->
-<!--                    <ul style="list-style: none;">-->
-<!--                        <li>-->
-<!--                            <strong>Weight</strong>-->
-<!--                        </li>-->
-<!--                        <li>340gr +/- 8%</li>-->
-<!--                    </ul>-->
-<!--                    <ul style="list-style: none;">-->
-<!--                        <li>-->
-<!--                            <strong>Width</strong>-->
-<!--                        </li>-->
-<!--                        <li>155gr +/- 5%</li>-->
-<!--                    </ul>-->
-<!--                    <ul style="list-style: none;">-->
-<!--                        <li>-->
-<!--                            <strong>Structure</strong>-->
-<!--                        </li>-->
-<!--                        <li>Interlock</li>-->
-<!--                    </ul>-->
-<!--                    <ul style="list-style: none;">-->
-<!--                        <li>-->
-<!--                            <strong>Composition</strong>-->
-<!--                        </li>-->
-<!--                        <li>89% Microtencel</li>-->
-<!--                        <li>11% Elastane</li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--                <div style="width: 75%;">-->
-<!--                    <table>-->
-<!--                        <tr>-->
-<!--                            <th>-->
-<!--                                <h5>-->
-<!--                                    <strong>Properties</strong>-->
-<!--                                </h5>-->
-<!--                            </th>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td style="min-width: 200px;">-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20"-->
-<!--                                     viewBox="0 0 640 512">&lt;!&ndash;!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.&ndash;&gt;-->
-<!--                                    <path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-154.3-121c-2-30.1 20.8-60.1 56-60.1H544c17.7 0 32-14.3 32-32s-14.3-32-32-32H532.5c-49.9 0-74.9-60.3-39.6-95.6l8.2-8.2c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-8.2 8.2C412.3 118.4 352 93.4 352 43.5V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V43.5c0 49.9-60.3 74.9-95.6 39.6L184.2 75c-12.5-12.5-32.8-12.5-45.3 0c-1.6 1.6-3.1 3.4-4.3 5.3L38.8 5.1zm225.8 177c6.9-3.9 14.9-6.1 23.4-6.1c26.5 0 48 21.5 48 48c0 4.4-.6 8.7-1.7 12.7l-69.7-54.6zM402 412.7L144.7 210c-9.5 8.5-22.2 14-37.2 14H96c-17.7 0-32 14.3-32 32s14.3 32 32 32h11.5c49.9 0 74.9 60.3 39.6 95.6l-8.2 8.2c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l8.2-8.2c35.3-35.3 95.6-10.3 95.6 39.6V480c0 17.7 14.3 32 32 32s32-14.3 32-32V468.5c0-31.2 23.6-52.7 50-55.7z"/>-->
-<!--                                </svg>-->
-<!--                                Anti-Bacterial-->
-<!--                            </td>-->
-<!--                            <td style="min-width: 200px;">-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"-->
-<!--                                     viewBox="0 0 576 512">&lt;!&ndash;!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.&ndash;&gt;-->
-<!--                                    <path d="M559.7 392.2c17.8-13.1 21.6-38.1 8.5-55.9s-38.1-21.6-55.9-8.5L392.6 416H272c-8.8 0-16-7.2-16-16s7.2-16 16-16h16 64c17.7 0 32-14.3 32-32s-14.3-32-32-32H288 272 193.7c-29.1 0-57.3 9.9-80 28L68.8 384H32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H192 352.5c29 0 57.3-9.3 80.7-26.5l126.6-93.3zm-366.1-8.3a.5 .5 0 1 1 -.9 .2 .5 .5 0 1 1 .9-.2z"/>-->
-<!--                                </svg>-->
-<!--                                Anti-Irritation-->
-<!--                            </td>-->
-<!--                            <td style="min-width: 200px;">-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"-->
-<!--                                     viewBox="0 0 512 512">&lt;!&ndash;!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.&ndash;&gt;-->
-<!--                                    <path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>-->
-<!--                                </svg>-->
-<!--                                Quick Dry-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td style="min-width: 200px;">-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18"-->
-<!--                                     viewBox="0 0 576 512">&lt;!&ndash;!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.&ndash;&gt;-->
-<!--                                    <path d="M272 416c17.7 0 32-14.3 32-32s-14.3-32-32-32H160c-17.7 0-32-14.3-32-32V192h32c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-64-64c-12.5-12.5-32.8-12.5-45.3 0l-64 64c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8l32 0 0 128c0 53 43 96 96 96H272zM304 96c-17.7 0-32 14.3-32 32s14.3 32 32 32l112 0c17.7 0 32 14.3 32 32l0 128H416c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l64 64c12.5 12.5 32.8 12.5 45.3 0l64-64c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8l-32 0V192c0-53-43-96-96-96L304 96z"/>-->
-<!--                                </svg>-->
-<!--                                Superior Breathability-->
-<!--                            </td>-->
-<!--                            <td>-->
-<!--                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"-->
-<!--                                     viewBox="0 0 448 512">&lt;!&ndash;!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.&ndash;&gt;-->
-<!--                                    <path d="M224 0c13.3 0 24 10.7 24 24V70.1l23-23c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-57 57v76.5l66.2-38.2 20.9-77.8c3.4-12.8 16.6-20.4 29.4-17s20.4 16.6 17 29.4L373 142.2l37.1-21.4c11.5-6.6 26.2-2.7 32.8 8.8s2.7 26.2-8.8 32.8L397 183.8l31.5 8.4c12.8 3.4 20.4 16.6 17 29.4s-16.6 20.4-29.4 17l-77.8-20.9L272 256l66.2 38.2 77.8-20.9c12.8-3.4 26 4.2 29.4 17s-4.2 26-17 29.4L397 328.2l37.1 21.4c11.5 6.6 15.4 21.3 8.8 32.8s-21.3 15.4-32.8 8.8L373 369.8l8.4 31.5c3.4 12.8-4.2 26-17 29.4s-26-4.2-29.4-17l-20.9-77.8L248 297.6v76.5l57 57c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-23-23V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V441.9l-23 23c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l57-57V297.6l-66.2 38.2-20.9 77.8c-3.4 12.8-16.6 20.4-29.4 17s-20.4-16.6-17-29.4L75 369.8 37.9 391.2c-11.5 6.6-26.2 2.7-32.8-8.8s-2.7-26.2 8.8-32.8L51 328.2l-31.5-8.4c-12.8-3.4-20.4-16.6-17-29.4s16.6-20.4 29.4-17l77.8 20.9L176 256l-66.2-38.2L31.9 238.6c-12.8 3.4-26-4.2-29.4-17s4.2-26 17-29.4L51 183.8 13.9 162.4c-11.5-6.6-15.4-21.3-8.8-32.8s21.3-15.4 32.8-8.8L75 142.2l-8.4-31.5c-3.4-12.8 4.2-26 17-29.4s26 4.2 29.4 17l20.9 77.8L200 214.4V137.9L143 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l23 23V24c0-13.3 10.7-24 24-24z"/>-->
-<!--                                </svg>-->
-<!--                                Cooling Effect-->
-<!--                            </td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                    <div class="d-flex justify-content-end aign-items-start">-->
-<!--                        <img t-if="not user_id.partner_id.name == 'Public user'"-->
-<!--                             src='/ecommerce_product/static/src/img/certified.png' style="width: 100px; height:150px;"/>-->
-<!--                    </div>-->
-
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div t-else="">-->
-<!--                <p>For more information, <a t-attf-href="/web/login">Sign in</a>.-->
-<!--                </p>-->
-<!--            </div>-->
-
-<!--            <div class="row">-->
-<!--                <div class="col-md-6">-->
-<!--                    <img t-if="not user_id.partner_id.name == 'Public user'"-->
-<!--                         src='/ecommerce_product/static/src/img/lavado.png' style="width: 65%; height: 45%;"/>-->
-<!--                    <h5 t-if="not user_id.partner_id.name == 'Public user'" class="text-primary">Made in Portugal</h5>-->
-<!--                </div>-->
-<!--                <div class="col-md-6">-->
-<!--                    <p></p>-->
-<!--                    <a href="#" class="btn btn-primary btn-sm">Add to Swatch Pack</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </xpath>-->
-
-<!--        &lt;!&ndash;No muestra el precio del producto&ndash;&gt;-->
-<!--        <xpath expr="//form/div[hasclass('js_product')]/div" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-
-<!--        &lt;!&ndash;No muestra la categoría, ni atributos&ndash;&gt;-->
-<!--        <xpath expr="//form/div/t[@t-placeholder='select']" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-
-<!--        &lt;!&ndash;No muestra el div del botón&ndash;&gt;-->
-<!--        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-
-<!--        &lt;!&ndash;No muestra la página de abajo&ndash;&gt;-->
-<!--        <xpath expr="//div[@itemprop='description']" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-<!--        <xpath expr="//div[hasclass('oe_structure')]" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-
-
-<!--        <xpath expr="//div[@id='o_product_terms_and_share']" position="attributes">-->
-<!--            <attribute name="t-if">1!=1</attribute>-->
-<!--        </xpath>-->
-<!--    </template>-->
-<!--</odoo>-->
-
-
 <odoo>
-    <template id="product_properties_custom" inherit_id="website_sale.product" name="Product Properties">
+    <template id="product_properties_nds" inherit_id="website_sale.product">
 
         <!--Mostrar el color-->
-<!--        <xpath expr="//div[@id='product_detail_main']/div" position="inside">-->
-<!--            <t t-placeholder="select">-->
-<!--                <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>-->
-<!--                <input type="hidden" class="product_template_id" name="product_template_id"-->
-<!--                       t-att-value="product.id"/>-->
-<!--                <input t-if="product.public_categ_ids.ids" type="hidden" class="product_category_id"-->
-<!--                       name="product_category_id" t-att-value="product.public_categ_ids.ids[0]"/>-->
-<!--                <input t-if="product.product_tag_ids.ids" type="hidden" class="product_tag_id" name="product_tag_id"-->
-<!--                       t-att-value="product.product_tag_ids.ids[0]"/>-->
-<!--                <t t-if="combination" t-call="sale.variants">-->
-<!--                    <t t-set="ul_class" t-valuef="flex-column"/>-->
-<!--                    <t t-set="parent_combination" t-value="None"/>-->
-<!--                </t>-->
-<!--                <t t-else="">-->
-<!--                    <ul class="d-none js_add_cart_variants mb-0"-->
-<!--                        t-att-data-attribute_exclusions="{'exclusions: []'}"/>-->
-<!--                </t>-->
-<!--            </t>-->
-<!--        </xpath>-->
+        <!--        <xpath expr="//div[@id='product_detail_main']/div" position="inside">-->
+        <!--            <t t-placeholder="select">-->
+        <!--                <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>-->
+        <!--                <input type="hidden" class="product_template_id" name="product_template_id"-->
+        <!--                       t-att-value="product.id"/>-->
+        <!--                <input t-if="product.public_categ_ids.ids" type="hidden" class="product_category_id"-->
+        <!--                       name="product_category_id" t-att-value="product.public_categ_ids.ids[0]"/>-->
+        <!--                <input t-if="product.product_tag_ids.ids" type="hidden" class="product_tag_id" name="product_tag_id"-->
+        <!--                       t-att-value="product.product_tag_ids.ids[0]"/>-->
+        <!--                <t t-if="combination" t-call="sale.variants">-->
+        <!--                    <t t-set="ul_class" t-valuef="flex-column"/>-->
+        <!--                    <t t-set="parent_combination" t-value="None"/>-->
+        <!--                </t>-->
+        <!--                <t t-else="">-->
+        <!--                    <ul class="d-none js_add_cart_variants mb-0"-->
+        <!--                        t-att-data-attribute_exclusions="{'exclusions: []'}"/>-->
+        <!--                </t>-->
+        <!--            </t>-->
+        <!--        </xpath>-->
+
+        <xpath expr="//div/h1[@itemprop='name']" position="after">
+            <p t-field="product.description_ecommerce"/>
+        </xpath>
 
         <xpath expr="//p[hasclass('text-muted')]" position="after">
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;"
@@ -189,32 +34,41 @@
                         <li>
                             <strong>Weight</strong>
                         </li>
-                        <p t-field="product_variant.weight"/>
+                        <p t-field="product.weight"/>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
                             <strong>Width</strong>
                         </li>
-                        <p t-field="product_variant.volume"/>
+                        <p t-field="product.width"/>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
                             <strong>Structure</strong>
                         </li>
-<!--                        <t t-foreach="product_variant.attributes" t-as="attribute">-->
-<!--                            <p t-field="attribute.value_ids.name"/>-->
-<!--                        </t>-->
-
+                        <t t-foreach="product.attribute_line_ids" t-as="attribute">
+                            <t t-if="attribute.display_name == 'Structure'">
+                                <t t-foreach="attribute.value_ids" t-as="value">
+                                    <p t-field="value.name"/>
+                                </t>
+                            </t>
+                        </t>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
                             <strong>Composition</strong>
                         </li>
-                        <p t-field="product_variant.composition_id"/>
+                        <t t-foreach="product.attribute_line_ids" t-as="attribute">
+                            <t t-if="attribute.display_name == 'Composition'">
+                                <t t-foreach="attribute.value_ids" t-as="value">
+                                    <p t-field="value.name"/>
+                                </t>
+                            </t>
+                        </t>
                     </ul>
                 </div>
                 <div style="width: 75%;">
-                    <table class="table">
+                    <table class="table-borderless">
                         <thead>
                             <tr>
                                 <th scope="col">Properties</th>
@@ -222,13 +76,31 @@
                         </thead>
                         <tbody>
                             <tr>
-<!--                                <td>Mark</td>-->
+                                <td class="d-flex">
+                                    <t t-foreach="product.attribute_line_ids" t-as="attribute">
+                                        <t t-if="attribute.display_name == 'Properties'">
+                                            <t t-foreach="attribute.value_ids" t-as="value">
+                                                <img t-if="value.icon_id" class="p-1"
+                                                     t-att-src="image_data_uri(value.icon_id)"
+                                                     style="width: 5%; height: 3%;"/>
+                                                <p t-field="value.name" class="p-1"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-end aign-items-start">
-                        <img t-if="not user_id.partner_id.name == 'Public user'"
-                             src='/ecommerce_product/static/src/img/certified.png' style="width: 100px; height:150px;"/>
+                        <t t-if="not user_id.partner_id.name == 'Public user'" t-foreach="product.attribute_line_ids"
+                           t-as="attribute">
+                            <t t-if="attribute.display_name == 'Certifications'">
+                                <t t-foreach="attribute.value_ids" t-as="value">
+                                    <img t-if="value.icon_id" class="p-1" t-att-src="image_data_uri(value.icon_id)"
+                                         style="width: 10%; height: 5%;"/>
+                                </t>
+                            </t>
+                        </t>
                     </div>
                 </div>
             </div>
@@ -238,9 +110,19 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <img t-if="not user_id.partner_id.name == 'Public user'"
-                         src='/ecommerce_product/static/src/img/lavado.png' style="width: 65%; height: 45%;"/>
-                    <h5 t-if="not user_id.partner_id.name == 'Public user'" class="text-primary">Made in Portugal</h5>
+                    <t t-if="not user_id.partner_id.name == 'Public user'" t-foreach="product.attribute_line_ids"
+                       t-as="attribute">
+                        <t t-if="attribute.display_name == 'Care Instructions'">
+                            <t t-foreach="attribute.value_ids" t-as="value">
+                                <img t-if="value.icon_id" class="p-1" t-att-src="image_data_uri(value.icon_id)"/>
+                            </t>
+                        </t>
+                    </t>
+                    <h5 t-if="not user_id.partner_id.name == 'Public user' and product.country_id" class="text-primary">
+                        Made in
+                        <span t-field="product.country_id"/>
+                    </h5>
+
                 </div>
                 <div class="col-md-6">
                     <p></p>
@@ -275,7 +157,6 @@
         <xpath expr="//div[hasclass('oe_structure')]" position="attributes">
             <attribute name="t-if">1!=1</attribute>
         </xpath>
-
 
         <xpath expr="//div[@id='o_product_terms_and_share']" position="attributes">
             <attribute name="t-if">1!=1</attribute>
