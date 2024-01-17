@@ -1,1 +1,1 @@
-from . import product_composition, product_template, product_attribute_value
+from . import product_template, product_attribute_value
