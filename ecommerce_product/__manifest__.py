@@ -19,10 +19,12 @@
     'depends': ['base', 'website_sale', 'product'],
 
     'data': [
-        'views/product_properties_views.xml',
+        'views/product_properties_view_custom.xml',
         'views/product_template_form_view_custom.xml',
         'views/product_attribute_view_form_custom.xml',
         'views/product_template_form_view_nds.xml',
+        'views/filter_products_price_custom.xml',
+        'views/attributes_filter_view.xml'
     ],
     'demo': [
     ],
