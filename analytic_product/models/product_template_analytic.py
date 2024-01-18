@@ -3,6 +3,7 @@ import pprint
 
 from odoo import api, fields, models, SUPERUSER_ID, _
 from odoo.tools.safe_eval import json
+from odoo.exceptions import UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -73,8 +74,8 @@ class ProductTemplateAnalytic(models.Model):
 
         data = {}
 
+        # Lineas de Ventas
         for sale_line in sale_order_line_ids:
-
             distribution = sale_line.analytic_distribution
             analitic_account_old_id = sale_line.order_id.analytic_account_id
             if not distribution:
@@ -95,6 +96,7 @@ class ProductTemplateAnalytic(models.Model):
                 data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_amount'] += sale_line.price_total * (to_this_account / 100)
                 data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_qty'] += sale_line.product_uom_qty * (to_this_account / 100)
 
+        # Lineas de Compras
         for purchase_line in purchase_order_line_ids:
             distribution = purchase_line.analytic_distribution
             if not distribution:
@@ -111,6 +113,7 @@ class ProductTemplateAnalytic(models.Model):
                 data[analitic_account_id.id][purchase_line.product_id.product_tmpl_id.id]['purchase_amount'] += purchase_line.price_subtotal * (to_this_account / 100)
                 data[analitic_account_id.id][purchase_line.product_id.product_tmpl_id.id]['purchase_qty'] += purchase_line.product_qty * (to_this_account / 100)
 
+        # Lineas de Facturas a Clientes (Ventas) y Rectificativas
         for move_line in customer_move_line_ids:
             distribution = move_line.analytic_distribution
             if not distribution:
@@ -124,15 +127,19 @@ class ProductTemplateAnalytic(models.Model):
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
 
-                balance = move_line.balance
-                quantity = move_line.quantity
-                # if move_line.move_id.move_type == 'out_refund':
-                #     balance = -1 * balance
-                #     quantity = -1 * quantity
+                if move_line.move_id.move_type == 'out_refund':
+                    balance = -1 * move_line.balance     # viene en +, lo hago -
+                    quantity = -1 * move_line.quantity   # viene en +, lo hago -
+                elif move_line.move_id.move_type == 'out_invoice':
+                    balance = move_line.balance * -1     # viene en -, lo hago +
+                    quantity = move_line.quantity        # viene en +
+                else:
+                    raise UserError(f"Error: Tipo de factura {move_line.move_id.move_type} incorrecto, deberia estar filtrado")
 
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_amount'] += balance * (to_this_account / 100)
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['customer_bill_qty'] += quantity * (to_this_account / 100)
 
+        # Lineas de Facturas a Proveedores (Compras) y Rectificativas
         for move_line in vendor_move_line_ids:
             distribution = move_line.analytic_distribution
             if not distribution:
@@ -146,11 +153,15 @@ class ProductTemplateAnalytic(models.Model):
                 if move_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id] = self._get_default_values()
 
-                balance = move_line.balance
-                quantity = move_line.quantity
-                # if move_line.move_id.move_type == 'in_refund':
-                #     balance = -1 * balance
-                #     quantity = -1 * quantity
+                if move_line.move_id.move_type == 'in_refund':
+                    balance = move_line.balance          # viene en -
+                    quantity = move_line.quantity * -1   # viene en +, lo hago -
+                elif move_line.move_id.move_type == 'in_invoice':
+                    balance = move_line.balance          # viene en +
+                    quantity = move_line.quantity        # viene en +
+                else:
+                    raise UserError(f"Error: Tipo de factura {move_line.move_id.move_type} incorrecto, deberia estar filtrado")
+
 
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_amount'] += balance * (to_this_account / 100)
                 data[analitic_account_id.id][move_line.product_id.product_tmpl_id.id]['vendor_bill_qty'] += quantity * (to_this_account / 100)
