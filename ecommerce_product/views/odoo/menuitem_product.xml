@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_product_template" name="Product Information" parent="website.menu_website_global_configuration"
+                  sequence="100"/>
+
+        <menuitem id="menu_fiberfamily_tree" name="Fiber Family" parent="menu_product_template"
+                  action="action_fiberfamily_tree" sequence="110"/>
+    </data>
+</odoo>
