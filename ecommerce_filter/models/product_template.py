@@ -5,12 +5,6 @@ from odoo.addons.http_routing.models.ir_http import slug, unslug
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    # def _search_get_detail(self, website, order, options):
-    #     search_details = super()._search_get_detail(website, order, options)
-    #     if options.get('fiberfamily'):
-    #         fiberfamily = int(options.get('fiberfamily'))
-    #         search_details['base_domain'].append([('fiberfamily_id', '=', fiberfamily)])
-    #     return search_details
 
     def _search_get_detail(self, website, order, options):
         with_image = options['displayImage']

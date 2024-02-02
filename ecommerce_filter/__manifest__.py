@@ -22,5 +22,10 @@
         'views/portrait_categories_views.xml',
         'views/products_attributes_add_categories_views.xml',
         'views/attributes_views.xml'
-    ]
+    ],
+    'assets':{
+        'web.assets_frontend':[
+            'ecommerce_filter/static/src/scss/style.css',
+        ]
+    }
 }

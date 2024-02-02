@@ -8,26 +8,26 @@
                         <div class="row">
                             <ul class="list-unstyled d-flex justify-content-center gap-3">
                                 <li class="d-inline">
-                                    <a href="/">Home</a>
+                                    <a href="/" class="text-decoration-none text-dark">Home</a>
                                 </li>
                                 <li>
-                                    <a href="#">About us</a>
+                                    <a href="#" class="text-decoration-none text-dark">About us</a>
                                 </li>
                                 <li>
-                                    <a href="#">Products</a>
+                                    <a href="#" class="text-decoration-none text-dark">Products</a>
                                 </li>
                                 <li>
-                                    <a href="#">Services</a>
+                                    <a href="#" class="text-decoration-none text-dark">Services</a>
                                 </li>
                                 <li>
-                                    <a href="#">Legal</a>
+                                    <a href="#" class="text-decoration-none text-dark">Legal</a>
                                 </li>
                                 <t t-set="configurator_footer_links" t-value="[]"/>
                                 <li t-foreach="configurator_footer_links" t-as="link">
                                     <a t-att-href="link['href']" t-esc="link['text']"/>
                                 </li>
                                 <li>
-                                    <a href="/contactus">Contact us</a>
+                                    <a href="/contactus" class="text-decoration-none text-dark">Contact us</a>
                                 </li>
                             </ul>
                         </div>

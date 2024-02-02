@@ -1,9 +1,9 @@
 <odoo>
     <template id="products_custom" inherit_id="website_sale.products">
+
         <xpath expr="//t[@t-call='website_sale.search']" position="attributes">
             <attribute name="t-if">1!=1</attribute>
         </xpath>
-
 
         <xpath expr="//t[@t-call='website_sale.pricelist_list']" position="attributes">
             <attribute name="t-if">1!=1</attribute>
@@ -12,6 +12,25 @@
         <xpath expr="//t[@t-call='website_sale.sort']" position="attributes">
             <attribute name="t-if">1!=1</attribute>
         </xpath>
+
+<!--        <xpath expr="//tbody/tr/t[@t-as='td_product']" position="replace">-->
+<!--            <t t-foreach="tr_product" t-as="td_product">-->
+<!--                <t t-if="td_product">-->
+<!--                    &lt;!&ndash; We use t-attf-class here to allow easier customization &ndash;&gt;-->
+<!--                    <td t-att-colspan="td_product['x'] != 1 and td_product['x']"-->
+<!--                        t-att-rowspan="td_product['y'] != 1 and td_product['y']" t-attf-class="oe_product"-->
+<!--                        t-att-data-ribbon-id="td_product['ribbon'].id" t-att-data-name="product_block_name">-->
+<!--&lt;!&ndash;                        <div t-attf-class="o_wsale_product_grid_wrapper position-relative h-100 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}">&ndash;&gt;-->
+<!--                        <div t-attf-class="position-relative">-->
+<!--                            <t t-call="website_sale.products_item">-->
+<!--                                <t t-set="product" t-value="td_product['product']"/>-->
+<!--                            </t>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                </t>-->
+<!--                <td t-else=""/>-->
+<!--            </t>-->
+<!--        </xpath>-->
 
         <xpath expr="//t[@t-call='website_sale.add_grid_or_list_option']" position="attributes">
             <attribute name="t-if">1!=1</attribute>
