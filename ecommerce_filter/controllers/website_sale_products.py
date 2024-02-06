@@ -197,6 +197,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'attrib_values': attrib_values,
             'attrib_set': attrib_set,
             'fiberfamily_set': fiberfamily_set,
+            'structure_set': structure_set,
             'pager': pager,
             'pricelist': pricelist,
             'add_qty': add_qty,
