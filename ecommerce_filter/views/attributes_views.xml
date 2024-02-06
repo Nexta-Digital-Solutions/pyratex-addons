@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="filtered" inherit_id="website_sale.products_attributes" name="Color Attributes">
+    <template id="filtered" inherit_id="website_sale.products_attributes" name="Filters">
         <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="replace">
-            <form t-if="attributes" class="js_attributes position-relative mb-2" method="get">
+            <!--            <form t-if="attributes" class="js_attributes position-relative mb-2" method="get">-->
+            <form class="js_attributes position-relative mb-2" method="get">
 
-                    <!--Añade los atributos con el formato que piden en el Figma-->
+                <!--Añade los atributos con el formato que piden en el Figma-->
 
                 <h6 class="mb-3">
                     <b class="o_products_attributes_title d-none d-lg-block">Filters</b>
                 </h6>
-                <a t-if="attrib_values"
+
+                <a t-if="attrib_values or fiberfamily_set"
                    t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
                    t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">
                     <small class="mx-auto">
@@ -19,96 +21,124 @@
                 </a>
 
 
-                <t t-foreach="attributes" t-as="a">
-                    <t t-if="a.name == 'Fiber Family'">
-                        <select class="form-select css_attribute_select mb-2" name="attrib">
-                            <option value="" selected="true">Fiber Family</option>
-                            <t t-foreach="a.value_ids" t-as="v">
-                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"
-                                        t-att-selected="v.id in attrib_set"/>
-                            </t>
-                        </select>
-                    </t>
+                <t t-set="fiber_families" t-value="env['fiber.family'].sudo().search([])"/>
+                <t t-if="fiber_families">
+                    <span t-esc="fiberfamily_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="fiberfamily">
+                        <option value="" selected="true">Fiber Family</option>
+                        <t t-foreach="fiber_families" t-as="ff">
+                            <option t-att-value="'%s' % (ff.id)" t-esc="ff.name"
+                                    t-att-selected="ff.id == fiberfamily_set"/>
+                        </t>
+                    </select>
                 </t>
 
-                <t t-foreach="attributes" t-as="a">
-                    <t t-if="a.name == 'Color'">
-                        <select class="form-select css_attribute_select mb-2" name="attrib">
-                            <option value="" selected="true">Colors</option>
-                            <t t-foreach="a.value_ids" t-as="v">
-                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"
-                                        t-att-selected="v.id in attrib_set"/>
-                            </t>
-                        </select>
-                    </t>
+                <t t-set="struct" t-value="env['structure'].sudo().search([])"/>
+                <t t-if="struct">
+                    <span t-esc="structure_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="structure">
+                        <option value="" selected="true">Structure</option>
+                        <t t-foreach="struct" t-as="s">
+                            <option t-att-value="'%s' % (s.id)" t-esc="s.name"
+                                    t-att-selected="s.id == structure_set"/>
+                        </t>
+                    </select>
                 </t>
 
-                <t t-foreach="attributes" t-as="a">
-                    <t t-if="a.name == 'Properties'">
-                        <select class="form-select css_attribute_select mb-2" name="attrib">
-                            <option value="" selected="true">Properties</option>
-                            <t t-foreach="a.value_ids" t-as="v">
-                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"
-                                        t-att-selected="v.id in attrib_set"/>
-                            </t>
-                        </select>
-                    </t>
-                </t>
 
-                <t t-foreach="attributes" t-as="a">
-                    <t t-if="a.name == 'Usage'">
-                        <select class="form-select css_attribute_select mb-2" name="attrib">
-                            <option value="" selected="true">Usage</option>
-                            <t t-foreach="a.value_ids" t-as="v">
-                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"
-                                        t-att-selected="v.id in attrib_set"/>
-                            </t>
-                        </select>
-                    </t>
-                </t>
+                <!--                                <t t-foreach="attributes" t-as="a">-->
+                <!--                                    <t t-if="a.name == 'Fiber Family'">-->
+                <!--                                        <select class="form-select css_attribute_select mb-2" name="attrib">-->
+                <!--                                            <option value="" selected="true">Fiber Family</option>-->
+                <!--                                            <t t-foreach="a.value_ids" t-as="v">-->
+                <!--                                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"-->
+                <!--                                                        t-att-selected="v.id in attrib_set"/>-->
+                <!--                                            </t>-->
+                <!--                                        </select>-->
+                <!--                                    </t>-->
+                <!--                                </t>-->
 
-                <t t-foreach="attributes" t-as="a">
-                    <t t-if="a.name == 'Product Type'">
-                        <select class="form-select css_attribute_select mb-2" name="attrib">
-                            <option value="" selected="true">Product Type</option>
-                            <t t-foreach="a.value_ids" t-as="v">
-                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"
-                                        t-att-selected="v.id in attrib_set"/>
-                            </t>
-                        </select>
-                    </t>
-                </t>
+<!--                <t t-foreach="attributes" t-as="a">-->
+<!--                    <t t-if="a.name == 'Color'">-->
+<!--                        <select class="form-select css_attribute_select mb-2" name="attrib">-->
+<!--                            <option value="" selected="true">Colors</option>-->
+<!--                            <t t-foreach="a.value_ids" t-as="v">-->
+<!--                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"-->
+<!--                                        t-att-selected="v.id in attrib_set"/>-->
+<!--                            </t>-->
+<!--                        </select>-->
+<!--                    </t>-->
+<!--                </t>-->
 
+<!--                <t t-foreach="attributes" t-as="a">-->
+<!--                    <t t-if="a.name == 'Properties'">-->
+<!--                        <select class="form-select css_attribute_select mb-2" name="attrib">-->
+<!--                            <option value="" selected="true">Properties</option>-->
+<!--                            <t t-foreach="a.value_ids" t-as="v">-->
+<!--                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"-->
+<!--                                        t-att-selected="v.id in attrib_set"/>-->
+<!--                            </t>-->
+<!--                        </select>-->
+<!--                    </t>-->
+<!--                </t>-->
+
+<!--                <t t-foreach="attributes" t-as="a">-->
+<!--                    <t t-if="a.name == 'Usage'">-->
+<!--                        <select class="form-select css_attribute_select mb-2" name="attrib">-->
+<!--                            <option value="" selected="true">Usage</option>-->
+<!--                            <t t-foreach="a.value_ids" t-as="v">-->
+<!--                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"-->
+<!--                                        t-att-selected="v.id in attrib_set"/>-->
+<!--                            </t>-->
+<!--                        </select>-->
+<!--                    </t>-->
+<!--                </t>-->
+
+<!--                <t t-foreach="attributes" t-as="a">-->
+<!--                    <t t-if="a.name == 'Product Type'">-->
+<!--                        <select class="form-select css_attribute_select mb-2" name="attrib">-->
+<!--                            <option value="" selected="true">Product Type</option>-->
+<!--                            <t t-foreach="a.value_ids" t-as="v">-->
+<!--                                <option t-att-value="'%s-%s' % (a.id,v.id)" t-esc="v.name"-->
+<!--                                        t-att-selected="v.id in attrib_set"/>-->
+<!--                            </t>-->
+<!--                        </select>-->
+<!--                    </t>-->
+<!--                </t>-->
 
 
                 <!--Si en lugar de añadir Product Info como atributos se añade en una tabla, descomentar lo de abajo-->
 
-                <t t-set="fiber_families" t-value="env['product.product.fiberfamily'].search([])"/>
-                <select class="form-select css_attribute_select mb-2" name="fiber_family">
-                    <option value="" selected="true">Fiber Family</option>
-                    <t t-foreach="fiber_families" t-as="fiber">
-                        <option t-att-value="fiber.id" t-esc="fiber.name" t-att-selected="fiber.id in attrib_set"/>
-                    </t>
-                </select>
+                <!--                <t t-set="fiber_families" t-value="env['product.product.fiberfamily'].search([])"/>-->
+                <!--                <select class="form-select css_attribute_select mb-2" name="fiber_family">-->
+                <!--                    <option value="" selected="true">Fiber Family</option>-->
+                <!--                    <t t-foreach="fiber_families" t-as="fiber">-->
+                <!--                        <option t-att-value="fiber.id" t-esc="fiber.name" t-att-selected="fiber.id in attrib_set"/>-->
+                <!--                    </t>-->
+                <!--                </select>-->
 
-                <t t-set="properties" t-value="env['product.product.properties'].search([])"/>
-                <select class="form-select css_attribute_select mb-2" name="property">
-                    <option value="" selected="true">Properties</option>
-                    <t t-foreach="properties" t-as="prop">
-                        <option t-att-value="prop.id" t-esc="prop.name" t-att-selected="prop.id in attrib_set"/>
-                    </t>
-                </select>
+                <!--                <t t-set="properties" t-value="env['product.product.properties'].search([])"/>-->
+                <!--                <select class="form-select css_attribute_select mb-2" name="property">-->
+                <!--                    <option value="" selected="true">Properties</option>-->
+                <!--                    <t t-foreach="properties" t-as="prop">-->
+                <!--                        <option t-att-value="prop.id" t-esc="prop.name" t-att-selected="prop.id in attrib_set"/>-->
+                <!--                    </t>-->
+                <!--                </select>-->
 
-                <t t-set="usages" t-value="env['product.product.usage'].search([])"/>
-                <select class="form-select css_attribute_select mb-2" name="usage">
-                    <option value="" selected="true">Usage</option>
-                    <t t-foreach="usages" t-as="u">
-                        <option t-att-value="u.id" t-esc="u.name" t-att-selected="u.id in attrib_set"/>
-                    </t>
-                </select>
+                <!--                <t t-set="usages" t-value="env['product.product.usage'].search([])"/>-->
+                <!--                <select class="form-select css_attribute_select mb-2" name="usage">-->
+                <!--                    <option value="" selected="true">Usage</option>-->
+                <!--                    <t t-foreach="usages" t-as="u">-->
+                <!--                        <option t-att-value="u.id" t-esc="u.name" t-att-selected="u.id in attrib_set"/>-->
+                <!--                    </t>-->
+                <!--                </select>-->
 
 
             </form>
+            <h6 class="mb-3">
+                <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
+            </h6>
+            <t t-call="ecommerce_filter.portrait_categories"/>
         </xpath>
     </template>
 </odoo>
