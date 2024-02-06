@@ -3,7 +3,7 @@
         <xpath expr="//form/div/div[hasclass('o_wsale_product_information_text')]" position="replace">
             <div class="o_wsale_product_information_text flex-grow-1 d-flex mr-1">
                 <h6 class="o_wsale_products_item_title mb-2">
-                    <strong>PYRATEX®</strong>
+<!--                    <strong>PYRATEX®</strong>-->
                     <a class="text-primary text-decoration-none text-dark" itemprop="name" t-att-href="product_href"
                        t-att-content="product.name" t-field="product.name"/>
                     <a t-if="not product.website_published" role="button" t-att-href="product_href"

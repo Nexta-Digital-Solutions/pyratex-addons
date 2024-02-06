@@ -5,7 +5,6 @@ from odoo.addons.http_routing.models.ir_http import slug, unslug
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-
     def _search_get_detail(self, website, order, options):
         with_image = options['displayImage']
         with_description = options['displayDescription']
@@ -17,6 +16,7 @@ class ProductTemplate(models.Model):
         max_price = options.get('max_price')
         attrib_values = options.get('attrib_values')
         fiberfamily = options.get('fiberfamily')
+        structure = options.get('structure')
 
         if category:
             domains.append([('public_categ_ids', 'child_of', unslug(category)[1])])
@@ -26,6 +26,8 @@ class ProductTemplate(models.Model):
             domains.append([('list_price', '<=', max_price)])
         if fiberfamily:
             domains.append([('fiberfamily_id', '=', int(fiberfamily))])
+        if structure:
+            domains.append([('structure_id', '=', int(structure))])
         if attrib_values:
             attrib = None
             ids = []

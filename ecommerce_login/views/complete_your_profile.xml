@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="complete_your_profile" name="Complete Profile">
+        <form>
+            <fieldset>
+                <legend>Complete your profile</legend>
+
+                <label>Address
+                    <input type="text" placeholder="Name"/>
+                    <input type="text" placeholder="Last name"/>
+                    <input type="text" placeholder="Company name"/>
+                    <input type="text" placeholder="Phone number"/>
+                    <input type="text" placeholder="Address 1"/>
+                    <input type="text" placeholder="Address 2"/>
+                    <input type="text" placeholder="Address 2"/>
+                    <input type="text" placeholder="Address 2"/>
+                    <input type="text" placeholder="Additional delivery instructions"/>
+                    <div class="d-flex">
+                        <input type="text" placeholder="Postal Code"/>
+                        <input type="text" placeholder="City"/>
+                    </div>
+                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
+                            class="button dropdown">Country
+                    </button>
+                    <br/>
+                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
+                        <li>
+                            <a href="#">This is a link</a>
+                        </li>
+                    </ul>
+                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
+                            class="button dropdown">I'm a
+                    </button>
+                    <br/>
+                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
+                        <li>
+                            <a href="#">This is a link</a>
+                        </li>
+                    </ul>
+                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
+                            class="button dropdown">How did you hear about us?
+                    </button>
+                    <br/>
+                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
+                        <li>
+                            <a href="#">This is a link</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <p>My billing address is different from my shipping</p>
+                        <input type="checkbox" aria-label="Checkbox for following text input"/>
+                    </div>
+                </label>
+            </fieldset>
+        </form>
+    </template>
+</odoo>

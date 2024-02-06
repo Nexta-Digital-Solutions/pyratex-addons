@@ -28,6 +28,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'attrib_values': attrib_values,
             'display_currency': pricelist.currency_id,
             'fiberfamily': post.get('fiberfamily', False),
+            'structure': post.get('structure', False),
         }
 
         return res
@@ -76,6 +77,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         fiberfamily_set = False
         if post.get('fiberfamily'):
             fiberfamily_set = int(post.get('fiberfamily', False))
+        structure_set = False
+        if post.get('structure'):
+            structure_set = int(post.get('structure', False))
 
         keep = QueryURL('/shop',
                         **self._shop_get_query_url_kwargs(category and int(category), search, min_price, max_price,

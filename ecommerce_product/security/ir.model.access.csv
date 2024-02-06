@@ -1,2 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_fiberfamily,Fiber Family,model_fiber_family,base.group_user,1,1,1,1
+access_usage,Usage,model_usage,base.group_user,1,1,1,1
+access_properties,Properties,model_properties,base.group_user,1,1,1,1
+access_producttype,Product Type,model_product_type,base.group_user,1,1,1,1
+access_structure,Structure,model_structure,base.group_user,1,1,1,1
+access_productattributegroup,Product Attribute Group,model_product_attribute_group,base.group_user,1,1,1,1
