@@ -17,6 +17,9 @@ class ProductTemplate(models.Model):
         attrib_values = options.get('attrib_values')
         fiberfamily = options.get('fiberfamily')
         structure = options.get('structure')
+        property = options.get('property')
+        usage = options.get('usage')
+        producttype = options.get('producttype')
 
         if category:
             domains.append([('public_categ_ids', 'child_of', unslug(category)[1])])
@@ -28,6 +31,12 @@ class ProductTemplate(models.Model):
             domains.append([('fiberfamily_id', '=', int(fiberfamily))])
         if structure:
             domains.append([('structure_id', '=', int(structure))])
+        if property:
+            domains.append([('property_id', '=', int(property))])
+        if usage:
+            domains.append([('usage_id', '=', int(usage))])
+        if producttype:
+            domains.append([('producttype_id', '=', int(producttype))])
         if attrib_values:
             attrib = None
             ids = []

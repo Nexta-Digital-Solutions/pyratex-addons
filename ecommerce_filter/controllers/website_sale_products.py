@@ -29,6 +29,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'display_currency': pricelist.currency_id,
             'fiberfamily': post.get('fiberfamily', False),
             'structure': post.get('structure', False),
+            'property': post.get('property', False),
+            'usage': post.get('usage', False),
+            'producttype': post.get('producttype', False),
         }
 
         return res
@@ -80,6 +83,15 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         structure_set = False
         if post.get('structure'):
             structure_set = int(post.get('structure', False))
+        property_set = False
+        if post.get('property'):
+            property_set = int(post.get('property', False))
+        usage_set = False
+        if post.get('usage'):
+            usage_set = int(post.get('usage', False))
+        producttype_set = False
+        if post.get('producttype'):
+            producttype_set = int(post.get('producttype', False))
 
         keep = QueryURL('/shop',
                         **self._shop_get_query_url_kwargs(category and int(category), search, min_price, max_price,
@@ -198,6 +210,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'attrib_set': attrib_set,
             'fiberfamily_set': fiberfamily_set,
             'structure_set': structure_set,
+            'property_set': property_set,
+            'usage_set': usage_set,
+            'producttype_set': producttype_set,
             'pager': pager,
             'pricelist': pricelist,
             'add_qty': add_qty,

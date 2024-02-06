@@ -11,7 +11,7 @@
                     <b class="o_products_attributes_title d-none d-lg-block">Filters</b>
                 </h6>
 
-                <a t-if="attrib_values or fiberfamily_set"
+                <a t-if="attrib_values or fiberfamily_set or property_set or structure_set or usage_set or producttype_set"
                    t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
                    t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">
                     <small class="mx-auto">
@@ -33,6 +33,30 @@
                     </select>
                 </t>
 
+                <t t-set="properties" t-value="env['properties'].sudo().search([])"/>
+                <t t-if="properties">
+                    <span t-esc="property_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="property">
+                        <option value="" selected="true">Properties</option>
+                        <t t-foreach="properties" t-as="prop">
+                            <option t-att-value="'%s' % (prop.id)" t-esc="prop.name"
+                                    t-att-selected="prop.id == property_set"/>
+                        </t>
+                    </select>
+                </t>
+
+                <t t-set="usage" t-value="env['usage'].sudo().search([])"/>
+                <t t-if="usage">
+                    <span t-esc="usage_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="usage">
+                        <option value="" selected="true">Usage</option>
+                        <t t-foreach="usage" t-as="u">
+                            <option t-att-value="'%s' % (u.id)" t-esc="u.name"
+                                    t-att-selected="u.id == usage_set"/>
+                        </t>
+                    </select>
+                </t>
+
                 <t t-set="struct" t-value="env['structure'].sudo().search([])"/>
                 <t t-if="struct">
                     <span t-esc="structure_set" class="d-none"/>
@@ -41,6 +65,18 @@
                         <t t-foreach="struct" t-as="s">
                             <option t-att-value="'%s' % (s.id)" t-esc="s.name"
                                     t-att-selected="s.id == structure_set"/>
+                        </t>
+                    </select>
+                </t>
+
+                <t t-set="producttype" t-value="env['product.type'].sudo().search([])"/>
+                <t t-if="producttype">
+                    <span t-esc="structure_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="producttype">
+                        <option value="" selected="true">Product type</option>
+                        <t t-foreach="producttype" t-as="pt">
+                            <option t-att-value="'%s' % (pt.id)" t-esc="pt.name"
+                                    t-att-selected="pt.id == producttype_set"/>
                         </t>
                     </select>
                 </t>
