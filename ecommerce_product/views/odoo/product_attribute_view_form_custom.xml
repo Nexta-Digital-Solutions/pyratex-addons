@@ -7,6 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='is_custom']" position="after">
                 <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>
+                <field name="attribute_name" invisible="1"/>
+                <field name="group_id" attrs="{ 'invisible': [('attribute_name', '!=', 'Color')] }"/>
             </xpath>
         </field>
     </record>

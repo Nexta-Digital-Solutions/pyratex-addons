@@ -16,9 +16,13 @@
             </xpath>
 
             <xpath expr="//notebook/page[@name='inventory']" position="after">
-                <page name="ecommerce" string="Fiber Family">
+                <page name="ecommerce" string="E-Shop">
                     <group name="fields_ecommerce" string="Product Information">
                             <field name="fiberfamily_id"/>
+                            <field name="property_id" widget="many2many_tags"/>
+                            <field name="usage_id" widget="many2many_tags"/>
+                            <field name="structure_id"/>
+                            <field name="producttype_id"/>
                     </group>
                 </page>
             </xpath>

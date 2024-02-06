@@ -6,5 +6,14 @@
 
         <menuitem id="menu_fiberfamily_tree" name="Fiber Family" parent="menu_product_template"
                   action="action_fiberfamily_tree" sequence="110"/>
+        <menuitem id="menu_properties_tree" name="Properties" parent="menu_product_template"
+                  action="action_properties_tree" sequence="110"/>
+        <menuitem id="menu_usage_tree" name="Usage" parent="menu_product_template"
+                  action="action_usage_tree" sequence="110"/>
+        <menuitem id="menu_producttype_tree" name="Product Type" parent="menu_product_template"
+                  action="action_producttype_tree" sequence="110"/>
+        <menuitem id="menu_structure_tree" name="Structure" parent="menu_product_template"
+                  action="action_structure_tree" sequence="110"/>
+
     </data>
 </odoo>
