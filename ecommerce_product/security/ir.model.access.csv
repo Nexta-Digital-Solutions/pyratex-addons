@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fiberfamily,Fiber Family,model_fiber_family,base.group_user,1,1,1,1
+access_colorgroup,Color Group,model_color_group,base.group_user,1,1,1,1
+access_usage,Usage,model_usage,base.group_user,1,1,1,1
+access_properties,Properties,model_properties,base.group_user,1,1,1,1
+access_producttype,Product Type,model_product_type,base.group_user,1,1,1,1
+access_structure,Structure,model_structure,base.group_user,1,1,1,1
+access_careinstructions,Care Instructions,model_care_instructions,base.group_user,1,1,1,1
+access_certification,Certification,model_certification,base.group_user,1,1,1,1
