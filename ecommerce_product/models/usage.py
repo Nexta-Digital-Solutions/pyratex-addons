@@ -6,4 +6,3 @@ class Usage(models.Model):
     _description = 'Modelo para añadir la forma de empleo'
 
     name = fields.Char(string='Nombre')
-    image = fields.Binary(string='Imagen')

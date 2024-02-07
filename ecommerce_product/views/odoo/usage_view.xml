@@ -7,7 +7,6 @@
             <field name="arch" type="xml">
                 <tree editable="bottom">
                     <field name="name"/>
-                    <field name="image" widget="image" options="{'size': [50, 50]}"/>
                 </tree>
             </field>
         </record>
