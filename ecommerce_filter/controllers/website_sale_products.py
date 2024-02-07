@@ -28,10 +28,13 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'attrib_values': attrib_values,
             'display_currency': pricelist.currency_id,
             'fiberfamily': post.get('fiberfamily', False),
+            'colorgroup': post.get('colorgroup', False),
             'structure': post.get('structure', False),
             'property': post.get('property', False),
             'usage': post.get('usage', False),
             'producttype': post.get('producttype', False),
+            'careinstructions': post.get('careinstructions', False),
+            'certification': post.get('certification', False),
         }
 
         return res
@@ -80,6 +83,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         fiberfamily_set = False
         if post.get('fiberfamily'):
             fiberfamily_set = int(post.get('fiberfamily', False))
+        colorgroup_set = False
+        if post.get('colorgroup'):
+            colorgroup_set = int(post.get('colorgroup', False))
         structure_set = False
         if post.get('structure'):
             structure_set = int(post.get('structure', False))
@@ -92,6 +98,12 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         producttype_set = False
         if post.get('producttype'):
             producttype_set = int(post.get('producttype', False))
+        careinstructions_set = False
+        if post.get('careinstructions'):
+            careinstructions_set = int(post.get('careinstructions', False))
+        certification_set = False
+        if post.get('certification'):
+            certification_set = int(post.get('certification', False))
 
         keep = QueryURL('/shop',
                         **self._shop_get_query_url_kwargs(category and int(category), search, min_price, max_price,
@@ -201,6 +213,18 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
 
         products_prices = lazy(lambda: products._get_sales_prices(pricelist))
 
+
+        # product_filter = request.env['product.template'].search([])
+        #
+        # for product_template in product_filter:
+        #     for variant in product_template:
+        #         if (variant.product_variant_id.colorgroup_id.id == colorgroup_set):
+        #             product_filter.append(product_template)
+        #
+        # products = set(list(product_filter))
+
+
+
         values = {
             'search': fuzzy_search_term or search,
             'original_search': fuzzy_search_term and search,
@@ -209,10 +233,13 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'attrib_values': attrib_values,
             'attrib_set': attrib_set,
             'fiberfamily_set': fiberfamily_set,
+            'colorgroup_set': colorgroup_set,
             'structure_set': structure_set,
             'property_set': property_set,
             'usage_set': usage_set,
             'producttype_set': producttype_set,
+            'careinstructions_set': careinstructions_set,
+            'certification_set': certification_set,
             'pager': pager,
             'pricelist': pricelist,
             'add_qty': add_qty,

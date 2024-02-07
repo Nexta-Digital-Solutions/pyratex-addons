@@ -16,10 +16,13 @@ class ProductTemplate(models.Model):
         max_price = options.get('max_price')
         attrib_values = options.get('attrib_values')
         fiberfamily = options.get('fiberfamily')
+        colorgroup = options.get('colorgroup')
         structure = options.get('structure')
         property = options.get('property')
         usage = options.get('usage')
         producttype = options.get('producttype')
+        careinstructions = options.get('careinstructions')
+        certification = options.get('certification')
 
         if category:
             domains.append([('public_categ_ids', 'child_of', unslug(category)[1])])
@@ -29,6 +32,8 @@ class ProductTemplate(models.Model):
             domains.append([('list_price', '<=', max_price)])
         if fiberfamily:
             domains.append([('fiberfamily_id', '=', int(fiberfamily))])
+        if colorgroup:
+            domains.append([('colorgroup_id', '=', int(colorgroup))])
         if structure:
             domains.append([('structure_id', '=', int(structure))])
         if property:
@@ -37,6 +42,10 @@ class ProductTemplate(models.Model):
             domains.append([('usage_id', '=', int(usage))])
         if producttype:
             domains.append([('producttype_id', '=', int(producttype))])
+        if careinstructions:
+            domains.append([('careinstructions_id', '=', int(careinstructions))])
+        if certification:
+            domains.append([('certification_id', '=', int(certification))])
         if attrib_values:
             attrib = None
             ids = []

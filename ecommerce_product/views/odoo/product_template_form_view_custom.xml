@@ -23,6 +23,8 @@
                             <field name="usage_id" widget="many2many_tags"/>
                             <field name="structure_id"/>
                             <field name="producttype_id"/>
+                            <field name="careinstructions_id" widget="many2many_tags"/>
+                            <field name="certification_id" widget="many2many_tags"/>
                     </group>
                 </page>
             </xpath>

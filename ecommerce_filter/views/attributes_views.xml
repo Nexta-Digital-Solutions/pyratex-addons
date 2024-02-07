@@ -11,7 +11,7 @@
                     <b class="o_products_attributes_title d-none d-lg-block">Filters</b>
                 </h6>
 
-                <a t-if="attrib_values or fiberfamily_set or property_set or structure_set or usage_set or producttype_set"
+                <a t-if="attrib_values or fiberfamily_set or colorgroup_set or property_set or structure_set or usage_set or producttype_set or careinstructions_set"
                    t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
                    t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">
                     <small class="mx-auto">
@@ -29,6 +29,18 @@
                         <t t-foreach="fiber_families" t-as="ff">
                             <option t-att-value="'%s' % (ff.id)" t-esc="ff.name"
                                     t-att-selected="ff.id == fiberfamily_set"/>
+                        </t>
+                    </select>
+                </t>
+
+                <t t-set="colorgroup" t-value="env['color.group'].sudo().search([])"/>
+                <t t-if="colorgroup">
+                    <span t-esc="colorgroup_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="colorgroup">
+                        <option value="" selected="true">Color</option>
+                        <t t-foreach="colorgroup" t-as="cg">
+                            <option t-att-value="'%s' % (cg.id)" t-esc="cg.name"
+                                    t-att-selected="cg.id == colorgroup_set"/>
                         </t>
                     </select>
                 </t>
@@ -77,6 +89,30 @@
                         <t t-foreach="producttype" t-as="pt">
                             <option t-att-value="'%s' % (pt.id)" t-esc="pt.name"
                                     t-att-selected="pt.id == producttype_set"/>
+                        </t>
+                    </select>
+                </t>
+
+                <t t-set="careinstructions" t-value="env['care.instructions'].sudo().search([])"/>
+                <t t-if="careinstructions">
+                    <span t-esc="careinstructions_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="careinstructions">
+                        <option value="" selected="true">Care Instructions</option>
+                        <t t-foreach="careinstructions" t-as="ci">
+                            <option t-att-value="'%s' % (ci.id)" t-esc="ci.name"
+                                    t-att-selected="ci.id == careinstructions_set"/>
+                        </t>
+                    </select>
+                </t>
+
+                <t t-set="certification" t-value="env['certification'].sudo().search([])"/>
+                <t t-if="certification">
+                    <span t-esc="certification_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="certification">
+                        <option value="" selected="true">Certification</option>
+                        <t t-foreach="certification" t-as="c">
+                            <option t-att-value="'%s' % (c.id)" t-esc="c.name"
+                                    t-att-selected="c.id == certification_set"/>
                         </t>
                     </select>
                 </t>
