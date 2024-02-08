@@ -7,3 +7,4 @@ access_producttype,Product Type,model_product_type,base.group_user,1,1,1,1
 access_structure,Structure,model_structure,base.group_user,1,1,1,1
 access_careinstructions,Care Instructions,model_care_instructions,base.group_user,1,1,1,1
 access_certification,Certification,model_certification,base.group_user,1,1,1,1
+access_availablemeters,Available Meters,model_available_meters,base.group_user,1,1,1,1

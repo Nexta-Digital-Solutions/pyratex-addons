@@ -8,4 +8,5 @@ from . import (product_template,
                color_group,
                care_instructions,
                certification,
-               product_template_attribute_line)
+               product_template_attribute_line,
+               available_meters)
