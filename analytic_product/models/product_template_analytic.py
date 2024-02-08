@@ -93,7 +93,7 @@ class ProductTemplateAnalytic(models.Model):
                 if sale_line.product_id.product_tmpl_id.id not in data[analitic_account_id.id].keys():
                     data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id] = self._get_default_values()
 
-                data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_amount'] += sale_line.price_total * (to_this_account / 100)
+                data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_amount'] += sale_line.price_subtotal * (to_this_account / 100)
                 data[analitic_account_id.id][sale_line.product_id.product_tmpl_id.id]['sale_qty'] += sale_line.product_uom_qty * (to_this_account / 100)
 
         # Lineas de Compras
