@@ -17,7 +17,7 @@ class ProductTemplate(models.Model):
     careinstructions_id = fields.Many2many('care.instructions', string='Care Instructions')
     certification_id = fields.Many2many('certification', string='Certification')
     colorgroup_id = fields.Many2many('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
-                                      store=True)
+                                      store=True, readonly=False)
 
     @api.depends('attribute_line_ids')
     def _compute_colorgroup_ids(self):
