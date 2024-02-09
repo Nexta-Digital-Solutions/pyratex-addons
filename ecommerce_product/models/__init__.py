@@ -9,4 +9,5 @@ from . import (product_template,
                care_instructions,
                certification,
                product_template_attribute_line,
-               available_meters)
+               available_meters,
+               product_product)

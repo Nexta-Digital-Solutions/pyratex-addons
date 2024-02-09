@@ -4,7 +4,6 @@ from odoo import api, fields, models, _
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    # composition_id = fields.Many2many('product.composition', string='Composition')
     country_id = fields.Many2one('res.country', string='Made in')
     weight = fields.Char(string='Weight')
     width = fields.Char(string='Width')
@@ -16,12 +15,14 @@ class ProductTemplate(models.Model):
     structure_id = fields.Many2one('structure', string='Structure')
     careinstructions_id = fields.Many2many('care.instructions', string='Care Instructions')
     certification_id = fields.Many2many('certification', string='Certification')
-    colorgroup_id = fields.Many2many('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
-                                      store=True, readonly=False)
+    is_published = fields.Boolean(copy=False)
 
-    @api.depends('attribute_line_ids')
-    def _compute_colorgroup_ids(self):
-        for template in self:
-            color_groups = template.attribute_line_ids.mapped('colorgroup_id')
-            template.colorgroup_id = color_groups
+    # colorgroup_id = fields.Many2many('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
+    #                                   store=True, readonly=False)
+    #
+    # @api.depends('attribute_line_ids')
+    # def _compute_colorgroup_ids(self):
+    #     for template in self:
+    #         color_groups = template.attribute_line_ids.mapped('colorgroup_id')
+    #         template.colorgroup_id = color_groups
 
