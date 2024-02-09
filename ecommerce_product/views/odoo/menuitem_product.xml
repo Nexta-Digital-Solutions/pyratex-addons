@@ -20,6 +20,8 @@
                   action="action_careinstructions_tree" sequence="110"/>
         <menuitem id="menu_certification_tree" name="Certification" parent="menu_product_template"
                   action="action_certification_tree" sequence="110"/>
+        <menuitem id="menu_availablemeters_tree" name="Available meters" parent="menu_product_template"
+                  action="action_availablemeters_tree" sequence="110"/>
 
     </data>
 </odoo>
