@@ -10,10 +10,10 @@ class ProductProduct(models.Model):
     colorgroup_id = fields.Many2one('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
                                        readonly=False)
 
-    @api.depends('attribute_line_ids', 'attribute_line_ids.colorgroup_id')
+    @api.depends('product_template_variant_value_ids')
     def _compute_colorgroup_ids(self):
         for template in self:
-            color_groups = template.attribute_line_ids.mapped('colorgroup_id')
+            color_groups = template.mapped('product_template_variant_value_ids.product_attribute_value_id.colorgroup_id')
             if color_groups:
                 template.colorgroup_id = color_groups[0]
             else:
