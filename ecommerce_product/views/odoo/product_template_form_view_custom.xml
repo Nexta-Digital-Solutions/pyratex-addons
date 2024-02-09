@@ -19,7 +19,7 @@
                 <page name="ecommerce" string="E-Shop">
                     <group name="fields_ecommerce" string="Product Information">
                             <field name="fiberfamily_id"/>
-                            <field name="colorgroup_id" widget="many2many_tags"/>
+<!--                            <field name="colorgroup_id" widget="many2many_tags"/>-->
                             <field name="property_id" widget="many2many_tags"/>
                             <field name="usage_id" widget="many2many_tags"/>
                             <field name="structure_id"/>
