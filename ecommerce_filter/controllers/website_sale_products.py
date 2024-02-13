@@ -15,6 +15,11 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             self, category=None, attrib_values=None, pricelist=None, min_price=0.0, max_price=0.0, conversion_rate=1,
             **post
     ):
+        product_available_meters = False
+        if post.get('availablemeters', False):
+            avail_meters = request.env['product.available.meters'].search([('id', '=', int(post.get('availablemeters')))])
+            product_available_meters = request.env['product.template'].search(
+            [('qty_available', '<=', avail_meters.max), ('qty_available', '>=', avail_meters.min)])
         res = {
             'displayDescription': True,
             'displayDetail': True,
@@ -32,6 +37,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'structure': post.get('structure', False),
             'property': post.get('property', False),
             'usage': post.get('usage', False),
+            'availablemeters': product_available_meters.ids if product_available_meters else False,
             'producttype': post.get('producttype', False),
             'careinstructions': post.get('careinstructions', False),
             'certification': post.get('certification', False),
@@ -95,6 +101,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         usage_set = False
         if post.get('usage'):
             usage_set = int(post.get('usage', False))
+        availablemeters_set = False
+        if post.get('availablemeters_set'):
+            availablemeters_set = int(post.get('availablemeters_set', False))
         producttype_set = False
         if post.get('producttype'):
             producttype_set = int(post.get('producttype', False))
@@ -144,7 +153,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         )
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(attrib_set, options, post, search,
                                                                                       website)
-
+        if colorgroup_set:
+            search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(lambda product: product.colorgroup_id.id == colorgroup_set))
+            product_count = len(search_product)
         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
         if filter_by_price_enabled:
             # TODO Find an alternative way to obtain the domain through the search metadata.
@@ -225,6 +236,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
 
 
 
+
+
+
         values = {
             'search': fuzzy_search_term or search,
             'original_search': fuzzy_search_term and search,
@@ -237,6 +251,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'structure_set': structure_set,
             'property_set': property_set,
             'usage_set': usage_set,
+            'availablemeters_set': availablemeters_set,
             'producttype_set': producttype_set,
             'careinstructions_set': careinstructions_set,
             'certification_set': certification_set,

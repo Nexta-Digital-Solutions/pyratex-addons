@@ -69,6 +69,18 @@
                     </select>
                 </t>
 
+                <t t-set="availablemeters" t-value="env['product.available.meters'].sudo().search([])"/>
+                <t t-if="availablemeters">
+                    <span t-esc="availablemeters_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="availablemeters">
+                        <option value="" selected="true">Available meters</option>
+                        <t t-foreach="availablemeters" t-as="av">
+                            <option t-att-value="'%s' % (av.id)" t-esc="av.name"
+                                    t-att-selected="av.id == availablemeters_set"/>
+                        </t>
+                    </select>
+                </t>
+
                 <t t-set="struct" t-value="env['structure'].sudo().search([])"/>
                 <t t-if="struct">
                     <span t-esc="structure_set" class="d-none"/>
