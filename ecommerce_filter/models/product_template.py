@@ -16,10 +16,11 @@ class ProductTemplate(models.Model):
         max_price = options.get('max_price')
         attrib_values = options.get('attrib_values')
         fiberfamily = options.get('fiberfamily')
-        colorgroup = options.get('colorgroup')
+        # colorgroup = options.get('colorgroup')
         structure = options.get('structure')
         property = options.get('property')
         usage = options.get('usage')
+        availablemeters = options.get('availablemeters')
         producttype = options.get('producttype')
         careinstructions = options.get('careinstructions')
         certification = options.get('certification')
@@ -32,14 +33,16 @@ class ProductTemplate(models.Model):
             domains.append([('list_price', '<=', max_price)])
         if fiberfamily:
             domains.append([('fiberfamily_id', '=', int(fiberfamily))])
-        if colorgroup:
-            domains.append([('colorgroup_id', '=', int(colorgroup))])
+        # if colorgroup:
+        #     domains.append([('product_variant_ids.colorgroup_id', '=', int(colorgroup))])
         if structure:
             domains.append([('structure_id', '=', int(structure))])
         if property:
             domains.append([('property_id', '=', int(property))])
         if usage:
             domains.append([('usage_id', '=', int(usage))])
+        if availablemeters:
+            domains.append([('id', 'in', availablemeters)])
         if producttype:
             domains.append([('producttype_id', '=', int(producttype))])
         if careinstructions:
