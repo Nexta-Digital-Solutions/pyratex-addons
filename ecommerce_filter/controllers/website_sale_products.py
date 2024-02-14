@@ -102,8 +102,8 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         if post.get('usage'):
             usage_set = int(post.get('usage', False))
         availablemeters_set = False
-        if post.get('availablemeters_set'):
-            availablemeters_set = int(post.get('availablemeters_set', False))
+        if post.get('availablemeters'):
+            availablemeters_set = int(post.get('availablemeters', False))
         producttype_set = False
         if post.get('producttype'):
             producttype_set = int(post.get('producttype', False))
@@ -154,7 +154,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(attrib_set, options, post, search,
                                                                                       website)
         if colorgroup_set:
-            search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(lambda product: product.colorgroup_id.id == colorgroup_set))
+            search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(lambda product:colorgroup_set in product.mapped('product_template_attribute_value_ids.product_attribute_value_id.colorgroup_id.id')))
             product_count = len(search_product)
         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
         if filter_by_price_enabled:
