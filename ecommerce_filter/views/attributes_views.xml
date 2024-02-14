@@ -105,29 +105,29 @@
                     </select>
                 </t>
 
-                <t t-set="careinstructions" t-value="env['care.instructions'].sudo().search([])"/>
-                <t t-if="careinstructions">
-                    <span t-esc="careinstructions_set" class="d-none"/>
-                    <select class="form-select css_attribute_select mb-2" name="careinstructions">
-                        <option value="" selected="true">Care Instructions</option>
-                        <t t-foreach="careinstructions" t-as="ci">
-                            <option t-att-value="'%s' % (ci.id)" t-esc="ci.name"
-                                    t-att-selected="ci.id == careinstructions_set"/>
-                        </t>
-                    </select>
-                </t>
+<!--                <t t-set="careinstructions" t-value="env['care.instructions'].sudo().search([])"/>-->
+<!--                <t t-if="careinstructions">-->
+<!--                    <span t-esc="careinstructions_set" class="d-none"/>-->
+<!--                    <select class="form-select css_attribute_select mb-2" name="careinstructions">-->
+<!--                        <option value="" selected="true">Care Instructions</option>-->
+<!--                        <t t-foreach="careinstructions" t-as="ci">-->
+<!--                            <option t-att-value="'%s' % (ci.id)" t-esc="ci.name"-->
+<!--                                    t-att-selected="ci.id == careinstructions_set"/>-->
+<!--                        </t>-->
+<!--                    </select>-->
+<!--                </t>-->
 
-                <t t-set="certification" t-value="env['certification'].sudo().search([])"/>
-                <t t-if="certification">
-                    <span t-esc="certification_set" class="d-none"/>
-                    <select class="form-select css_attribute_select mb-2" name="certification">
-                        <option value="" selected="true">Certification</option>
-                        <t t-foreach="certification" t-as="c">
-                            <option t-att-value="'%s' % (c.id)" t-esc="c.name"
-                                    t-att-selected="c.id == certification_set"/>
-                        </t>
-                    </select>
-                </t>
+<!--                <t t-set="certification" t-value="env['certification'].sudo().search([])"/>-->
+<!--                <t t-if="certification">-->
+<!--                    <span t-esc="certification_set" class="d-none"/>-->
+<!--                    <select class="form-select css_attribute_select mb-2" name="certification">-->
+<!--                        <option value="" selected="true">Certification</option>-->
+<!--                        <t t-foreach="certification" t-as="c">-->
+<!--                            <option t-att-value="'%s' % (c.id)" t-esc="c.name"-->
+<!--                                    t-att-selected="c.id == certification_set"/>-->
+<!--                        </t>-->
+<!--                    </select>-->
+<!--                </t>-->
 
 
                 <!--                                <t t-foreach="attributes" t-as="a">-->
