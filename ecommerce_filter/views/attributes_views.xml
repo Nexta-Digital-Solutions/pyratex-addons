@@ -11,7 +11,7 @@
                     <b class="o_products_attributes_title d-none d-lg-block">Filters</b>
                 </h6>
 
-                <a t-if="attrib_values or fiberfamily_set or colorgroup_set or property_set or structure_set or usage_set or producttype_set or careinstructions_set"
+                <a t-if="attrib_values or fiberfamily_set or colorgroup_set or property_set or structure_set or usage_set or availablemeters_set or producttype_set or careinstructions_set"
                    t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
                    t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">
                     <small class="mx-auto">
