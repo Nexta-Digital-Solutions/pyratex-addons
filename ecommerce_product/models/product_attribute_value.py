@@ -4,5 +4,6 @@ class ProductAttributeValue(models.Model):
     _inherit = 'product.attribute.value'
 
     icon_id = fields.Binary(string='Icono')
+    color_code = fields.Text(string="Color Style")
     colorgroup_id = fields.Many2one('color.group', string='Group')
     attribute_name = fields.Char(related="attribute_id.name", string="Attribute Name")

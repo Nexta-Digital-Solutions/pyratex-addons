@@ -7,5 +7,5 @@ class AvailableMeters(models.Model):
     _description = 'Modelo para añadir propiedades de Available Meters'
 
     name = fields.Char(string='Name')
-    min = fields.Integer(string='Mínimo')
-    max = fields.Integer(string='Máximo')
+    min = fields.Float(string='Mínimo')
+    max = fields.Float(string='Máximo')
