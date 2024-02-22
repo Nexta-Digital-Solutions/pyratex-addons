@@ -6,7 +6,8 @@
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='is_custom']" position="after">
-                <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>
+<!--                <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>-->
+                <field name="color_code"/>
                 <field name="attribute_name" invisible="1"/>
                 <field name="colorgroup_id" attrs="{ 'invisible': [('attribute_name', '!=', 'Color')] }"/>
             </xpath>
