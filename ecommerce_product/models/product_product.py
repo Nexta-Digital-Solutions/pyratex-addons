@@ -5,6 +5,7 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     colorgroup_id = fields.Many2one('color.group', string='Color Groups', readonly=False)
+
     # colorgroup_id = fields.Many2one('product.attribute.value', string='Color Groups', readonly=False, domain="[('attribute_id.name', '=', 'Color')]",)
     # colorgroup_id = fields.Many2one('color.group', string='Color Groups', readonly=False, domain="[('product_attribute_valued_ids.attribute_id.name', '=', 'Color')]", relate="product_attribute_valued_ids.colorgroup_id")
 
@@ -19,5 +20,10 @@ class ProductProduct(models.Model):
     #             template.colorgroup_id = color_groups[0]
     #         else:
     #             template.colorgroup_id = False
-
+    @api.onchange('colorgroup_id')
+    def _onchange_colorgroup_id(self):
+        for product in self:
+            color = product.product_template_attribute_value_ids.filtered(lambda template: template.display_type == 'color')
+            if color:
+                color.product_attribute_value_id.update({'colorgroup_id': product.colorgroup_id.id})
 
