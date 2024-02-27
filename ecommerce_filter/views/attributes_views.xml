@@ -3,7 +3,8 @@
     <template id="filtered" inherit_id="website_sale.products_attributes" name="Filters">
         <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="replace">
             <!--            <form t-if="attributes" class="js_attributes position-relative mb-2" method="get">-->
-            <form class="js_attributes position-relative mb-2" method="get">
+<!--            <form class="js_attributes position-relative mb-2" method="get">-->
+            <form class="position-relative mb-2" >
 
                 <!--Añade los atributos con el formato que piden en el Figma-->
 
@@ -218,7 +219,7 @@
                 <!--                    </t>-->
                 <!--                </select>-->
 
-
+                <button name="filter" class="js_attributes btn btn-primary" method="get">Filter</button>
             </form>
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>

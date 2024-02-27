@@ -10,4 +10,5 @@ from . import (product_template,
                certification,
                product_template_attribute_line,
                available_meters,
-               product_product)
+               product_product,
+               )

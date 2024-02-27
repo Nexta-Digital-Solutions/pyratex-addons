@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
     structure_id = fields.Many2one('structure', string='Structure')
     careinstructions_id = fields.Many2many('care.instructions', string='Care Instructions')
     certification_id = fields.Many2many('certification', string='Certification')
-    is_published = fields.Boolean(copy=False)
+    # is_published = fields.Boolean(copy=False)
 
     # colorgroup_id = fields.Many2many('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
     #                                   store=True, readonly=False)
