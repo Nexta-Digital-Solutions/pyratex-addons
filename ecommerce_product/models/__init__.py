@@ -11,4 +11,6 @@ from . import (product_template,
                product_template_attribute_line,
                available_meters,
                product_product,
+               website,
+               main
                )

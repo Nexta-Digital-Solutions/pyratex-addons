@@ -1,12 +1,13 @@
+from odoo import api, fields, models, _
+class Website(models.Model):
+    _inherit = 'website'
 
-class WebsitePublishedMultiMixin(WebsitePublishedMixin):
+    def _search_get_details(self, search_type, order, options):
+        result = super()._search_get_details(search_type, order, options)
+        for i in range(0, len(result)):
+            if result[i].get('model') == 'product.template':
+                del result[i]
+        if search_type in ['products', 'products_only', 'all']:
+            result.append(self.env['product.product']._search_get_detail(self, order, options))
+        return result
 
-    _name = 'website.published.multi.mixin'
-    _inherit = ['website.published.mixin', 'website.multi.mixin']
-    _description = 'Multi Website Published Mixin'
-
-    # website_published = fields.Boolean(compute='_compute_website_published',
-    #                                    inverse='_inverse_website_published',
-    #                                    search='_search_website_published',
-    #                                    related=False, readonly=False)
-    website_published = fields.Boolean()
