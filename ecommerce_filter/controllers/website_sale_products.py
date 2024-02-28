@@ -516,9 +516,10 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         # products = set(list(product_filter))
 
 
-        # products_variants = request.env['product.product']
+        products_variants = request.env['product.product']
         # product_filter = products_variants.search([('id', '=', 32)])
-        # products = product_filter
+        product_filter = products_variants.search([])
+        products = product_filter
         #
         # tabla = lazy(lambda: TableCompute().process(products, ppg, ppr))
 
@@ -545,7 +546,8 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'products': products,
             'search_product': search_product,
             'search_count': product_count,  # common for all searchbox
-            'bins': lazy(lambda: TableCompute().process(products, ppg, ppr)),
+            # 'bins': lazy(lambda: TableCompute().process(products, ppg, ppr)),
+            'bins': TableCompute().process(products, ppg, ppr),
             'ppg': ppg,
             'ppr': ppr,
             'categories': categs,
