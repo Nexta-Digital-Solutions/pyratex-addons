@@ -516,10 +516,10 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         # products = set(list(product_filter))
 
 
-        products_variants = request.env['product.product']
-        # product_filter = products_variants.search([('id', '=', 32)])
-        product_filter = products_variants.search([])
-        products = product_filter
+        # products_variants = request.env['product.product']
+        # # product_filter = products_variants.search([('id', '=', 32)])
+        # product_filter = products_variants.search([])
+        # products = product_filter
         #
         # tabla = lazy(lambda: TableCompute().process(products, ppg, ppr))
 
