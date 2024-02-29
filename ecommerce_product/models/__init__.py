@@ -10,6 +10,7 @@ from . import (product_template,
                certification,
                product_template_attribute_line,
                available_meters,
+               composition,
                product_product,
                website,
                main

@@ -25,62 +25,45 @@
                         <li>
                             <strong>Structure</strong>
                         </li>
-                        <t t-foreach="product.attribute_line_ids" t-as="attribute">
-                            <t t-if="attribute.display_name == 'Structure'">
-                                <t t-foreach="attribute.value_ids" t-as="value">
-                                    <p t-field="value.name"/>
-                                </t>
-                            </t>
-                        </t>
+                        <p t-field="product.structure_id"/>
                     </ul>
                     <ul style="list-style: none;">
                         <li>
                             <strong>Composition</strong>
-                        </li>
-                        <t t-foreach="product.attribute_line_ids" t-as="attribute">
-                            <t t-if="attribute.display_name == 'Composition'">
-                                <t t-foreach="attribute.value_ids" t-as="value">
-                                    <p t-field="value.name"/>
-                                </t>
+                            <t t-if="product.composition_id">
+                            <t t-foreach="product.composition_id" t-as="composition">
+                                <p t-field="composition.name" class="p-1"/>
                             </t>
                         </t>
+                        </li>
                     </ul>
                 </div>
-                <div style="width: 75%;">
-                    <table class="table-borderless">
-                        <thead>
-                            <tr>
-                                <th scope="col">Properties</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="d-flex">
-                                    <t t-foreach="product.attribute_line_ids" t-as="attribute">
-                                        <t t-if="attribute.display_name == 'Properties'">
-                                            <t t-foreach="attribute.value_ids" t-as="value">
-                                                <img t-if="value.icon_id" class="p-1"
-                                                     t-att-src="image_data_uri(value.icon_id)"
-                                                     style="width: 5%; height: 3%;"/>
-                                                <p t-field="value.name" class="p-1"/>
-                                            </t>
-                                        </t>
-                                    </t>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-end aign-items-start">
-                        <t t-if="not user_id.partner_id.name == 'Public user'" t-foreach="product.attribute_line_ids"
-                           t-as="attribute">
-                            <t t-if="attribute.display_name == 'Certifications'">
-                                <t t-foreach="attribute.value_ids" t-as="value">
-                                    <img t-if="value.icon_id" class="p-1" t-att-src="image_data_uri(value.icon_id)"
-                                         style="width: 10%; height: 5%;"/>
+                <div style="width: 50%;">
+                    <ul style="list-style: none;">
+                        <li>
+                            <strong>Properties</strong>
+                        </li>
+                        <div class="d-flex justify-content-end aign-items-start">
+                            <t t-if="product.property_id">
+                                <t t-foreach="product.property_id" t-as="property">
+                                    <img t-att-src="image_data_uri(property.image)"
+                                         style="width: 5%; height: 3%;"/>
+                                    <p t-field="property.name" class="p-1"/>
                                 </t>
                             </t>
+                        </div>
+                    </ul>
+                </div>
+                <div style="width: 25%; width: 25%; margin: 0 auto; text-align: center;">
+                    <t t-if="not user_id.partner_id.name == 'Public user'">
+                        <t t-if="product.certification_id">
+                            <t t-foreach="product.certification_id" t-as="certification">
+                                <img t-if="certification.image" class="p-1"
+                                     t-att-src="image_data_uri(certification.image)"
+                                     style="width: 50%; height: 20%;"/>
+                            </t>
                         </t>
-                    </div>
+                    </t>
                 </div>
             </div>
             <div t-else="">
@@ -88,13 +71,17 @@
                 </p>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <t t-if="not user_id.partner_id.name == 'Public user'" t-foreach="product.attribute_line_ids"
-                       t-as="attribute">
-                        <t t-if="attribute.display_name == 'Care Instructions'">
-                            <t t-foreach="attribute.value_ids" t-as="value">
-                                <img t-if="value.icon_id" class="p-1" t-att-src="image_data_uri(value.icon_id)"/>
-                            </t>
+                <div class="col-md-12">
+                    <t t-if="not user_id.partner_id.name == 'Public user'">
+                        <t t-if="product.careinstructions_id">
+                            <div class="d-flex flex-wrap">
+                                <t t-foreach="product.careinstructions_id" t-as="care">
+                                    <t t-if="care.image">
+                                        <img class="p-1 w-25 h-auto" style="max-width: 50px; max-height: 50px;"
+                                             t-att-src="image_data_uri(care.image)"/>
+                                    </t>
+                                </t>
+                            </div>
                         </t>
                     </t>
                     <h5 t-if="not user_id.partner_id.name == 'Public user' and product.country_id" class="text-primary">
@@ -111,24 +98,24 @@
         </xpath>
 
         <!--Ocultar el botón de ADD TO CART-->
-<!--        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="replace">-->
-<!--            <div id="o_wsale_cta_wrapper" class="align-items-end">-->
-<!--                <t t-set="hasQuantities" t-value="false"/>-->
-<!--                <t t-set="hasBuyNow" t-value="false"/>-->
-<!--                <t t-set="ctaSizeBig" t-value="not hasQuantities or not hasBuyNow"/>-->
+        <!--        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="replace">-->
+        <!--            <div id="o_wsale_cta_wrapper" class="align-items-end">-->
+        <!--                <t t-set="hasQuantities" t-value="false"/>-->
+        <!--                <t t-set="hasBuyNow" t-value="false"/>-->
+        <!--                <t t-set="ctaSizeBig" t-value="not hasQuantities or not hasBuyNow"/>-->
 
-<!--                <div id="add_to_cart_wrap"-->
-<!--                     t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center mb-2 me-auto">-->
-<!--                    <a role="button" id="add_to_cart"-->
-<!--                       t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"-->
-<!--                       href="#">-->
-<!--                        <i class="fa fa-shopping-cart me-2"/>-->
-<!--                        <span style="font-weight: bold">Add to Swatch Pack</span>-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--                <div id="product_option_block" class="d-flex flex-wrap w-100"/>-->
-<!--            </div>-->
-<!--        </xpath>-->
+        <!--                <div id="add_to_cart_wrap"-->
+        <!--                     t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center mb-2 me-auto">-->
+        <!--                    <a role="button" id="add_to_cart"-->
+        <!--                       t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"-->
+        <!--                       href="#">-->
+        <!--                        <i class="fa fa-shopping-cart me-2"/>-->
+        <!--                        <span style="font-weight: bold">Add to Swatch Pack</span>-->
+        <!--                    </a>-->
+        <!--                </div>-->
+        <!--                <div id="product_option_block" class="d-flex flex-wrap w-100"/>-->
+        <!--            </div>-->
+        <!--        </xpath>-->
 
         <!--Muestra el color-->
         <xpath expr="//t[@t-placeholder='select']" position="replace">
