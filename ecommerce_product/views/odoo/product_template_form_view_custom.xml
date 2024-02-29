@@ -28,6 +28,7 @@
                         <field name="careinstructions_id" widget="many2many_tags"/>
                         <field name="certification_id" widget="many2many_tags"/>
                         <field name="description_ecommerce" placeholder="This note is only for ecommerce."/>
+                        <field name="composition_id" widget="many2many_tags"/>
                     </group>
                 </page>
             </xpath>
