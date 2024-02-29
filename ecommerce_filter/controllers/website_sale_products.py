@@ -523,6 +523,15 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         #
         # tabla = lazy(lambda: TableCompute().process(products, ppg, ppr))
 
+        products = products.filtered(lambda product: product.website_published)
+
+        # Para que me devuelva únicamente un producto en lugar de todas las variantes
+        unique_products = {}
+        for product in products:
+            template_id = product.product_tmpl_id.id
+            if template_id not in unique_products:
+                unique_products[template_id] = product
+        products = list(unique_products.values())
 
         values = {
             'search': fuzzy_search_term or search,
