@@ -15,15 +15,15 @@ class ProductTemplate(models.Model):
         min_price = options.get('min_price')
         max_price = options.get('max_price')
         attrib_values = options.get('attrib_values')
-        # fiberfamily = options.get('fiberfamily')
-        # # colorgroup = options.get('colorgroup')
-        # structure = options.get('structure')
-        # property = options.get('property')
-        # usage = options.get('usage')
-        # availablemeters = options.get('availablemeters')
-        # producttype = options.get('producttype')
-        # careinstructions = options.get('careinstructions')
-        # certification = options.get('certification')
+        fiberfamily = options.get('fiberfamily')
+        # colorgroup = options.get('colorgroup')
+        structure = options.get('structure')
+        property = options.get('property')
+        usage = options.get('usage')
+        availablemeters = options.get('availablemeters')
+        producttype = options.get('producttype')
+        careinstructions = options.get('careinstructions')
+        certification = options.get('certification')
 
         if category:
             domains.append([('public_categ_ids', 'child_of', unslug(category)[1])])
@@ -31,24 +31,24 @@ class ProductTemplate(models.Model):
             domains.append([('list_price', '>=', min_price)])
         if max_price:
             domains.append([('list_price', '<=', max_price)])
-        # if fiberfamily:
-        #     domains.append([('fiberfamily_id', '=', int(fiberfamily))])
-        # # if colorgroup:
-        # #     domains.append([('product_variant_ids.colorgroup_id', '=', int(colorgroup))])
-        # if structure:
-        #     domains.append([('structure_id', '=', int(structure))])
-        # if property:
-        #     domains.append([('property_id', '=', int(property))])
-        # if usage:
-        #     domains.append([('usage_id', '=', int(usage))])
-        # if availablemeters:
-        #     domains.append([('id', 'in', availablemeters)])
-        # if producttype:
-        #     domains.append([('producttype_id', '=', int(producttype))])
-        # if careinstructions:
-        #     domains.append([('careinstructions_id', '=', int(careinstructions))])
-        # if certification:
-        #     domains.append([('certification_id', '=', int(certification))])
+        if fiberfamily:
+            domains.append([('fiberfamily_id', '=', int(fiberfamily))])
+        # if colorgroup:
+        #     domains.append([('product_variant_ids.colorgroup_id', '=', int(colorgroup))])
+        if structure:
+            domains.append([('structure_id', '=', int(structure))])
+        if property:
+            domains.append([('property_id', '=', int(property))])
+        if usage:
+            domains.append([('usage_id', '=', int(usage))])
+        if availablemeters:
+            domains.append([('id', 'in', availablemeters)])
+        if producttype:
+            domains.append([('producttype_id', '=', int(producttype))])
+        if careinstructions:
+            domains.append([('careinstructions_id', '=', int(careinstructions))])
+        if certification:
+            domains.append([('certification_id', '=', int(certification))])
         if attrib_values:
             attrib = None
             ids = []
