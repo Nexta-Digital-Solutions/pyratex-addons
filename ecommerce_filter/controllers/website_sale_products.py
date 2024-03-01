@@ -526,12 +526,12 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         products = products.filtered(lambda product: product.website_published)
 
         # Para que me devuelva únicamente un producto en lugar de todas las variantes
-        unique_products = {}
-        for product in products:
-            template_id = product.product_tmpl_id.id
-            if template_id not in unique_products:
-                unique_products[template_id] = product
-        products = list(unique_products.values())
+        # unique_products = {}
+        # for product in products:
+        #     template_id = product.product_tmpl_id.id
+        #     if template_id not in unique_products:
+        #         unique_products[template_id] = product
+        # products = list(unique_products.values())
 
         values = {
             'search': fuzzy_search_term or search,
@@ -555,8 +555,8 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'products': products,
             'search_product': search_product,
             'search_count': product_count,  # common for all searchbox
-            # 'bins': lazy(lambda: TableCompute().process(products, ppg, ppr)),
-            'bins': TableCompute().process(products, ppg, ppr),
+            'bins': lazy(lambda: TableCompute().process(products, ppg, ppr)),
+            # 'bins': TableCompute().process(products, ppg, ppr),
             'ppg': ppg,
             'ppr': ppr,
             'categories': categs,
