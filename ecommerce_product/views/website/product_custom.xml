@@ -9,25 +9,25 @@
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;"
                  t-if="not user_id.partner_id.name == 'Public user'">
                 <div style="width: 25%;">
-                    <ul style="list-style: none;">
+                    <ul t-if="product.weight" style="list-style: none;">
                         <li>
                             <strong>Weight</strong>
                         </li>
                         <p t-field="product.weight"/>
                     </ul>
-                    <ul style="list-style: none;">
+                    <ul t-if="product.width" style="list-style: none;">
                         <li>
                             <strong>Width</strong>
                         </li>
                         <p t-field="product.width"/>
                     </ul>
-                    <ul style="list-style: none;">
+                    <ul t-if="product.structure_id" style="list-style: none;">
                         <li>
                             <strong>Structure</strong>
                         </li>
                         <p t-field="product.structure_id"/>
                     </ul>
-                    <ul style="list-style: none;">
+                    <ul t-if="product.composition_id" style="list-style: none;">
                         <li>
                             <strong>Composition</strong>
                         </li>
@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <div style="width: 50%;">
-                    <ul style="list-style: none;">
+                    <ul t-if="product.property_id" style="list-style: none;">
                         <li>
                             <strong>Properties</strong>
                         </li>
