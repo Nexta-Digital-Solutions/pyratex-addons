@@ -298,8 +298,8 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
     ):
         product_available_meters = False
         if post.get('availablemeters', False):
-            avail_meters = request.env['product.available.meters'].search([('id', '=', int(post.get('availablemeters')))])
-            product_available_meters = request.env['product.template'].search(
+            avail_meters = request.env['product.available.meters'].sudo().search([('id', '=', int(post.get('availablemeters')))])
+            product_available_meters = request.env['product.template'].sudo().search(
             [('qty_available', '<=', avail_meters.max), ('qty_available', '>=', avail_meters.min)])
         res = {
             'displayDescription': True,
