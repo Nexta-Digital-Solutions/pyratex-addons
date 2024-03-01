@@ -30,12 +30,12 @@
                     <ul style="list-style: none;">
                         <li>
                             <strong>Composition</strong>
-                            <t t-if="product.composition_id">
-                                <t t-foreach="product.composition_id" t-as="composition">
-                                    <p t-field="composition.name" class="p-1"/>
-                                </t>
-                            </t>
                         </li>
+                        <t t-if="product.composition_id">
+                            <t t-foreach="product.composition_id" t-as="composition">
+                                <p t-field="composition.name" class="p-1"/>
+                            </t>
+                        </t>
                     </ul>
                 </div>
                 <div style="width: 50%;">
