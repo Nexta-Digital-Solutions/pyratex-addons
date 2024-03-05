@@ -117,6 +117,18 @@
         <!--            </div>-->
         <!--        </xpath>-->
 
+        <!--        Muestra un botón u otro según si es pack o no-->
+        <xpath expr="//a[@id='add_to_cart']" position="replace">
+            <a role="button" id="add_to_cart"
+               t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"
+               href="#">
+                <i class="fa fa-shopping-cart me-2"/>
+                <span t-if="not product.pack_ok" style="font-weight: bold">ADD TO CART</span>
+                <span t-if="product.pack_ok" style="font-weight: bold">ADD SWATCH PACK TO THE CART</span>
+            </a>
+        </xpath>
+
+
         <!--Muestra el color-->
         <xpath expr="//t[@t-placeholder='select']" position="replace">
             <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id"/>
@@ -129,6 +141,29 @@
                 <t t-call="ecommerce_product.variants_nds"/>
             </t>
         </xpath>
+
+
+        <!--Muestra los productos que tiene asignado el pack-->
+        <xpath expr="//section" position="after">
+            <div class="container">
+                <div class="d-flex overflow-auto">
+                    <div class="row justify-content-start flex-nowrap">
+                        <t t-foreach="product.pack_line_ids" t-as="pack">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="text-center">
+                                    <img t-if="pack.product_id.image_1920" class="img-fluid"
+                                         t-att-src="image_data_uri(pack.product_id.image_1920)"/>
+                                    <img t-if="not pack.product_id.image_1920" class="img-fluid"
+                                         src="/ecommerce_product/static/img/placeholder.png"/>
+                                    <p class="mt-2" t-field="pack.product_id.name"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+
 
         <!--Cuando hay un único atributo no lo muestra-->
         <xpath expr="//div[@id='product_attributes_simple']" position="attributes">
