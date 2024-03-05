@@ -3,8 +3,8 @@
     <template id="filtered" inherit_id="website_sale.products_attributes" name="Filters">
         <xpath expr="//div[@id='wsale_products_attributes_collapse']" position="replace">
             <!--            <form t-if="attributes" class="js_attributes position-relative mb-2" method="get">-->
-<!--            <form class="js_attributes position-relative mb-2" method="get">-->
-            <form class="position-relative mb-2" >
+            <!--            <form class="js_attributes position-relative mb-2" method="get">-->
+            <form class="position-relative mb-2">
 
                 <!--Añade los atributos con el formato que piden en el Figma-->
 
@@ -224,6 +224,11 @@
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
             </h6>
+            <div class="card mb-3">
+                <a t-att-href="" class="btn btn-secondary">
+                    <h5 class="card-title">Build-your-own Pack</h5>
+                </a>
+            </div>
             <t t-call="ecommerce_filter.portrait_categories"/>
         </xpath>
     </template>
