@@ -17,8 +17,8 @@ from odoo.tools import lazy
 #     ):
 #         product_available_meters = False
 #         if post.get('availablemeters', False):
-#             avail_meters = request.env['product.available.meters'].search([('id', '=', int(post.get('availablemeters')))])
-#             product_available_meters = request.env['product.template'].search(
+#             avail_meters = request.env['product.available.meters'].sudo().search([('id', '=', int(post.get('availablemeters')))])
+#             product_available_meters = request.env['product.template'].sudo().search(
 #             [('qty_available', '<=', avail_meters.max), ('qty_available', '>=', avail_meters.min)])
 #         res = {
 #             'displayDescription': True,
@@ -159,7 +159,7 @@ from odoo.tools import lazy
 #         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
 #         if filter_by_price_enabled:
 #             # TODO Find an alternative way to obtain the domain through the search metadata.
-#             Product = request.env['product.template'].with_context(bin_size=True)
+#             Product = request.env['product.product'].with_context(bin_size=True)
 #             domain = self._get_search_domain(search, category, attrib_values)
 #
 #             # This is ~4 times more efficient than a search for the cheapest and most expensive products
@@ -225,21 +225,6 @@ from odoo.tools import lazy
 #         products_prices = lazy(lambda: products._get_sales_prices(pricelist))
 #
 #
-#         # product_filter = request.env['product.template'].search([])
-#         #
-#         # for product_template in product_filter:
-#         #     for variant in product_template:
-#         #         if (variant.product_variant_id.colorgroup_id.id == colorgroup_set):
-#         #             product_filter.append(product_template)
-#         #
-#         # products = set(list(product_filter))
-#
-#
-#         # products_variants = request.env['product.product']
-#         # product_filter = products_variants.search([('id', '=', 1)])
-#         # products = product_filter
-#
-#
 #         values = {
 #             'search': fuzzy_search_term or search,
 #             'original_search': fuzzy_search_term and search,
@@ -287,13 +272,10 @@ from odoo.tools import lazy
 
 
 
-
-
-
 class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
 
     def _get_search_options(
-            self, category=None, attrib_values=None, pricelist=None, min_price=0.0, max_price=0.0, conversion_rate=1,
+            self, category=None, product=None, attrib_values=None, pricelist=None, min_price=0.0, max_price=0.0, conversion_rate=1,
             **post
     ):
         product_available_meters = False
@@ -309,6 +291,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'displayImage': True,
             'allowFuzzy': not post.get('noFuzzy'),
             'category': str(category.id) if category else None,
+            'product': str(product.id) if product else None,
             'min_price': min_price / conversion_rate,
             'max_price': max_price / conversion_rate,
             'attrib_values': attrib_values,
@@ -331,8 +314,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         '/shop/page/<int:page>',
         '/shop/category/<model("product.public.category"):category>',
         '/shop/category/<model("product.public.category"):category>/page/<int:page>',
+        '/shop/product/<model("product.template"):product>'
     ], type='http', auth="public", website=True, sitemap=ws.sitemap_shop)
-    def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, **post):
+    def shop(self, page=0, category=None, search='', min_price=0.0, max_price=0.0, ppg=False, product=None, **post):
         add_qty = int(post.get('add_qty', 1))
         try:
             min_price = float(min_price)
@@ -435,7 +419,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         fuzzy_search_term, product_count, search_product = self._shop_lookup_products(attrib_set, options, post, search,
                                                                                       website)
         if colorgroup_set:
-            search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(lambda product:colorgroup_set in product.mapped('product_template_attribute_value_ids.product_attribute_value_id.colorgroup_id.id')))
+            search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(
+                lambda product: colorgroup_set in product.mapped(
+                    'product_template_attribute_value_ids.product_attribute_value_id.colorgroup_id.id')))
             product_count = len(search_product)
         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
         if filter_by_price_enabled:
@@ -505,39 +491,6 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
 
         products_prices = lazy(lambda: products._get_sales_prices(pricelist))
 
-
-        # product_filter = request.env['product.template'].search([])
-        #
-        # for product_template in product_filter:
-        #     for variant in product_template:
-        #         if (variant.product_variant_id.colorgroup_id.id == colorgroup_set):
-        #             product_filter.append(product_template)
-        #
-        # products = set(list(product_filter))
-
-
-        # products_variants = request.env['product.product']
-        # # product_filter = products_variants.search([('id', '=', 32)])
-        # product_filter = products_variants.search([])
-        # products = product_filter
-        #
-        # tabla = lazy(lambda: TableCompute().process(products, ppg, ppr))
-
-
-
-        # Para que me devuelva únicamente un producto en lugar de todas las variantes
-        # unique_products = {}
-        # for product in products:
-        #     template_id = product.product_tmpl_id.id
-        #     if template_id not in unique_products:
-        #         unique_products[template_id] = product
-        # products = list(unique_products.values())
-
-
-
-
-        # products = products.filtered(lambda product: product.website_published)
-
         values = {
             'search': fuzzy_search_term or search,
             'original_search': fuzzy_search_term and search,
@@ -561,7 +514,6 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             'search_product': search_product,
             'search_count': product_count,  # common for all searchbox
             'bins': lazy(lambda: TableCompute().process(products, ppg, ppr)),
-            # 'bins': TableCompute().process(products, ppg, ppr),
             'ppg': ppg,
             'ppr': ppr,
             'categories': categs,
@@ -582,3 +534,15 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             values['main_object'] = category
         values.update(self._get_additional_shop_values(values))
         return request.render("website_sale.products", values)
+
+    # @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
+    # def filter_by_product(self, product, **kwargs):
+    #     products = request.env['product.template'].sudo().search([('pack_ok', '=', True), ('id', '!=', product.id)])
+    #     options = self._get_search_options(**kwargs)
+    #     pricelist = request.website.get_current_pricelist()
+    #     if not pricelist:
+    #         pricelist = request.env['product.pricelist'].browse(request.session.get('website_sale_current_pl'))
+    #     options.update({'product_id': product.id, 'display_currency': pricelist.currency_id if pricelist else None})
+    #     search_product = self._search_get_detail(request.website, options, product)
+    #     return request.render("website_sale.products",
+    #                           {'products': products, 'search_product': search_product})
