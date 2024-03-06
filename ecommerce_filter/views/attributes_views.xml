@@ -219,7 +219,7 @@
                 <!--                    </t>-->
                 <!--                </select>-->
 
-                <button name="filter" class="js_attributes btn btn-primary" method="get">Filter</button>
+                <button name="filter" class="js_attributes btn btn-primary w-100" method="get">Filter</button>
             </form>
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
