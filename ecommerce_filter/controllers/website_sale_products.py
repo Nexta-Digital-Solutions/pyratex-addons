@@ -474,7 +474,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         ProductAttribute = request.env['product.attribute']
         if products:
             # get all products without limit
-            attributes = lazy(lambda: ProductAttribute.search([
+            attributes = lazy(lambda: ProductAttribute.sudo().search([
                 ('product_tmpl_ids', 'in', search_product.ids),
                 ('visibility', '=', 'visible'),
             ]))

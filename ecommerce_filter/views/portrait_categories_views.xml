@@ -46,20 +46,20 @@
 
         <t t-name="website_sale.pack_products">
             <t t-set="products" t-value="request.env['product.template'].sudo().search([('pack_ok', '=', True)])"/>
-            <div class="container">
+<!--            <div class="container">-->
                 <div class="row">
                     <div class="col">
                         <t t-foreach="products" t-as="product">
-                            <div class="card mb-3">
-                                <a t-att-href="'/shop/product/' + str(product.id)" class="btn btn-primary">
-                                    <h5 class="card-title" t-esc="product.name"/>
-                                    <p class="card-text" t-field="product.description"/>
+                            <div class="card mb-2" style="max-width: 100%;">
+                                <a t-att-href="'/shop/product/' + str(product.id)" class="btn btn-primary btn-sm">
+                                    <p class="card-title" t-esc="product.name"/>
+<!--                                    <p class="card-text" t-field="product.description"/>-->
                                 </a>
                             </div>
                         </t>
                     </div>
                 </div>
-            </div>
+<!--            </div>-->
         </t>
 
     </template>
