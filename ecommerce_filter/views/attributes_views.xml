@@ -224,9 +224,9 @@
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
             </h6>
-            <div class="card mb-3">
-                <a t-att-href="" class="btn btn-secondary">
-                    <h5 class="card-title">Build-your-own Pack</h5>
+            <div class="card mb-2" style="max-width: 100%;">
+                <a t-att-href="" class="btn btn-secondary btn-sm">
+                    <p class="card-title">Build-your-own Pack</p>
                 </a>
             </div>
             <t t-call="ecommerce_filter.portrait_categories"/>
