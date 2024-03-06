@@ -40,6 +40,7 @@
         'views/website/footer_custom_custom.xml',
         'views/website/products_item_custom.xml',
         'views/website/products_custom.xml',
+        'views/website/product_price_custom.xml',
     ],
     'demo': [
     ],

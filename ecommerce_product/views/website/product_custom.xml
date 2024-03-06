@@ -93,29 +93,9 @@
         </xpath>
 
         <!--No muestra el precio-->
-        <xpath expr="//form/div/div/t" position="attributes">
-            <attribute name="t-if">1!=1</attribute>
-        </xpath>
-
-        <!--Ocultar el botón de ADD TO CART-->
-        <!--        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="replace">-->
-        <!--            <div id="o_wsale_cta_wrapper" class="align-items-end">-->
-        <!--                <t t-set="hasQuantities" t-value="false"/>-->
-        <!--                <t t-set="hasBuyNow" t-value="false"/>-->
-        <!--                <t t-set="ctaSizeBig" t-value="not hasQuantities or not hasBuyNow"/>-->
-
-        <!--                <div id="add_to_cart_wrap"-->
-        <!--                     t-attf-class="{{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} align-items-center mb-2 me-auto">-->
-        <!--                    <a role="button" id="add_to_cart"-->
-        <!--                       t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"-->
-        <!--                       href="#">-->
-        <!--                        <i class="fa fa-shopping-cart me-2"/>-->
-        <!--                        <span style="font-weight: bold">Add to Swatch Pack</span>-->
-        <!--                    </a>-->
-        <!--                </div>-->
-        <!--                <div id="product_option_block" class="d-flex flex-wrap w-100"/>-->
-        <!--            </div>-->
-        <!--        </xpath>-->
+<!--        <xpath expr="//form/div/div/t" position="attributes">-->
+<!--            <attribute name="t-if">1!=1</attribute>-->
+<!--        </xpath>-->
 
         <!--        Muestra un botón u otro según si es pack o no-->
         <xpath expr="//a[@id='add_to_cart']" position="replace">
