@@ -16,14 +16,5 @@ class ProductTemplate(models.Model):
     careinstructions_id = fields.Many2many('care.instructions', string='Care Instructions')
     certification_id = fields.Many2many('certification', string='Certification')
     composition_id = fields.Many2many('composition', string='Composition')
-    # is_published = fields.Boolean(copy=False)
 
-    # colorgroup_id = fields.Many2many('color.group', string='Color Groups', compute='_compute_colorgroup_ids',
-    #                                   store=True, readonly=False)
-    #
-    # @api.depends('attribute_line_ids')
-    # def _compute_colorgroup_ids(self):
-    #     for template in self:
-    #         color_groups = template.attribute_line_ids.mapped('colorgroup_id')
-    #         template.colorgroup_id = color_groups
 
