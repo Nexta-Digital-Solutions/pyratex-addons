@@ -12,14 +12,14 @@
                     <b class="o_products_attributes_title d-none d-lg-block">Filters</b>
                 </h6>
 
-                <a t-if="attrib_values or fiberfamily_set or colorgroup_set or property_set or structure_set or usage_set or availablemeters_set or producttype_set or careinstructions_set"
-                   t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
-                   t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">
-                    <small class="mx-auto">
-                        <b>Clear Filters</b>
-                    </small>
-                    <i class="oi oi-close"/>
-                </a>
+                <!--                <a t-if="attrib_values or fiberfamily_set or colorgroup_set or property_set or structure_set or usage_set or availablemeters_set or producttype_set or careinstructions_set"-->
+                <!--                   t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"-->
+                <!--                   t-attf-class="btn btn-{{navClass}} d-flex py-1 mb-2">-->
+                <!--                    <small class="mx-auto">-->
+                <!--                        <b>Clear Filters</b>-->
+                <!--                    </small>-->
+                <!--                    <i class="oi oi-close"/>-->
+                <!--                </a>-->
 
                 <t t-set="producttype" t-value="env['product.type'].sudo().search([])"/>
                 <t t-if="producttype">
@@ -50,7 +50,7 @@
                 <t t-if="colorgroup">
                     <span t-esc="colorgroup_set" class="d-none"/>
                     <select class="form-select css_attribute_select mb-2" name="colorgroup">
-                        <option value="" selected="true">Color</option>
+                        <option value="" selected="true">Color group</option>
                         <t t-foreach="colorgroup" t-as="cg">
                             <option t-att-value="'%s' % (cg.id)" t-esc="cg.name"
                                     t-att-selected="cg.id == colorgroup_set"/>
@@ -219,7 +219,32 @@
                 <!--                    </t>-->
                 <!--                </select>-->
 
-                <button name="filter" class="js_attributes btn btn-primary w-100" method="get">Filter</button>
+
+                <!--                <div class="d-flex justify-content-center">-->
+                <!--                    <div class="d-flex">-->
+                <!--                        <button name="filter" class="js_attributes btn btn-primary mr-2 w-100">Filter</button>-->
+                <!--                        <a t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"-->
+                <!--                           t-attf-class="btn btn-{{navClass}} w-100">-->
+                <!--                            <small class="mx-auto">-->
+                <!--                                <b>Clear Filters</b>-->
+                <!--                            </small>-->
+                <!--                        </a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex">
+                        <button name="filter" class="js_attributes btn btn-primary mr-2 w-100">Filter</button>
+                        <a t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
+                           t-attf-class="btn btn-{{navClass}} w-100">
+                            <small class="mx-auto">
+                                <b>Clear Filters</b>
+                            </small>
+                        </a>
+                    </div>
+                </div>
+
+
             </form>
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
