@@ -19,7 +19,6 @@
                         <button type="button" class="button secondary m-1"
                                 onclick="window.location.href='/web/login?{{ keep_query() }}'">Log in
                         </button>
-
                         <button type="button" class="button secondary m-1"
                                 id="prueba_button" name="action_redirect_to_template">Prueba
                         </button>
