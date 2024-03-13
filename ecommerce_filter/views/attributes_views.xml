@@ -234,7 +234,7 @@
 
                 <div class="d-flex justify-content-center">
                     <div class="d-flex">
-                        <button name="filter" class="js_attributes btn btn-primary mr-2 w-100">Filter</button>
+                        <button name="filter" class="js_attributes mr-2 h-100 w-100 btn btn-primary">Filter</button>
                         <a t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
                            t-attf-class="btn btn-{{navClass}} w-100">
                             <small class="mx-auto">
@@ -249,8 +249,13 @@
             <h6 class="mb-3">
                 <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>
             </h6>
+<!--            <div class="card mb-2" style="max-width: 100%;">-->
+<!--                <a t-att-href="" class="btn btn-secondary btn-sm">-->
+<!--                    <p class="card-title">Build-your-own Pack</p>-->
+<!--                </a>-->
+<!--            </div>-->
             <div class="card mb-2" style="max-width: 100%;">
-                <a t-att-href="" class="btn btn-secondary btn-sm">
+                <a t-att-href="'/shop?producttype=1'" class="btn btn-secondary btn-sm">
                     <p class="card-title">Build-your-own Pack</p>
                 </a>
             </div>

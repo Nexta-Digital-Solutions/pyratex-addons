@@ -26,6 +26,7 @@
     'assets':{
         'web.assets_frontend':[
             'ecommerce_filter/static/src/scss/style.css',
+            'ecommerce_filter/static/src/scss/foundation.min.css',
         ]
     }
 }
