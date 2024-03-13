@@ -50,7 +50,14 @@
         </xpath>
 
         <xpath expr="//form" position="inside">
-            <button name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>
+            <t t-if="product.producttype_id.name == 'Swatchpack'">
+                <button name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>
+            </t>
         </xpath>
+<!--        <xpath expr="//t[@name='Products item']" position="inside">-->
+<!--            <t t-if="product.producttype_id.name == 'Swatchpack'">-->
+<!--                <button name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>-->
+<!--            </t>-->
+<!--        </xpath>-->
     </template>
 </odoo>
