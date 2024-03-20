@@ -37,8 +37,24 @@
         </xpath>
 
         <xpath expr="//div[@id='products_grid']/t" position="after">
-            <div id="allProducts" style="border: 1px solid black;">
+            <div id="allProducts" class="mb-2">
 <!--                <p name="productsArray" />-->
+            </div>
+
+             <t t-set="open_pack" t-value="env['open.pack'].sudo().search([])"/>
+                <t t-if="open_pack">
+                    <span t-esc="openpack_set" class="d-none"/>
+                    <select class="form-select css_attribute_select mb-2" name="openpack">
+                        <option value="" selected="true">Open Pack</option>
+                        <t t-foreach="open_pack" t-as="op">
+                            <option t-att-value="'%s' % (op.id)" t-esc="op.name"
+                                    t-att-selected="op.id == openpack_set"/>
+                        </t>
+                    </select>
+                </t>
+
+            <div id="packPrice">
+
             </div>
         </xpath>
 
