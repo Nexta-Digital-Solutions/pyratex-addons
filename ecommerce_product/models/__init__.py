@@ -12,6 +12,6 @@ from . import (product_template,
                available_meters,
                composition,
                product_product,
-    # website,
-    # main
+               open_pack,
+               user_open_pack,
                )

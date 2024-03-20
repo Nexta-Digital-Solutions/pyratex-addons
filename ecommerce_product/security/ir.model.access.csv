@@ -9,3 +9,5 @@ access_careinstructions,Care Instructions,model_care_instructions,base.group_use
 access_certification,Certification,model_certification,base.group_user,1,1,1,1
 access_availablemeters,Available Meters,model_product_available_meters,base.group_user,1,1,1,1
 access_composition,Composition,model_composition,base.group_user,1,1,1,1
+access_openpack,Open Pack,model_open_pack,base.group_user,1,1,1,1
+access_useropenpack,User Open Pack,model_user_open_pack,base.group_user,1,1,1,1
