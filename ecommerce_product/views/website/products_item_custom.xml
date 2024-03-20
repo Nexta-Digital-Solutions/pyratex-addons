@@ -50,14 +50,24 @@
         </xpath>
 
         <xpath expr="//form" position="inside">
-            <t t-if="product.producttype_id.name == 'Swatchpack'">
-                <button name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>
-            </t>
+            <!--            <t t-if="product.producttype_id.name == 'Swatchpack'">-->
+            <!--                <button id="o_add_to_the_pack" name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>-->
+            <!--            </t>-->
+            <!--            <t t-if="product.producttype_id.name == 'Swatchpack'">-->
+            <!--                <a id="o_add_to_the_pack" class="btn btn-primary btn-sm mr-2 w-100">-->
+            <!--                    <p class="card-title">Add to the Pack</p>-->
+            <!--                </a>-->
+            <!--            </t>-->
         </xpath>
-<!--        <xpath expr="//t[@name='Products item']" position="inside">-->
-<!--            <t t-if="product.producttype_id.name == 'Swatchpack'">-->
-<!--                <button name="pack" class="btn btn-primary btn-sm mr-2 w-100">Add to the Pack</button>-->
-<!--            </t>-->
-<!--        </xpath>-->
+        <xpath expr="//form" position="after">
+            <div class="container">
+                <t t-if="product.producttype_id.name == 'Swatchpack'">
+                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary btn-sm mr-2 w-100"
+                    t-attf-data-product-id="{{product.id}}">Add to the Pack
+                    </button>
+                </t>
+            </div>
+
+        </xpath>
     </template>
 </odoo>

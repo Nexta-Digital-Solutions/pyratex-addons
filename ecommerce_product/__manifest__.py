@@ -55,6 +55,7 @@
             'ecommerce_product/static/src/scss/style.css',
             'ecommerce_product/static/src/scss/material.min.css',
             'ecommerce_product/static/src/js/material.min.js',
+            'ecommerce_product/static/src/js/add_to_the_pack.js',
         ]
 
     }
