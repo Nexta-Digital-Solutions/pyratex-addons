@@ -50,7 +50,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     $(document).on('click', '#o_add_to_the_pack', async function (evt) {
         const productId = $(this).data('product-id');
         console.log('Product ID:', productId);
-        console.log(evt);
+        // console.log(evt);
         await addToThePack(productId);
     });
 
@@ -64,14 +64,14 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
             method: 'read',
             args: [[productId], ['image_1920']],
         });
-
         const imageUrl = result[0].image_1920;
         displayProductImage(imageUrl);
     }
 
     function displayProductImage(imageUrl) {
         const container = $('#allProducts');
-        const imgElement = $('<img>').attr('src', imageUrl).css({'width': '100px', 'height': '100px'});
+        // añadiendo data:image/jpg;base64, transforma la imagen de base 64 a jpg
+        const imgElement = $('<img>').attr('src', "data:image/jpg;base64," + imageUrl).css({'width': '50px', 'height': '50px'});
         container.append(imgElement);
     }
 });
