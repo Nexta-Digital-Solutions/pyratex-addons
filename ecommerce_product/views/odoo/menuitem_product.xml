@@ -24,6 +24,10 @@
                   action="action_availablemeters_tree" sequence="110"/>
         <menuitem id="menu_composition_tree" name="Composition" parent="menu_product_template"
                   action="action_composition_tree" sequence="110"/>
+        <menuitem id="menu_useropenpack_tree" name="User Open Pack" parent="menu_product_template"
+                  action="action_useropenpack_tree" sequence="110"/>
+        <menuitem id="menu_openpack_tree" name="Open Pack" parent="menu_product_template"
+                  action="action_openpack_tree" sequence="110"/>
 
     </data>
 </odoo>

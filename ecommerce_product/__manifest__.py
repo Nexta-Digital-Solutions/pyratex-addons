@@ -34,6 +34,8 @@
         'views/odoo/certification_view.xml',
         'views/odoo/available_meters_view.xml',
         'views/odoo/composition_view.xml',
+        'views/odoo/user_open_pack_view.xml',
+        'views/odoo/open_pack_view.xml',
         'views/odoo/menuitem_product.xml',
         'views/website/product_custom.xml',
         'views/website/attributes_filter_view.xml',
