@@ -27,11 +27,13 @@
                     <select class="form-select css_attribute_select mb-2" name="producttype">
                         <option value="" selected="true">Product type</option>
                         <t t-foreach="producttype" t-as="pt">
-                            <option t-if="pt.name == 'Swatchpack'" t-att-value="'%s' % (pt.id)" t-esc="pt.name + ' (closed)'"
+                            <option t-if="pt.name == 'Swatchpack'" t-att-value="'%s' % (pt.id)"
+                                    t-esc="pt.name + ' (closed)'"
                                     t-att-selected="pt.id == producttype_set"/>
                             <option t-if="pt.name == 'Swatch'" t-att-value="'%s' % (pt.id)" t-esc="pt.name + ' (open)'"
                                     t-att-selected="pt.id == producttype_set"/>
-                            <option t-if="pt.name != 'Swatchpack' and pt.name != 'Swatch'" t-att-value="'%s' % (pt.id)" t-esc="pt.name"
+                            <option t-if="pt.name != 'Swatchpack' and pt.name != 'Swatch'" t-att-value="'%s' % (pt.id)"
+                                    t-esc="pt.name"
                                     t-att-selected="pt.id == producttype_set"/>
                         </t>
                     </select>
@@ -236,34 +238,35 @@
                 <!--                    </div>-->
                 <!--                </div>-->
 
-                <div class="d-flex justify-content-center">
-                    <div class="d-flex">
-                        <button name="filter" class="js_attributes mr-2 h-100 w-100 btn btn-primary mr-1" style="background-color: #0275d8; color: white; border-radius: 5px;">Filter</button>
-                        <a t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
-                           t-attf-class="btn btn-{{navClass}} w-100" style="background-color: grey; color: white; border-radius: 5px;">
-                            <small class="mx-auto">
-                                <b>Clear Filters</b>
-                            </small>
-                        </a>
-                    </div>
+                <div class="d-flex">
+                    <button name="filter" class="js_attributes mr-2 h-100 w-100 btn btn-primary mr-1"
+                            style="background-color: #0275d8; color: white; border-radius: 5px;">Filter
+                    </button>
+                    <a t-att-href="keep('/shop'+ ('/category/'+slug(category)) if category else None, attrib=0)"
+                       t-attf-class="btn btn-{{navClass}} w-100"
+                       style="background-color: grey; color: white; border-radius: 5px;">
+                        <small class="mx-auto">
+                            <b>Clear Filters</b>
+                        </small>
+                    </a>
                 </div>
 
 
             </form>
-<!--            <h6 class="mb-3">-->
-<!--                <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>-->
-<!--            </h6>-->
-<!--&lt;!&ndash;            <div class="card mb-2" style="max-width: 100%;">&ndash;&gt;-->
-<!--&lt;!&ndash;                <a t-att-href="" class="btn btn-secondary btn-sm">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p class="card-title">Build-your-own Pack</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                </a>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--            <div class="card mb-2" style="max-width: 100%;">-->
-<!--                <a t-att-href="'/shop?producttype=1'" class="btn btn-secondary btn-sm">-->
-<!--                    <p class="card-title">Build-your-own Pack</p>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <t t-call="ecommerce_filter.portrait_categories"/>-->
+            <!--            <h6 class="mb-3">-->
+            <!--                <b class="o_products_attributes_title d-none d-lg-block">Swatch Packs</b>-->
+            <!--            </h6>-->
+            <!--&lt;!&ndash;            <div class="card mb-2" style="max-width: 100%;">&ndash;&gt;-->
+            <!--&lt;!&ndash;                <a t-att-href="" class="btn btn-secondary btn-sm">&ndash;&gt;-->
+            <!--&lt;!&ndash;                    <p class="card-title">Build-your-own Pack</p>&ndash;&gt;-->
+            <!--&lt;!&ndash;                </a>&ndash;&gt;-->
+            <!--&lt;!&ndash;            </div>&ndash;&gt;-->
+            <!--            <div class="card mb-2" style="max-width: 100%;">-->
+            <!--                <a t-att-href="'/shop?producttype=1'" class="btn btn-secondary btn-sm">-->
+            <!--                    <p class="card-title">Build-your-own Pack</p>-->
+            <!--                </a>-->
+            <!--            </div>-->
+            <!--            <t t-call="ecommerce_filter.portrait_categories"/>-->
         </xpath>
     </template>
 </odoo>
