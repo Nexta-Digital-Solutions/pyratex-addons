@@ -36,24 +36,11 @@
             <attribute name="t-if">1!=1</attribute>
         </xpath>
 
-        <!--        <xpath expr="//div[@id='wrap']" position="before">-->
-        <!--            <div id="allProducts">-->
-        <!--                <p name="productsArray" />-->
-        <!--            </div>-->
-        <!--        </xpath>-->
-
         <xpath expr="//div[@id='products_grid']/t" position="after">
-            <div>
-                <table name="collection" border="1px" style="display: flex;">
-                    <tbody>
-                        <tr id="allProducts">
-                            <td>
-                                <p name="productsArray"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div id="allProducts" style="border: 1px solid black;">
+<!--                <p name="productsArray" />-->
             </div>
         </xpath>
+
     </template>
 </odoo>

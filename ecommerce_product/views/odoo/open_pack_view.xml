@@ -6,7 +6,7 @@
             <field name="model">open.pack</field>
             <field name="arch" type="xml">
                 <tree editable="bottom">
-                    <field name="pack_name"/>
+                    <field name="name"/>
                     <field name="price"/>
                     <field name="elements_number"/>
                 </tree>
