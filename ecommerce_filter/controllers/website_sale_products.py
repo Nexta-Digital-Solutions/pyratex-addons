@@ -272,14 +272,4 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         values.update(self._get_additional_shop_values(values))
         return request.render("website_sale.products", values)
 
-    # @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
-    # def filter_by_product(self, product, **kwargs):
-    #     products = request.env['product.template'].sudo().search([('pack_ok', '=', True), ('id', '!=', product.id)])
-    #     options = self._get_search_options(**kwargs)
-    #     pricelist = request.website.get_current_pricelist()
-    #     if not pricelist:
-    #         pricelist = request.env['product.pricelist'].browse(request.session.get('website_sale_current_pl'))
-    #     options.update({'product_id': product.id, 'display_currency': pricelist.currency_id if pricelist else None})
-    #     search_product = self._search_get_detail(request.website, options, product)
-    #     return request.render("website_sale.products",
-    #                           {'products': products, 'search_product': search_product})
+
