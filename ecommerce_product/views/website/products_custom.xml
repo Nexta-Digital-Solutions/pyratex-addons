@@ -44,22 +44,22 @@
             <t t-set="open_pack" t-value="env['open.pack'].sudo().search([])"/>
             <t t-if="open_pack">
                 <span t-esc="openpack_set" class="d-none"/>
-                <div class="row">
+                <div t-if="producttype_set == 2" class="row align-items-center">
                     <div class="col-md-2">
                         <select class="form-select css_attribute_select mb-2" name="openpack">
-                            <option value="" selected="true">Open Pack</option>
                             <t t-foreach="open_pack" t-as="op">
                                 <option t-att-value="'%s' % (op.id)" t-esc="op.name"
                                         t-att-selected="op.id == openpack_set"/>
                             </t>
                         </select>
                     </div>
-                    <div class="col-md-8 text-end">
-                        <div id="packPrice">
-                        </div>
+                    <div class="col-md-10 d-flex justify-content-end">
+                        <button class="btn btn-primary btn-sm" style="margin-right: 10px;">Add to Cart</button>
+                        <div id="packPrice"></div>
                     </div>
                 </div>
             </t>
+
         </xpath>
 
 
