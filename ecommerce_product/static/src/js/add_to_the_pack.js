@@ -104,7 +104,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     let packElementsNumber = 0;
 
     $(document).on('click', '#o_add_to_the_pack', async function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Evitar el envío del formulario
         const productId = $(this).data('product-id');
         console.log('Product ID:', productId);
 
