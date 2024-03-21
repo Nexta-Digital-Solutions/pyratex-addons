@@ -49,7 +49,16 @@
             </div>
         </xpath>
 
-<!--        <xpath expr="//form" position="inside">-->
+        <xpath expr="//form" position="inside">
+            <div class="container">
+                <t t-if="product.producttype_id.name == 'Swatch'">
+                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary btn-sm mr-2 w-100"
+                            t-attf-data-product-id="{{product.id}}">Add to the Pack
+                    </button>
+                </t>
+            </div>
+        </xpath>
+<!--        <xpath expr="//form" position="after">-->
 <!--            <div class="container">-->
 <!--                <t t-if="product.producttype_id.name == 'Swatch'">-->
 <!--                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary btn-sm mr-2 w-100"-->
@@ -58,14 +67,5 @@
 <!--                </t>-->
 <!--            </div>-->
 <!--        </xpath>-->
-        <xpath expr="//form" position="after">
-            <div class="container">
-                <t t-if="product.producttype_id.name == 'Swatch'">
-                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary btn-sm mr-2 w-100"
-                    t-attf-data-product-id="{{product.id}}">Add to the Pack
-                    </button>
-                </t>
-            </div>
-        </xpath>
     </template>
 </odoo>
