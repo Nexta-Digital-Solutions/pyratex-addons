@@ -134,7 +134,9 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
         const imageUrl = result[0].image_1920;
         displayProductImage(imageUrl, productId);
 
+
         packElementsNumber++;
+        console.log('Suma', packElementsNumber);
     }
 
     function removeProductFromPack(productIdToRemove) {
@@ -186,6 +188,11 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
             return 0;
         }
     }
+
+    $(document).on('change', 'select[name="openpack"]', async function () {
+        packElementsNumber = 0;
+    });
+
 });
 
 
