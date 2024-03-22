@@ -120,6 +120,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
         removeProductFromPack(productIdToRemove);
     });
 
+
     async function addToThePack(productId) {
         selectedProductIds.push(productId);
         console.log('Selected Array Product IDs:', selectedProductIds);
