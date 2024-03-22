@@ -52,7 +52,7 @@ odoo.define('ecommerce_product.show_pack_price', function (require) {
 
     $(document).on('change', 'select[name="openpack"]', async function () {
         const selectedId = $(this).val();
-        console.log(selectedId);
+        // console.log(selectedId);
         if (selectedId) {
             const packs = await getOpenPacks();
             const selectedPack = packs.find(pack => pack.id === parseInt(selectedId));
@@ -83,6 +83,7 @@ odoo.define('ecommerce_product.show_pack_price', function (require) {
 
     function clearAllProducts() {
         $('#allProducts').empty();
+
     }
 
 
