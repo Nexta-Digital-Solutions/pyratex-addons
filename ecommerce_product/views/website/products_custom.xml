@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-md-10 d-flex justify-content-end align-items-center">
                         <button id="o_add_to_Cart" name="button_add_to_cart" class="btn btn-primary"
-                                style="margin-right: 10px; background-color: blue;">Add to Cart
+                                style="margin-right: 10px; background-color: blue; border-radius: 10%; color: white;">Add to Cart
                         </button>
                         <div id="packPrice" class="centered-element"></div>
                     </div>
