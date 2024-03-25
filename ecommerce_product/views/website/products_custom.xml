@@ -53,10 +53,13 @@
                             </t>
                         </select>
                     </div>
-                    <div class="col-md-10 d-flex justify-content-end">
-                        <button class="btn btn-primary btn-sm" style="margin-right: 10px;">Add to Cart</button>
-                        <div id="packPrice"></div>
+                    <div class="col-md-10 d-flex justify-content-end align-items-center">
+                        <button id="o_add_to_Cart" name="button_add_to_cart" class="btn btn-primary"
+                                style="margin-right: 10px; background-color: blue;">Add to Cart
+                        </button>
+                        <div id="packPrice" class="centered-element"></div>
                     </div>
+
                 </div>
             </t>
         </xpath>
