@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="billing_address" name="Billing Adress">
+        <label>Billing Address</label>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="name" placeholder="Name"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="lastname" placeholder="Last name"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="company" placeholder="Company Name"/>
+            <input type="text" class="form-control" id="vat" placeholder="VAT Number"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="addressone" placeholder="Address 1"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="addresstwo" placeholder="Address 2"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="additional"
+                   placeholder="Additional delivery instructions"/>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="city" placeholder="City"/>
+            </div>
+        </div>
+
+        <div>
+            <t t-set="fiber_families" t-value="env['fiber.family'].sudo().search([])"/>
+            <t t-if="fiber_families">
+                <span t-esc="fiberfamily_set" class="d-none"/>
+                <select class="form-select css_attribute_select mb-2" name="fiberfamily">
+                    <option value="" selected="true">Country</option>
+                    <t t-foreach="fiber_families" t-as="ff">
+                        <option t-att-value="'%s' % (ff.id)" t-esc="ff.name"
+                                t-att-selected="ff.id == fiberfamily_set"/>
+                    </t>
+                </select>
+            </t>
+        </div>
+    </template>
+</odoo>
+
+

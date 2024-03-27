@@ -1,57 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="complete_your_profile" name="Complete Profile">
-        <form>
-            <fieldset>
-                <legend>Complete your profile</legend>
+        <t t-call="website.layout">
+            <div class="container">
+                <form>
+                    <div class="container">
+                        <h2>Complete your profile</h2>
+                        <hr/>
 
-                <label>Address
-                    <input type="text" placeholder="Name"/>
-                    <input type="text" placeholder="Last name"/>
-                    <input type="text" placeholder="Company name"/>
-                    <input type="text" placeholder="Phone number"/>
-                    <input type="text" placeholder="Address 1"/>
-                    <input type="text" placeholder="Address 2"/>
-                    <input type="text" placeholder="Address 2"/>
-                    <input type="text" placeholder="Address 2"/>
-                    <input type="text" placeholder="Additional delivery instructions"/>
-                    <div class="d-flex">
-                        <input type="text" placeholder="Postal Code"/>
-                        <input type="text" placeholder="City"/>
+                        <label>Address</label>
+
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="Name"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="lastname" placeholder="Last name"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="company" placeholder="Company Name"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="addressone" placeholder="Address 1"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="addresstwo" placeholder="Address 2"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="additional"
+                                   placeholder="Additional delivery instructions"/>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="text" class="form-control" id="city" placeholder="City"/>
+                            </div>
+                        </div>
+
+                        <div>
+                            <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
+                            <t t-if="countries">
+                                <select class="form-select css_attribute_select mb-2" name="country">
+                                    <option value="" selected="true">Country</option>
+                                    <t t-foreach="countries" t-as="country">
+                                        <option t-att-value="country.id" t-esc="country.name"/>
+                                    </t>
+                                </select>
+                            </t>
+                        </div>
+<!--                        <div>-->
+<!--                            <select class="form-select css_attribute_select mb-2" name="profession">-->
+<!--                                <option value="" selected="true">Profession</option>-->
+<!--                                <t t-foreach="res_partner_fields['profession'].selection" t-as="option">-->
+<!--                                    <option t-att-value="option[0]" t-esc="option[1]"/>-->
+<!--                                </t>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+<!--                        <div>-->
+<!--                            <select class="form-select css_attribute_select mb-2" name="about_us">-->
+<!--                                <option value="" selected="true">About Us</option>-->
+<!--                                <t t-foreach="res_partner_fields['about_us'].selection" t-as="option">-->
+<!--                                    <option t-att-value="option[0]" t-esc="option[1]"/>-->
+<!--                                </t>-->
+<!--                            </select>-->
+<!--                        </div>-->
+
+
+                        <div class="form-check">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                My billing address is different from my shipping
+                            </label>
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                        </div>
                     </div>
-                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
-                            class="button dropdown">Country
-                    </button>
-                    <br/>
-                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
-                        <li>
-                            <a href="#">This is a link</a>
-                        </li>
-                    </ul>
-                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
-                            class="button dropdown">I'm a
-                    </button>
-                    <br/>
-                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
-                        <li>
-                            <a href="#">This is a link</a>
-                        </li>
-                    </ul>
-                    <button href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
-                            class="button dropdown">How did you hear about us?
-                    </button>
-                    <br/>
-                    <ul id="drop1" class="f-dropdown" aria-hidden="true">
-                        <li>
-                            <a href="#">This is a link</a>
-                        </li>
-                    </ul>
-                    <div class="d-flex">
-                        <p>My billing address is different from my shipping</p>
-                        <input type="checkbox" aria-label="Checkbox for following text input"/>
+
+                    <hr/>
+
+                    <div id="billingAddressContainer" class="container" style="display: none;">
+                        <t t-call="ecommerce_login.billing_address"/>
                     </div>
-                </label>
-            </fieldset>
-        </form>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                var checkbox = document.getElementById("flexCheckDefault");
+                var billingAddressContainer = document.getElementById("billingAddressContainer");
+
+                checkbox.addEventListener("change", function() {
+                if (this.checked) {
+                billingAddressContainer.style.display = "block";
+                } else {
+                billingAddressContainer.style.display = "none";
+                }
+                });
+                });
+            </script>
+
+        </t>
+
     </template>
 </odoo>
