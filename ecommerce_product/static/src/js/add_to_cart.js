@@ -4,46 +4,79 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 
     const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
-    // async function addToProductPack(packId, productIds) {
-    //     const promises = productIds.map(async (id) => {
-    //         await rpc.query({
-    //             model: 'product.pack.line',
-    //             method: 'create',
-    //             args: [{
-    //                 // "pack_id": packId,
-    //                 "parent_product_id": packId,
-    //                 "product_id": id,
-    //                 "quantity": 1
-    //             }]
-    //         });
-    //     });
-    //     await Promise.all(promises);
-    // }
 
-    async function addToProductPack(packId, productIds) {
-        const promises = productIds.map(async (id) => {
-            // Verificar si ya existe una línea de paquete con el mismo pack_id y product_id
-            const existingLine = await rpc.query({
-                model: 'product.pack.line',
+    async function getIdFromProductProduct() {
+        const result = await rpc.query({
+            model: 'product.product',
+            method: 'search_read',
+            args: [
+                [['default_code', '=', 'open_pack_web']],
+                ['id'],
+            ],
+        });
+        return result;
+    }
+
+    async function setPackPrice(id, price) {
+        console.log('Setting pack price. ID:', id, 'Price:', price);
+        const result = await rpc.query({
+            model: 'product.product',
+            method: 'write',
+            args: [[id], {lst_price: parseFloat(price)}]
+        });
+        console.log('Set pack price result:', result);
+        return result;
+    }
+
+
+    async function addToProductPack(packId, templateIds) {
+        await rpc.query({
+            model: 'product.pack.line',
+            method: 'search_read',
+            args: [
+                [['parent_product_id', '=', packId]],
+                ['id'],
+            ],
+        }).then(async (existingLines) => {
+            if (existingLines.length > 0) {
+                await rpc.query({
+                    model: 'product.pack.line',
+                    method: 'unlink',
+                    args: [existingLines.map(line => line.id)],
+                });
+            }
+        });
+
+        const templateCounts = {};
+        templateIds.forEach(templateId => {
+            templateCounts[templateId] = (templateCounts[templateId] || 0) + 1;
+        });
+
+        const promises = Object.entries(templateCounts).map(async ([templateId, quantity]) => {
+            const productIdsData = await rpc.query({
+                model: 'product.product',
                 method: 'search_read',
                 args: [
-                    [['parent_product_id', '=', packId], ['product_id', '=', id]],
-                    ['id'], // Solo necesitamos el id para verificar si existe
+                    [['product_tmpl_id', '=', parseInt(templateId)]],
+                    ['id'],
                 ],
             });
 
-            // Si no existe la línea de paquete, la creamos
-            if (existingLine.length === 0) {
+            const productIds = productIdsData.map(productData => productData.id);
+
+            const productPromises = productIds.map(async (productId) => {
                 await rpc.query({
                     model: 'product.pack.line',
                     method: 'create',
                     args: [{
                         "parent_product_id": packId,
-                        "product_id": id,
-                        "quantity": 1
+                        "product_id": productId,
+                        "quantity": quantity
                     }]
                 });
-            }
+            });
+
+            await Promise.all(productPromises);
         });
 
         await Promise.all(promises);
@@ -53,13 +86,14 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     $(document).on('click', '#o_add_to_Cart', async function () {
         const selectedProductIds = getSelectedProductIds();
         console.log('Received Product IDs:', selectedProductIds);
-
         try {
-            await addToProductPack(66, selectedProductIds); // el id debe ser de la tabla product.product
+            const packPrice = window.selectedPackPrice;
+            const resultId = await getIdFromProductProduct();
+            await setPackPrice(resultId[0].id, packPrice);
+            await addToProductPack(resultId[0].id, selectedProductIds);
             console.log('Products added to product pack.');
         } catch (error) {
             console.error('Error adding products to product pack:', error);
         }
     });
 });
-

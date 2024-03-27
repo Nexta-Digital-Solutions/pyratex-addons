@@ -1,1 +1,1 @@
-from . import signup
+from . import res_partner
