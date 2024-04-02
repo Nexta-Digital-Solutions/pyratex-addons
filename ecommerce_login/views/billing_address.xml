@@ -9,9 +9,13 @@
         <div class="form-group">
             <input type="text" class="form-control" id="lastname" placeholder="Last name"/>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="company" placeholder="Company Name"/>
-            <input type="text" class="form-control" id="vat" placeholder="VAT Number"/>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="company" placeholder="Company Name"/>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="vat" placeholder="VAT Number"/>
+            </div>
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
@@ -26,7 +30,7 @@
             <input type="text" class="form-control" id="additional"
                    placeholder="Additional delivery instructions"/>
         </div>
-        <div class="form-row">
+        <div class="row">
             <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
             </div>
@@ -36,14 +40,12 @@
         </div>
 
         <div>
-            <t t-set="fiber_families" t-value="env['fiber.family'].sudo().search([])"/>
-            <t t-if="fiber_families">
-                <span t-esc="fiberfamily_set" class="d-none"/>
-                <select class="form-select css_attribute_select mb-2" name="fiberfamily">
+            <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
+            <t t-if="countries">
+                <select class="form-select css_attribute_select mb-2" name="country">
                     <option value="" selected="true">Country</option>
-                    <t t-foreach="fiber_families" t-as="ff">
-                        <option t-att-value="'%s' % (ff.id)" t-esc="ff.name"
-                                t-att-selected="ff.id == fiberfamily_set"/>
+                    <t t-foreach="countries" t-as="country">
+                        <option t-att-value="country.id" t-esc="country.name"/>
                     </t>
                 </select>
             </t>

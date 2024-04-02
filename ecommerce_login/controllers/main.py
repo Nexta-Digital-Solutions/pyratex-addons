@@ -34,7 +34,8 @@ class AuthSignupHome(Home):
                                                raise_if_not_found=False)
                     if user_sudo and template:
                         template.sudo().send_mail(user_sudo.id, force_send=True)
-                return request.render('ecommerce_login.complete_your_profile')
+                return request.render('ecommerce_login.complete_your_profile')  # renderiza la vista
+                # return request.redirect('/web/complete_profile')
             except UserError as e:
                 qcontext['error'] = e.args[0]
             except (SignupError, AssertionError) as e:
@@ -54,3 +55,8 @@ class AuthSignupHome(Home):
         response.headers['X-Frame-Options'] = 'SAMEORIGIN'
         response.headers['Content-Security-Policy'] = "frame-ancestors 'self'"
         return response
+
+    # Método para recibir los datos del formulario
+    @http.route('/web/complete_profile', type='http', auth='public', website=True, methods=['POST'])
+    def complete_profile(self, **post):
+        return request.render('ecommerce_login.complete_your_profile')
