@@ -100,8 +100,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     }
 
     return {
-        getSelectedProductIds: getSelectedProductIds,
-        addToThePack: addToThePack
+        getSelectedProductIds: getSelectedProductIds
     };
 });
 

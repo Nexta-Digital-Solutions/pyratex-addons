@@ -1,8 +1,33 @@
 odoo.define('ecommerce_product.add_to_cart', function (require) {
     "use strict";
-    const rpc = require('web.rpc');
 
-    const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
+    const addToThePackModule = require('ecommerce_product.add_to_the_pack');
+    const productId = $(this).data('product-id');
+    let cart = []; // Array para representar el carrito de compras
+
+//    async function addToCart(productId) {
+//        cart.push(productId);
+//    }
+
+    async function addAllToCart() {
+        const selectedProductIds = addToThePackModule.getSelectedProductIds();
+        for (const productId of selectedProductIds) {
+            await addToCart(productId);
+        }
+        console.log('Todos los productos del pack han sido añadidos al carrito.');
+    }
+
+    $(document).on('click', '#o_add_to_Cart', async function () {
+        await addAllToCart();
+        alert('Todos los productos del pack han sido añadidos al carrito.');
+    });
+});
+
+//odoo.define('ecommerce_product.add_to_cart', function (require) {
+//    "use strict";
+//    const rpc = require('web.rpc');
+//
+//    const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
 
 //        async function getIdFromProductProduct() {
@@ -11,52 +36,27 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 //        await rpc.query({
 //            model: 'product.template',
 //            method: 'search_read',
-//			args: [[ ['id','=', 67]], ['id', 'list_price'] ]
+//			args: [[ [$(this).data('product-id')] ], ['lst_price'] ]
 //        }).then(function (data) {
 //            console.log('Data', data);
 //            result = data});
 //        return result;
 //        };
 
-    async function getIdFromProductProduct() {
-    try {
-        const productIds = await getSelectedProductIds();
-        const results = await getProdutId(productIds);
-        return results;
-    } catch (error) {
-        console.error("Error getting product IDs:", error);
-    }
-}
+//GUILLE
+//    async function setPackPrice(id, price) {
+//        console.log('Setting pack price. ID:', id, 'Price:', price);
+//        const result = await rpc.query({
+//            model: 'product.product',
+//            method: 'write',
+//            args: [[id], {lst_price: parseFloat(price)}]
+//        });
+//        console.log('Set pack price result:', result);
+//        return result;
+//    }
 
-
-    async function getProdutId(productIds) {
-        const results = [];
-        for (const productId of productIds) {
-            const result = await rpc.query({
-                model: 'sale.order',
-                method: 'create_so_website',
-                args: [
-                    {'product_tmp_id': productId, 'price': 20}
-                ],
-            });
-            results.push(result);
-        }
-        return result;
-    }
-
-    async function setPackPrice(id, price) {
-        console.log('Setting pack price. ID:', id, 'Price:', price);
-        const result = await rpc.query({
-            model: 'product.template',
-            method: 'write',
-            args: [[id], {list_price: parseFloat(price)}]
-        });
-        console.log('Set pack price result:', result);
-        return result;
-    }
-
-
-//    async function addToProductPack(packId, templateIds) {
+//GUILLE
+//        async function addToProductPack(packId, templateIds) {
 //        await rpc.query({
 //            model: 'product.pack.line',
 //            method: 'search_read',
@@ -109,19 +109,21 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 //        await Promise.all(promises);
 //    }
 
-
-    $(document).on('click', '#o_add_to_Cart', async function () {
-        const selectedProductIds = getSelectedProductIds();
-        console.log('Received Product IDs:', selectedProductIds);
-        try {
-            const packPrice = window.selectedPackPrice;
-            const resultId = await getIdFromProductProduct();
-            console.log('Selected Product IDs:', selectedProductIds);
+//GUILLE
+//    $(document).on('click', '#o_add_to_Cart', async function () {
+//        const selectedProductIds = getSelectedProductIds();
+//        console.log('Received Product IDs:', selectedProductIds);
+//
+//        console.log('Received Product IDs:', selectedProductIds);
+//        try {
+//            const packPrice = window.selectedPackPrice;
+//            const resultId = await getIdFromProductProduct();
+//
 //            await setPackPrice(resultId[0].id, packPrice);
 //            await addToProductPack(resultId[0].id, selectedProductIds);
-            console.log('Products added to product pack.');
-        } catch (error) {
-            console.error('Error adding products to product pack:', error);
-        }
-    });
+//            console.log('Products added to product pack.');
+//        } catch (error) {
+//            console.error('Error adding products to product pack:', error);
+//        }
+//    });
 });
