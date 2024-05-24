@@ -30,7 +30,8 @@
             </div>
 
             <!--Muestra el precio de los productos-->
-            <div t-if="not user_id.partner_id.name == 'Public user' and product.producttype_id.name != 'Swatch'" class="product_price" itemprop="offers"
+            <div t-if="not user_id.partner_id.name == 'Public user' and product.producttype_id.name != 'Swatch'"
+                 class="product_price" itemprop="offers"
                  itemscope="itemscope" itemtype="http://schema.org/Offer">
                 <t t-if="'base_price' in template_price_vals">
                     <del t-attf-class="text-muted me-1 h6 mb-0" style="white-space: nowrap;">
@@ -52,11 +53,14 @@
         <xpath expr="//form" position="inside">
             <div class="container">
                 <t t-if="product.producttype_id.name == 'Swatch'">
-                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary mr-2 w-100" style="background-color: blue; border-radius: 10px; color: white;"
+                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary mr-2 w-100 "
+                            style="background-color: blue; border-radius: 10px; color: white;"
                             t-attf-data-product-id="{{product.id}}">Add to the Pack
                     </button>
                 </t>
             </div>
+
+
         </xpath>
     </template>
 </odoo>

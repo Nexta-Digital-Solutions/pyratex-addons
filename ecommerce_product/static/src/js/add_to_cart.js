@@ -5,32 +5,32 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
 
-//        async function getIdFromProductProduct() {
-//        let result;
-//
-//        await rpc.query({
-//            model: 'product.template',
-//            method: 'search_read',
-//			args: [[ ['id','=', 67]], ['id', 'list_price'] ]
-//        }).then(function (data) {
-//            console.log('Data', data);
-//            result = data});
-//        return result;
-//        };
+        async function getIdFromProductProduct() {
+        let result;
 
-    async function getIdFromProductProduct() {
-    try {
-        const productIds = await getSelectedProductIds();
-        const results = await getProdutId(productIds);
-        return results;
-    } catch (error) {
-        console.error("Error getting product IDs:", error);
-    }
-}
+        await rpc.query({
+            model: 'product.template',
+            method: 'search_read',
+			args: [[ ['id','=', 67]], ['id', 'list_price'] ]
+        }).then(function (data) {
+            console.log('Data', data);
+            result = data});
+        return result;
+        };
+
+//    async function getIdFromProductProduct() {
+//    try {
+//        const productIds = await getSelectedProductIds();
+//        const results = await getProductId(productIds);
+//        return results;
+//    } catch (error) {
+//        console.error("Error getting product IDs:", error);
+//    }
+//}
 
 
-    async function getProdutId(productIds) {
-        const results = [];
+    async function getProductId(productIds, 0) {
+        var results = [];
         for (const productId of productIds) {
             const result = await rpc.query({
                 model: 'sale.order',
@@ -41,8 +41,23 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
             });
             results.push(result);
         }
-        return result;
+        return results;
     }
+
+
+//    var res = result.map(x => ({
+//					product_id: x
+//				}));
+//				$.ajax({
+//					type: "get",
+//					url: "/shop/cart/add_pack_product",
+//					data: {
+//						'data': res
+//					},
+//					success: function(response) {
+//						return true;
+//					}
+//				});
 
     async function setPackPrice(id, price) {
         console.log('Setting pack price. ID:', id, 'Price:', price);
@@ -116,7 +131,8 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         try {
             const packPrice = window.selectedPackPrice;
             const resultId = await getIdFromProductProduct();
-            console.log('Selected Product IDs:', selectedProductIds);
+            const productOpenPack = await getProductId(resultId);
+
 //            await setPackPrice(resultId[0].id, packPrice);
 //            await addToProductPack(resultId[0].id, selectedProductIds);
             console.log('Products added to product pack.');
