@@ -1,63 +1,38 @@
 odoo.define('ecommerce_product.add_to_cart', function (require) {
     "use strict";
     const rpc = require('web.rpc');
+    const ajax = require('web.ajax');
+    var wSaleUtils = require('website_sale.utils');
 
     const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
 
-        async function getIdFromProductProduct() {
+        async function getIdFromProductName(ProductName) {
         let result;
 
         await rpc.query({
-            model: 'product.template',
+            model: 'product.product',
             method: 'search_read',
-			args: [[ ['id','=', 67]], ['id', 'list_price'] ]
+			args: [[ ['name','=', ProductName]], ['id'] ]
         }).then(function (data) {
             console.log('Data', data);
             result = data});
         return result;
         };
 
-//    async function getIdFromProductProduct() {
-//    try {
-//        const productIds = await getSelectedProductIds();
-//        const results = await getProductId(productIds);
-//        return results;
-//    } catch (error) {
-//        console.error("Error getting product IDs:", error);
-//    }
-//}
+        async function getIdFromProducTemplateId(productId) {
+            let result;
+    
+            await rpc.query({
+                model: 'product.product',
+                method: 'search_read',
+                args: [[ ['product_tmpl_id','=', productId]], ['id', 'list_price'] ]
+            }).then(function (data) {
+                data[0].list_price = 0;
+                result = data});
+            return result;
+            };
 
-
-    async function getProductId(productIds, 0) {
-        var results = [];
-        for (const productId of productIds) {
-            const result = await rpc.query({
-                model: 'sale.order',
-                method: 'create_so_website',
-                args: [
-                    {'product_tmp_id': productId, 'price': 20}
-                ],
-            });
-            results.push(result);
-        }
-        return results;
-    }
-
-
-//    var res = result.map(x => ({
-//					product_id: x
-//				}));
-//				$.ajax({
-//					type: "get",
-//					url: "/shop/cart/add_pack_product",
-//					data: {
-//						'data': res
-//					},
-//					success: function(response) {
-//						return true;
-//					}
-//				});
 
     async function setPackPrice(id, price) {
         console.log('Setting pack price. ID:', id, 'Price:', price);
@@ -70,74 +45,54 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         return result;
     }
 
-
-//    async function addToProductPack(packId, templateIds) {
-//        await rpc.query({
-//            model: 'product.pack.line',
-//            method: 'search_read',
-//            args: [
-//                [['parent_product_id', '=', packId]],
-//                ['id'],
-//            ],
-//        }).then(async (existingLines) => {
-//            if (existingLines.length > 0) {
-//                await rpc.query({
-//                    model: 'product.pack.line',
-//                    method: 'unlink',
-//                    args: [existingLines.map(line => line.id)],
-//                });
-//            }
-//        });
-//
-//        const templateCounts = {};
-//        templateIds.forEach(templateId => {
-//            templateCounts[templateId] = (templateCounts[templateId] || 0) + 1;
-//        });
-//
-//        const promises = Object.entries(templateCounts).map(async ([templateId, quantity]) => {
-//            const productIdsData = await rpc.query({
-//                model: 'product.product',
-//                method: 'search_read',
-//                args: [
-//                    [['product_tmpl_id', '=', parseInt(templateId)]],
-//                    ['id'],
-//                ],
-//            });
-//
-//            const productIds = productIdsData.map(productData => productData.id);
-//
-//            const productPromises = productIds.map(async (productId) => {
-//                await rpc.query({
-//                    model: 'product.pack.line',
-//                    method: 'create',
-//                    args: [{
-//                        "parent_product_id": packId,
-//                        "product_id": productId,
-//                        "quantity": quantity
-//                    }]
-//                });
-//            });
-//
-//            await Promise.all(productPromises);
-//        });
-//
-//        await Promise.all(promises);
-//    }
-
-
+    // Esta funcion es para el pack abierto
     $(document).on('click', '#o_add_to_Cart', async function () {
+        let product_ids = []
         const selectedProductIds = getSelectedProductIds();
+
+        for (const record of selectedProductIds){
+            const product_id = await getIdFromProducTemplateId(record);
+            product_ids.push(product_id[0]);
+        }
         console.log('Received Product IDs:', selectedProductIds);
+
+
         try {
             const packPrice = window.selectedPackPrice;
-            const resultId = await getIdFromProductProduct();
-            const productOpenPack = await getProductId(resultId);
+            const resultIdOpenPack = await getIdFromProductName('Open Pack');
+            resultIdOpenPack[0].list_price = packPrice;
 
-//            await setPackPrice(resultId[0].id, packPrice);
-//            await addToProductPack(resultId[0].id, selectedProductIds);
+            const productsOpenPack = [ resultIdOpenPack[0] ].concat(product_ids);
+            for (const record of productsOpenPack){
+                await AddProductOpenPackToCart (record.id, 1, record.list_price);
+            }
             console.log('Products added to product pack.');
         } catch (error) {
             console.error('Error adding products to product pack:', error);
         }
-    });
+    
+
+    })
+
+    async function AddProductOpenPackToCart (product_id, qty, price_unit) {
+
+        const data = await rpc.query({ 
+            route: "/shop/cart/update_json",
+            params: {
+                product_id: product_id,
+                add_qty: qty,
+                price_unit: price_unit
+            }
+        });
+        /*
+            const $navButton = $('header .o_wsale_my_cart').first();
+            wSaleUtils.animateClone($navButton, $(ev.currentTarget).parents('.card'), 25, 40);
+            wSaleUtils.updateCartNavBar(data);
+            if (this.add2cartRerender) {
+                this.trigger_up('widgets_start_request', {
+                    $target: this.$el.closest('.s_dynamic'),
+                });
+            }
+        */
+    }
 });
