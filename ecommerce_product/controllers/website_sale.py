@@ -15,6 +15,7 @@ from odoo.addons.base.models.ir_qweb_fields import nl2br
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.ecommerce_filter.controllers.website_sale_products import ProductsFilter
 from odoo.addons.payment import utils as payment_utils
+from odoo.tools.json import scriptsafe as json_scriptsafe
 
 class WebsiteSaleCart(ProductsFilter):
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
