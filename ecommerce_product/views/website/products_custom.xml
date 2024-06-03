@@ -38,15 +38,13 @@
 
 
         <xpath expr="//div[@id='products_grid']/t" position="after">
-            <div id="allProducts" class="mb-2">
-            </div>
 
             <t t-set="open_pack" t-value="env['open.pack'].sudo().search([])"/>
             <t t-if="open_pack">
                 <span t-esc="openpack_set" class="d-none"/>
                 <div t-if="producttype_set == 2" class="row align-items-center">
                     <div class="col-md-2">
-                        <select class="form-select css_attribute_select mb-2" name="openpack">
+                        <select class="form-select css_attribute_select mb-2" id = "select-openpack" name="openpack">
                             <t t-foreach="open_pack" t-as="op">
                                 <option t-att-value="'%s' % (op.id)" t-esc="op.name"
                                         t-att-selected="op.id == openpack_set"/>
@@ -61,6 +59,8 @@
                         <div id="packPrice" class="centered-element"></div>
                     </div>
 
+                </div>
+                 <div id="allProducts" class="mb-2">
                 </div>
             </t>
         </xpath>

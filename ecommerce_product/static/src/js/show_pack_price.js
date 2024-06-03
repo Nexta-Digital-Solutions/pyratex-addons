@@ -5,9 +5,9 @@ odoo.define('ecommerce_product.show_pack_price', function (require) {
 
     $(document).ready(async function() {
         const packs = await getOpenPacks();
-        const smallPack = packs.find(pack => pack.name === "Small");
-        if (smallPack) {
-            $('select[name="openpack"]').val(smallPack.id).change();
+        const firstPack = packs[0];
+        if (firstPack) {
+            $('select[name="openpack"]').val(firstPack.id).change();
         }
     });
 

@@ -59,7 +59,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 
         try {
             const packPrice = window.selectedPackPrice;
-            const resultIdOpenPack = await getIdFromProductName('Open Pack');
+            const resultIdOpenPack = await getIdFromProductName('Customized Swatchpack');
             resultIdOpenPack[0].list_price = packPrice;
 
             const productsOpenPack = [ resultIdOpenPack[0] ].concat(product_ids);
@@ -84,15 +84,15 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
                 price_unit: price_unit
             }
         });
-        /*
-            const $navButton = $('header .o_wsale_my_cart').first();
-            wSaleUtils.animateClone($navButton, $(ev.currentTarget).parents('.card'), 25, 40);
-            wSaleUtils.updateCartNavBar(data);
-            if (this.add2cartRerender) {
-                this.trigger_up('widgets_start_request', {
-                    $target: this.$el.closest('.s_dynamic'),
-                });
-            }
-        */
+
+        const $navButton = $('header .o_wsale_my_cart').first();
+        wSaleUtils.animateClone($navButton, $(ev.currentTarget).parents('.card'), 25, 40);
+        wSaleUtils.updateCartNavBar(data);
+        if (this.add2cartRerender) {
+            this.trigger_up('widgets_start_request', {
+                $target: this.$el.closest('.s_dynamic'),
+            });
+        }
+        
     }
 });
