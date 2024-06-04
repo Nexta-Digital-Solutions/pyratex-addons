@@ -55,6 +55,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
             'width': '100px',
             'height': '100px'
         });
+        imgElement.addClass('img-openpack');
         const removeButton = $('<button>').addClass('remove-from-pack').html('&#10006;').attr('data-product-id', productId).css({
             'position': 'absolute',
             'top': '5px',
