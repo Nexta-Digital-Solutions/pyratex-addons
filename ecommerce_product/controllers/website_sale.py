@@ -48,7 +48,7 @@ class WebsiteSaleCart(ProductsFilter):
         )
         
         if (price_unit):
-            line_id = order.order_line
+            line_id = request.env['sale.order.line'].browse(values['line_id'])
             line_id.update ({
                 'price_reduce': float(price_unit),
                 'price_reduce_taxexcl': float(price_unit),

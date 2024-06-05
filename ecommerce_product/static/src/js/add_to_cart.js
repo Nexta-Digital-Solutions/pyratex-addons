@@ -49,7 +49,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     $(document).on('click', '#o_add_to_Cart', async function () {
         let product_ids = []
         const selectedProductIds = getSelectedProductIds();
-
+        
         for (const record of selectedProductIds){
             const product_id = await getIdFromProducTemplateId(record);
             product_ids.push(product_id[0]);
@@ -59,12 +59,12 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 
         try {
             const packPrice = window.selectedPackPrice;
-            const resultIdOpenPack = await getIdFromProductName('Open Pack');
+            const resultIdOpenPack = await getIdFromProductName('Customized Swatchpack');
             resultIdOpenPack[0].list_price = packPrice;
 
             const productsOpenPack = [ resultIdOpenPack[0] ].concat(product_ids);
             for (const record of productsOpenPack){
-                await AddProductOpenPackToCart (record.id, 1, record.list_price);
+                await AddProductOpenPackToCart (record.id, 1, record.list_price, this);
             }
             console.log('Products added to product pack.');
         } catch (error) {
@@ -74,7 +74,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 
     })
 
-    async function AddProductOpenPackToCart (product_id, qty, price_unit) {
+    async function AddProductOpenPackToCart (product_id, qty, price_unit, ev) {
 
         const data = await rpc.query({ 
             route: "/shop/cart/update_json",
@@ -84,15 +84,11 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
                 price_unit: price_unit
             }
         });
-        /*
-            const $navButton = $('header .o_wsale_my_cart').first();
-            wSaleUtils.animateClone($navButton, $(ev.currentTarget).parents('.card'), 25, 40);
-            wSaleUtils.updateCartNavBar(data);
-            if (this.add2cartRerender) {
-                this.trigger_up('widgets_start_request', {
-                    $target: this.$el.closest('.s_dynamic'),
-                });
-            }
-        */
+
+        const $navButton = $('header .o_wsale_my_cart').first();
+        const imgContainer = $('#products_grid')
+        wSaleUtils.animateClone($navButton, imgContainer, 25, 40);
+        wSaleUtils.updateCartNavBar(data);  
+        
     }
 });
