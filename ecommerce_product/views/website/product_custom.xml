@@ -92,12 +92,19 @@
             </div>
         </xpath>
 
+        <!--No muestra el precio para usaurios que no se han dado de alta-->
+<!--        <xpath expr="//form//div[hasclass('js_product')]//div" position="attributes">-->
+<!--            <attribute name="t-if">"not user_id.partner_id.name == 'Public user'"</attribute>-->
+<!--        </xpath>-->
         <!--No muestra el precio-->
         <!--        <xpath expr="//form/div/div/t" position="attributes">-->
         <!--            <attribute name="t-if">1!=1</attribute>-->
         <!--        </xpath>-->
 
+
+
         <!--        Muestra un botón u otro según si es pack o no-->
+
         <xpath expr="//a[@id='add_to_cart']" position="replace">
             <a role="button" id="add_to_cart"
                t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"
@@ -107,6 +114,15 @@
                 <span t-if="product.pack_ok" style="font-weight: bold">ADD SWATCH PACK TO THE CART</span>
             </a>
         </xpath>
+
+
+<!--            <div t-foreach="product.product_variant_ids.mapped('product_template_attribute_value_ids')" t-as="variant">-->
+<!--                <t t-if="variant.html_color">-->
+<!--                    <label t-attf-style="background-color:#{variant.html_color}" t-attf-class="css_attribute_color">-->
+<!--                        <input type="radio"/>-->
+<!--                    </label>-->
+<!--                </t>-->
+<!--            </div>-->
 
 
         <xpath expr="//t[@t-placeholder='select']" position="replace">
