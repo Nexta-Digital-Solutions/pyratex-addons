@@ -49,12 +49,12 @@ class WebsiteSaleCart(ProductsFilter):
         
         if (price_unit):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
+            price_reduce = price_unit / (1 + line_id.tax_id.amount /100 )
             line_id.update ({
-                'price_reduce': float(price_unit),
-                'price_reduce_taxexcl': float(price_unit),
-                'price_reduce_taxinc': 1 + (price_unit * line_id.price_tax),
-                'price_subtotal': float(price_unit),
-                'price_total': line_id.product_qty * float(price_unit)
+                'price_reduce': price_reduce,
+                'price_tax': float(price_unit - price_reduce),
+                'price_subtotal': float(price_reduce),
+                'price_total': line_id.product_qty * float(price_reduce)
             })
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
