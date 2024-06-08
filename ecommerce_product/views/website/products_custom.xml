@@ -43,6 +43,9 @@
             <t t-if="open_pack">
                 <span t-esc="openpack_set" class="d-none"/>
                 <div t-if="producttype_set == 2" class="row align-items-center">
+                    <div id = "text-packsize" class = "cold-md-2">
+                        <span>Please, select your pack size:</span>
+                    </div>
                     <div class="col-md-2">
                         <select class="form-select css_attribute_select mb-2" id = "select-openpack" name="openpack">
                             <t t-foreach="open_pack" t-as="op">
