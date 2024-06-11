@@ -9,13 +9,13 @@
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;"
                  t-if="not user_id.partner_id.name == 'Public user'">
                 <div style="width: 25%;">
-                    <ul t-if="product.weight" style="list-style: none;">
+                    <ul t-if="product.weight > 0.0" style="list-style: none;">
                         <li>
                             <strong>Weight</strong>
                         </li>
                         <p t-field="product.weight"/>
                     </ul>
-                    <ul t-if="product.width" style="list-style: none;">
+                    <ul t-if="product.width > 0.0" style="list-style: none;">
                         <li>
                             <strong>Width</strong>
                         </li>
