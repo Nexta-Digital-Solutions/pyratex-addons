@@ -43,6 +43,7 @@
         'views/website/products_item_custom.xml',
         'views/website/products_custom.xml',
         'views/website/product_price_custom.xml',
+        'views/website/website_search_box_hide.xml',
     ],
     'demo': [
     ],
