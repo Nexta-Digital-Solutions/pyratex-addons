@@ -37,7 +37,6 @@ odoo.define('ecommerce_product.show_pack_price', function (require) {
             });
             return result;
         } catch (error) {
-            console.error('Error open packs:', error);
             return [];
         }
     }
