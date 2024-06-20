@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="billing_address" name="Billing Adress">
-    <div id = "ctn_billing_address" class  = "container" style = "display: none;">
+    <div id = "ctn_billing_address" class  = "container" >
         <label>Billing Address</label>
 
         <div class="form-group">

@@ -10,10 +10,10 @@ $( document ).ready(function(){
     },
     });
     
-    document.addEventListener("DOMContentLoaded", function() {
+   
       var checkbox = document.getElementById("flexCheckDefault");
       var billingAddressContainer = document.getElementById("billingAddressContainer");
-
+      if (checkbox){
         checkbox.addEventListener("change", function() {
           if (this.checked) {
           billingAddressContainer.style.display = "block";
@@ -21,7 +21,8 @@ $( document ).ready(function(){
           billingAddressContainer.style.display = "none";
           }
         });
-      });
+      };
+
 
          
 
