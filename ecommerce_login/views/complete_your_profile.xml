@@ -2,21 +2,23 @@
 <odoo>
     <template id="complete_your_profile" name="Complete Profile">
         <t t-call="website.layout">
-            <div class="container">
+            <div class="container" id="divFields">
                 <h2>Complete your profile</h2>
                 <hr/>
-                <div class="row">
+                <div class="row" >
+
                     <div class="col-md-6">
-                        <form t-attf-action="/web/complete_profile" role="form" method="post">
+                        <form action="javascript:showModal()">
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-                            <label>Address</label>
-
                             <div class="form-group">
-                                <input type="text" class="form-control" id="name" placeholder="Name"/>
+                                <input type="text" v-model = "name" class="form-control" id="name" placeholder="Name"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="lastname" placeholder="Last name"/>
+                                <input type="text" v-model = "lastname" class="form-control" id="lastname" placeholder="Last name"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" v-model = "email" class="form-control" id="email" placeholder="email"/>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="company" placeholder="Company Name"/>
@@ -96,7 +98,7 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Next</button>
                             </div>
 
                         </form>
@@ -106,15 +108,14 @@
                         <div class="card mb-3" style="max-width: 400px;">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="/ecommerce_login/static/img/placeholder.png" class="img-fluid rounded-start" alt="..."/>
+                                    <img src="/ecommerce_login/static/img/placeholder.svg" class="img-fluid rounded-start" alt="..."/>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">Full name</h5>
-                                        <p class="card-text">brand@pyratexfabrics.com
+                                        <h5 class="card-title" placeholder = "name">{{ name }} {{ lastname }}</h5>
+                                        <p class="card-text" placeholder = "email">{{ email }}
                                         </p>
-                                        <p class="card-text">Number
-                                        </p>
+                                        <p class="card-text" placeholder = "phone number">{{ phonenumber }}</p>
                                         <p class="card-text">
                                             <small class="text-muted">Last updated 3 mins ago</small>
                                         </p>
@@ -124,33 +125,77 @@
                         </div>
                     </div>
                 </div>
+
+
+                <t t-call = "ecommerce_login.mldna"/>
+                <!-- Modal
+
+                    <div class="modal fade show"  id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">LNDA</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form class="was-validated">
+                                <div class="form-group" id = "ods">
+                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="date_start" class="col-form-label">Fecha Inicio:</label>
+                                    <input type="date" class="form-control" id="date_start"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date_end" class="col-form-label">Fecha Fin:</label>
+                                    <input type="date" class="form-control" id="date_end"/>
+                                </div>
+
+                                <div t-if="doc.signature" class="mt-4 ml64 mr4" name="signature">
+                                    <div class="offset-8">
+                                        <strong>Signature</strong>
+                                    </div>
+                                    <div class="offset-8">
+                                        <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                                    </div>
+                                    <div class="offset-8 text-center">
+                                        <p t-field="doc.signed_by"/>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id = "modal_save" class="btn btn-primary">Save Changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                -->
+
+
             </div>
 
             <script> <!--Muestra el input cuando seleccionan "otros" en el dropdown-->
                 document.getElementById("about_us_select").addEventListener("change", function() {
                 var otherReasonInput = document.getElementById("other_reason");
                 if (this.value === "other") {
-                otherReasonInput.style.display = "block";
+                    otherReasonInput.style.display = "block";
                 } else {
-                otherReasonInput.style.display = "none";
+                    otherReasonInput.style.display = "none";
                 }
+                function showModal(){
+                        $('#modal_lnda').modal('show');
+                    } 
                 });
+
+                
             </script>
 
-            <script> <!--Muestra el segundo formulario cuando seleccionan el checkbox-->
-                document.addEventListener("DOMContentLoaded", function() {
-                var checkbox = document.getElementById("flexCheckDefault");
-                var billingAddressContainer = document.getElementById("billingAddressContainer");
-
-                checkbox.addEventListener("change", function() {
-                if (this.checked) {
-                billingAddressContainer.style.display = "block";
-                } else {
-                billingAddressContainer.style.display = "none";
-                }
-                });
-                });
-            </script>
+            
 
         </t>
     </template>

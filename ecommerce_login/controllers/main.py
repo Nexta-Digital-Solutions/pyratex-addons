@@ -22,9 +22,10 @@ class AuthSignupHome(Home):
         if not qcontext.get('token') and not qcontext.get('signup_enabled'):
             raise werkzeug.exceptions.NotFound()
 
-        if 'error' not in qcontext and request.httprequest.method == 'POST':
+        if 'error' not in qcontext:
+        #and request.httprequest.method == 'POST':
             try:
-                self.do_signup(qcontext)
+                #self.do_signup(qcontext)
                 if qcontext.get('token'):
                     User = request.env['res.users']
                     user_sudo = User.sudo().search(
