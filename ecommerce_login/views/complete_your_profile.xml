@@ -187,12 +187,13 @@
                 } else {
                     otherReasonInput.style.display = "none";
                 }
-                function showModal(){
-                        $('#modal_lnda').modal('show');
-                    } 
+                
                 });
 
-                
+                function showModal(){
+                    $('#modal_lnda').modal('show');
+                } 
+
             </script>
 
             
