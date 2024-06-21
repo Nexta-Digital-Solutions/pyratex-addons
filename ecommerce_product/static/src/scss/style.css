@@ -4,8 +4,13 @@ body {
     color: black;
 }
 
-/*.main-container {*/
-/*    background-color: blue;*/
-/*    font-family: "Roboto", sans-serif !important;*/
-/*    color: black;*/
-/*}*/
+
+#select-openpack {
+    width: auto;
+}
+
+#text-packsize>span{
+    font-weight: bolder;
+    margin-bottom: 0.5rem;
+}
+

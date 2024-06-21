@@ -2,7 +2,7 @@
 <odoo>
     <template id="product_price_custom" inherit_id="website_sale.product_price" name="Product Price Custom">
         <xpath expr="//div/h3[hasclass('css_editable_mode_hidden')]" position="replace">
-            <h5 class="css_editable_mode_hidden">
+            <h5 class="css_editable_mode_hidden" t-if="not user_id.partner_id.name == 'Public user'">
                 <span class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                 <span itemprop="price" style="display:none;" t-esc="combination_info['price']"/>
                 <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>

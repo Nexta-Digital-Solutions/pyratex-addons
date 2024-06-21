@@ -2,112 +2,202 @@
 <odoo>
     <template id="complete_your_profile" name="Complete Profile">
         <t t-call="website.layout">
-            <div class="container">
-                <form>
-                    <div class="container">
-                        <h2>Complete your profile</h2>
-                        <hr/>
+            <div class="container" id="divFields">
+                <h2>Complete your profile</h2>
+                <hr/>
+                <div class="row" >
 
-                        <label>Address</label>
+                    <div class="col-md-6">
+                        <form action="javascript:showModal()">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="name" placeholder="Name"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="lastname" placeholder="Last name"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="company" placeholder="Company Name"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="addressone" placeholder="Address 1"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="addresstwo" placeholder="Address 2"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="additional"
-                                   placeholder="Additional delivery instructions"/>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
+                            <div class="form-group">
+                                <input type="text" v-model = "name" class="form-control" id="name" placeholder="Name"/>
                             </div>
-                            <div class="form-group col-md-6">
-                                <input type="text" class="form-control" id="city" placeholder="City"/>
+                            <div class="form-group">
+                                <input type="text" v-model = "lastname" class="form-control" id="lastname" placeholder="Last name"/>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" v-model = "email" class="form-control" id="email" placeholder="email"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="company" placeholder="Company Name"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="addressone" placeholder="Address 1"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="addresstwo" placeholder="Address 2"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="additional"
+                                       placeholder="Additional delivery instructions"/>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" id="city" placeholder="City"/>
+                                </div>
+                            </div>
 
-                        <div>
-                            <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
-                            <t t-if="countries">
-                                <select class="form-select css_attribute_select mb-2" name="country">
-                                    <option value="" selected="true">Country</option>
-                                    <t t-foreach="countries" t-as="country">
-                                        <option t-att-value="country.id" t-esc="country.name"/>
+                            <div>
+                                <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
+                                <t t-if="countries">
+                                    <select class="form-select css_attribute_select mb-2" name="country">
+                                        <option value="" selected="true">Country</option>
+                                        <t t-foreach="countries" t-as="country">
+                                            <option t-att-value="country.id" t-esc="country.name"/>
+                                        </t>
+                                    </select>
+                                </t>
+                            </div>
+                            <div>
+                                <t t-set="professions"
+                                   t-value="['individual', 'student', 'company', 'library', 'project']"/>
+                                <select class="form-select css_attribute_select mb-2" name="profession">
+                                    <option value="" selected="selected">I'm</option>
+                                    <t t-foreach="professions" t-as="profession">
+                                        <option t-att-value="profession"
+                                                t-esc="{'individual': 'An Individual', 'student': 'A Student', 'company': 'A Company', 'library': 'A Material Library', 'project': 'Starting a new project'}[profession]"/>
                                     </t>
                                 </select>
-                            </t>
+                            </div>
+
+                            <div>
+                                <t t-set="about_us_options"
+                                   t-value="['engine', 'instagram', 'linkedin', 'word', 'events', 'newspaper', 'other']"/>
+                                <select class="form-select css_attribute_select mb-2" name="about_us"
+                                        id="about_us_select">
+                                    <option value="" selected="selected">About Us</option>
+                                    <t t-foreach="about_us_options" t-as="option">
+                                        <option t-att-value="option"
+                                                t-esc="{'engine': 'Search engine', 'instagram': 'Instagram', 'linkedin': 'Linkedin', 'word': 'Word of Mouth', 'events': 'Events', 'newspaper': 'Newspaper/Press', 'other': 'Other'}[option]"/>
+                                    </t>
+                                </select>
+                                <input type="text" id="other_reason" name="other_reason" style="display: none;"
+                                       placeholder="Enter Other Reason"/>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    My billing address is different from my shipping
+                                </label>
+                            </div>
+
+
+                            <hr/>
+
+                            <div id="billingAddressContainer" class="container" style="display: none;">
+                                <t t-call="ecommerce_login.billing_address"/>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="btn btn-primary">Next</button>
+                            </div>
+
+                        </form>
+                    </div>
+                    <!--Modificar este div para recibir los datos del formulario-->
+                    <div class="col-md-6">
+                        <div class="card mb-3" style="max-width: 400px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/ecommerce_login/static/img/placeholder.svg" class="img-fluid rounded-start" alt="..."/>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title" placeholder = "name">{{ name }} {{ lastname }}</h5>
+                                        <p class="card-text" placeholder = "email">{{ email }}
+                                        </p>
+                                        <p class="card-text" placeholder = "phone number">{{ phonenumber }}</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">Last updated 3 mins ago</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-<!--                        <div>-->
-<!--                            <select class="form-select css_attribute_select mb-2" name="profession">-->
-<!--                                <option value="" selected="true">Profession</option>-->
-<!--                                <t t-foreach="res_partner_fields['profession'].selection" t-as="option">-->
-<!--                                    <option t-att-value="option[0]" t-esc="option[1]"/>-->
-<!--                                </t>-->
-<!--                            </select>-->
-<!--                        </div>-->
-
-<!--                        <div>-->
-<!--                            <select class="form-select css_attribute_select mb-2" name="about_us">-->
-<!--                                <option value="" selected="true">About Us</option>-->
-<!--                                <t t-foreach="res_partner_fields['about_us'].selection" t-as="option">-->
-<!--                                    <option t-att-value="option[0]" t-esc="option[1]"/>-->
-<!--                                </t>-->
-<!--                            </select>-->
-<!--                        </div>-->
+                    </div>
+                </div>
 
 
-                        <div class="form-check">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                My billing address is different from my shipping
-                            </label>
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"/>
+                <t t-call = "ecommerce_login.mldna"/>
+                <!-- Modal
+
+                    <div class="modal fade show"  id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLongTitle">LNDA</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <form class="was-validated">
+                                <div class="form-group" id = "ods">
+                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="date_start" class="col-form-label">Fecha Inicio:</label>
+                                    <input type="date" class="form-control" id="date_start"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date_end" class="col-form-label">Fecha Fin:</label>
+                                    <input type="date" class="form-control" id="date_end"/>
+                                </div>
+
+                                <div t-if="doc.signature" class="mt-4 ml64 mr4" name="signature">
+                                    <div class="offset-8">
+                                        <strong>Signature</strong>
+                                    </div>
+                                    <div class="offset-8">
+                                        <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
+                                    </div>
+                                    <div class="offset-8 text-center">
+                                        <p t-field="doc.signed_by"/>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                              </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id = "modal_save" class="btn btn-primary">Save Changes</button>
+                          </div>
                         </div>
+                      </div>
                     </div>
+                -->
 
-                    <hr/>
 
-                    <div id="billingAddressContainer" class="container" style="display: none;">
-                        <t t-call="ecommerce_login.billing_address"/>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </form>
             </div>
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                var checkbox = document.getElementById("flexCheckDefault");
-                var billingAddressContainer = document.getElementById("billingAddressContainer");
-
-                checkbox.addEventListener("change", function() {
-                if (this.checked) {
-                billingAddressContainer.style.display = "block";
+            <script> <!--Muestra el input cuando seleccionan "otros" en el dropdown-->
+                document.getElementById("about_us_select").addEventListener("change", function() {
+                var otherReasonInput = document.getElementById("other_reason");
+                if (this.value === "other") {
+                    otherReasonInput.style.display = "block";
                 } else {
-                billingAddressContainer.style.display = "none";
+                    otherReasonInput.style.display = "none";
                 }
+                
                 });
-                });
+
+                function showModal(){
+                    $('#modal_lnda').modal('show');
+                } 
+
             </script>
 
-        </t>
+            
 
+        </t>
     </template>
 </odoo>
