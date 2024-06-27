@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 odoo.define('ecommerce_product.add_to_cart', function (require) {
     "use strict";
     const rpc = require('web.rpc');
@@ -68,6 +69,13 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
             }
             console.log('Products added to product pack.');
         } catch (error) {
+
+             Swal.fire({
+                icon: 'error',
+                title: 'Swatchpack',
+                text: 'You can only order one Swatch Pack for each order. If you need a larger size, please remove the previous Swatchpack from the shopping cart before adding a new pack',
+//                footer: '<a href>Why do I have this issue?</a>'
+            });
             console.error('Error adding products to product pack:', error);
         }
     
