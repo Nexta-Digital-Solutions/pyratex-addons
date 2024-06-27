@@ -14,4 +14,5 @@ from . import (product_template,
                product_product,
                open_pack,
                user_open_pack,
+               sale_order,
                )

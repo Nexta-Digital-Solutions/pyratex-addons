@@ -37,7 +37,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
 
 
         packElementsNumber++;
-        console.log('Suma', packElementsNumber);
+//        console.log('Suma', packElementsNumber);
     }
 
     function removeProductFromPack(productIdToRemove) {
@@ -55,6 +55,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
             'width': '100px',
             'height': '100px'
         });
+        imgElement.addClass('img-openpack');
         const removeButton = $('<button>').addClass('remove-from-pack').html('&#10006;').attr('data-product-id', productId).css({
             'position': 'absolute',
             'top': '5px',
@@ -83,7 +84,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
                 method: 'read',
                 args: [[parseInt(selectedOpenPackId)], ['elements_number']],
             });
-            console.log('Prueba', result[0].elements_number);
+            console.log('Cantidad máxima', result[0].elements_number);
             return result[0].elements_number;
         } else {
             return 0;
@@ -100,9 +101,8 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     }
 
     return {
-        getSelectedProductIds: getSelectedProductIds
+        getSelectedProductIds: getSelectedProductIds,
+        addToThePack: addToThePack
     };
 });
-
-
 
