@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="mldna" name="mldna">
-         <div class="modal fade show"  id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+         <div class="modal fade show" style="z-index: 1600" id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -67,7 +67,7 @@ BETWEEN
           <td>
             <div class="flex-row">
               <div class="wrapper">
-                <canvas id="signature-pad" width="400" height="200"></canvas>
+                <canvas id="signature-pad" name = "signature-pad" width="400" height="200"></canvas>
               </div>
             </div>
           </td>
@@ -89,7 +89,7 @@ BETWEEN
 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id = "modal_save" class="btn btn-primary">Save Changes</button>
+                            <button type="button" id = "modal_save" class="btn btn-primary">Next</button>
                           </div>
                         </div>
                       </div>

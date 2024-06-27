@@ -2,43 +2,45 @@
 <odoo>
     <template id="complete_your_profile" name="Complete Profile">
         <t t-call="website.layout">
+
+        <form action="javascript:showModal()" id = "form-mlnda">
             <div class="container" id="divFields">
                 <h2>Complete your profile</h2>
                 <hr/>
                 <div class="row" >
 
                     <div class="col-md-6">
-                        <form action="javascript:showModal()">
+                
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
                             <div class="form-group">
-                                <input type="text" v-model = "name" class="form-control" id="name" placeholder="Name"/>
+                                <input type="text" v-model = "name" class="form-control" id="name" name = "name" placeholder="Name"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "lastname" class="form-control" id="lastname" placeholder="Last name"/>
+                                <input type="text" v-model = "lastname" class="form-control" id="lastname" name = "lastname" placeholder="Last name"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "email" class="form-control" id="email" placeholder="email"/>
+                                <input type="text" v-model = "email" class="form-control" id="email" name = "email" placeholder="email"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="company" placeholder="Company Name"/>
+                                <input type="text" class="form-control" id="company" name = "company" placeholder="Company Name"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="phone" placeholder="Phone number"/>
+                                <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="addressone" placeholder="Address 1"/>
+                                <input type="text" class="form-control" id="addressone" name = "address1" placeholder="Address 1"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="addresstwo" placeholder="Address 2"/>
+                                <input type="text" class="form-control" id="addresstwo" name = "address2" placeholder="Address 2"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="additional"
+                                <input type="text" class="form-control" id="additional" name = "additional_instructions" 
                                        placeholder="Additional delivery instructions"/>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" id="postalcode" placeholder="Postal Code"/>
+                                    <input type="text" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code"/>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="text" class="form-control" id="city" placeholder="City"/>
@@ -101,7 +103,7 @@
                                 <button type="submit" class="btn btn-primary">Next</button>
                             </div>
 
-                        </form>
+
                     </div>
                     <!--Modificar este div para recibir los datos del formulario-->
                     <div class="col-md-6">
@@ -128,57 +130,10 @@
 
 
                 <t t-call = "ecommerce_login.mldna"/>
-                <!-- Modal
-
-                    <div class="modal fade show"  id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
-                      <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLongTitle">LNDA</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                              <form class="was-validated">
-                                <div class="form-group" id = "ods">
-                                    
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="date_start" class="col-form-label">Fecha Inicio:</label>
-                                    <input type="date" class="form-control" id="date_start"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="date_end" class="col-form-label">Fecha Fin:</label>
-                                    <input type="date" class="form-control" id="date_end"/>
-                                </div>
-
-                                <div t-if="doc.signature" class="mt-4 ml64 mr4" name="signature">
-                                    <div class="offset-8">
-                                        <strong>Signature</strong>
-                                    </div>
-                                    <div class="offset-8">
-                                        <img t-att-src="image_data_uri(doc.signature)" style="max-height: 4cm; max-width: 8cm;"/>
-                                    </div>
-                                    <div class="offset-8 text-center">
-                                        <p t-field="doc.signed_by"/>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                              </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" id = "modal_save" class="btn btn-primary">Save Changes</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                -->
-
+                <t t-call = "ecommerce_login.dlna_process_complete"/>
 
             </div>
-
+        </form>
             <script> <!--Muestra el input cuando seleccionan "otros" en el dropdown-->
                 document.getElementById("about_us_select").addEventListener("change", function() {
                 var otherReasonInput = document.getElementById("other_reason");

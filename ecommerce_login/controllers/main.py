@@ -61,3 +61,55 @@ class AuthSignupHome(Home):
     @http.route('/web/complete_profile', type='http', auth='public', website=True, methods=['POST'])
     def complete_profile(self, **post):
         return request.render('ecommerce_login.complete_your_profile')
+    
+    @http.route('/web/signup/saveMldna', type='http', auth='public', website=True, sitemap=False)
+    def web_saveDLNA(self, **post):
+        params = post
+        partner_id = self.createContactDLNA(params)        
+        user_id = self.createUserDLNA(params, partner_id)
+        #user_id.action_reset_password()
+        doc = partner_id.createDocumentMDNA(partner_id, params)
+        #return request.render('ecommerce_login.complete_your_profile')
+
+    def createUserDLNA(self, data, parent_id):
+        name = ' '.join([data.get('name'), data.get('lastname')])
+        email = data.get('email')
+        user_data = {
+            'name': name,
+            'login': email,
+            'sel_groups_1_9_10': 9,
+            'partner_id': parent_id.id
+        }
+        
+        user = request.env['res.users'].sudo().search([ ('login', '=', email) ])
+        if (not user):
+            user = request.env['res.users'].sudo().create( user_data )
+        return user
+            
+    def createContactDLNA(self, data):
+        name = ' '.join([data.get('name'), data.get('lastname')])
+        email = data.get('email')
+        company = {
+            'name': data.get('company')
+        }
+        
+        contact = {
+            'name': name,
+            'email': email,
+            'profession': data.get('profession'),
+            'about_us': data.get('about_us')
+        }
+        
+        partner = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
+        if (not partner):
+           partner = request.env['res.partner'].sudo().create( contact )
+        return partner
+        
+    def createInvoiceDLNA(self, data):
+        invoice_address = {
+            'name': data.get('invoice_name'),
+            'vat': data.get('invoice_vat'),
+            'street': data.get('invoice_address1'),
+            'street2': data.get('invoice_address2'),
+            'zip': data.get('invoice_postaldate')
+        }

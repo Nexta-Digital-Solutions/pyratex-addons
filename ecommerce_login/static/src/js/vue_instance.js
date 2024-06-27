@@ -23,6 +23,30 @@ $( document ).ready(function(){
         });
       };
 
+      let modal_save = document.getElementById('modal_save');
+      let modal_complete = document.querySelector('#modal_dlna_process_complete');
+      if (modal_save){
+        modal_save.addEventListener('click', (e) => {
+          e.preventDefault();
+          var el = $('#form-mlnda');
+          $.ajax({
+              type: el.attr('method'),
+              url: '/web/signup/saveMldna',
+              data: el.serialize(),
+              context: this
+          }).done(function(responseText) {
+                $('#modal_dlna_process_complete').modal('show');
+          });
+        })
+      }
+
+      let btn_modal_complete = document.querySelector('#btn_close_process_complete');
+      if (btn_modal_complete) {
+        btn_modal_complete.addEventListener('click', (e) => {
+          e.preventDefault();
+          $('#modal_save').modal('toggle');
+        });
+      }
 
          
 
