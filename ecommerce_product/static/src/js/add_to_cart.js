@@ -76,7 +76,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
                 text: 'You can only order one Swatch Pack for each order. If you need a larger size, please remove the previous Swatchpack from the shopping cart before adding a new pack',
 //                footer: '<a href>Why do I have this issue?</a>'
             });
-            console.error('Error adding products to product pack:', error);
+            console.error('Ops... Error adding products to product pack:', error);
         }
     
 
