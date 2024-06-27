@@ -1,4 +1,5 @@
-from sweetalert2 import Swal;
+//from sweetalert2 import Swal;
+import swal from 'swal';
 
 odoo.define('ecommerce_product.add_to_cart', function (require) {
     "use strict";
