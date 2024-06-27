@@ -68,15 +68,16 @@
                     <div id="text-packsize" class="cold-md-2">
                         <span>Please, select your pack size:</span>
                     </div>
-                    <div class="col-md-2">
-                        <select class="form-select css_attribute_select mb-2" id="select-openpack" name="openpack">
+                    <div class="col-md-3">
+<!--                        form-select -->
+                        <select class="css_attribute_select mb-2" id="select-openpack" name="openpack">
                             <t t-foreach="open_pack" t-as="op">
                                 <option t-att-value="'%s' % (op.id)" t-esc="op.name"
                                         t-att-selected="op.id == openpack_set"/>
                             </t>
                         </select>
                     </div>
-                    <div class="col-md-10 d-flex justify-content-end align-items-center">
+                    <div class="col-md-9 d-flex justify-content-end align-items-center">
                         <button id="o_add_to_Cart" name="button_add_to_cart" class="btn btn-primary"
                                 style="margin-right: 10px; background-color: blue; border-radius: 10px; color: white;">
                             Add to Cart
