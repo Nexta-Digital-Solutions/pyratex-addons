@@ -49,52 +49,48 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     }
 
     // Esta funcion es para el pack abierto
-   $(document).on('click', '#o_add_to_Cart', async function () {
+$(document).on('click', '#o_add_to_Cart', async function () {
     let product_ids = [];
     const selectedProductIds = getSelectedProductIds();
 
     try {
+        console.log('Starting to fetch product IDs');
         for (const record of selectedProductIds) {
             const product_id = await getIdFromProducTemplateId(record);
             product_ids.push(product_id[0]);
         }
-        console.log('Received Product IDs:', selectedProductIds);
+        console.log('Fetched Product IDs:', product_ids);
 
         const packPrice = window.selectedPackPrice;
+        console.log('Pack Price:', packPrice);
+
         const resultIdOpenPack = await getIdFromProductName('Customized Swatchpack');
+        console.log('Result ID Open Pack:', resultIdOpenPack);
 
         if (resultIdOpenPack.length === 0) {
             throw new Error('Customized Swatchpack not found');
         }
 
         resultIdOpenPack[0].list_price = packPrice;
-
         const productsOpenPack = [resultIdOpenPack[0]].concat(product_ids);
+        console.log('Products to add to cart:', productsOpenPack);
 
         for (const record of productsOpenPack) {
             await AddProductOpenPackToCart(record.id, 1, record.list_price, this);
+            console.log('Added product to cart:', record);
         }
-        console.log('Products added to product pack.');
+        console.log('All products added to product pack successfully.');
 
     } catch (error) {
-            for (const record of selectedProductIds) {
-            const product_id = await getIdFromProducTemplateId(record);
-            product_ids.push(product_id[0]);
-        }
-        console.log('Received Product IDs:', selectedProductIds);
-
-        const packPrice = window.selectedPackPrice;
-        const resultIdOpenPack = await getIdFromProductName('Customized Swatchpack');
-        if (resultIdOpenPack.length === 0) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Swatchpack',
-                    text: 'You can only order one Swatch Pack for each order. If you need a larger size, please remove the previous Swatchpack from the shopping cart before adding a new pack',
-                });
-                console.error('Ops... Error adding products to product pack:', error);
-            }
-        }
+        Swal.fire({
+            icon: 'error',
+            title: 'Swatchpack',
+            text: 'You can only order one Swatch Pack for each order. If you need a larger size, please remove the previous Swatchpack from the shopping cart before adding a new pack',
+        });
+        console.error('Ops... Error adding products to product pack:', error);
+    }
 });
+
 
     async function AddProductOpenPackToCart (product_id, qty, price_unit, ev) {
 
