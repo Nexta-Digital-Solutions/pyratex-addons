@@ -1,4 +1,5 @@
-import Swal from 'sweetalert2';
+from sweetalert2 import Swal;
+
 odoo.define('ecommerce_product.add_to_cart', function (require) {
     "use strict";
     const rpc = require('web.rpc');
