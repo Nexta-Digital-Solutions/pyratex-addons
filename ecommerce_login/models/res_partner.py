@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 from docx import Document
+from docx.shared import Mm
 from docxtpl import DocxTemplate,InlineImage
 import jinja2
 import tempfile
@@ -8,6 +9,11 @@ from odoo.exceptions import UserError
 import io
 import os
 import base64
+from PIL import Image
+from io import StringIO
+import re
+from binascii import a2b_base64
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -16,19 +22,30 @@ class ResPartner(models.Model):
     about_us = fields.Selection([('engine', 'Search engine'), ('instagram', 'Instagram'), ('linkedin', 'Linkedin'), ('word','Word of Mouth'), ('events','Events'), ('newspaper', 'Newspaper/ Press'),('other','Other')], string='About Us')
 
 
-    def generateTempFile(self):
-        tf = tempfile.NamedTemporaryFile(mode='w+', delete=False)
+    def generateTempFile(self, suffix = ''):
+        tf = tempfile.NamedTemporaryFile(mode='w+', delete=True, suffix=suffix)
+        
         temp_file_name = tf.name
         folder = tempfile.gettempdir()
         tf.close()
         return { 'name': temp_file_name, 'folder': folder }  
+   
+    def createDocumentSignature(self,signature):
+        temp_file = self.generateTempFile('.jpg')
+        imgstr = re.search(r'base64,(.*)', signature).group(1)
+        binary_data = a2b_base64(imgstr)
+        Out = open(temp_file.get('name'), 'wb')
+        Out.write(binary_data)
+        Out.close()
+        return temp_file
     
-    def createDocumentMDNA(self, partner_id, data):
+    def createDocumentMDNA(self, partner_id, data, signature):
         folder = 'Templates'
         template_name = "mnda.docx"
         folder_id = self.env['documents.folder'].search([ ('name', '=', folder)])
         docs = self.env['documents.document'].search( [('folder_id', '=', folder_id.id), ('name', '=', template_name)])
         merger = PdfFileMerger()
+        signature_file = self.createDocumentSignature(signature)
         for doc in docs:
             output = io.BytesIO()
             output.write(doc.raw)
@@ -43,7 +60,7 @@ class ResPartner(models.Model):
             outfile.close()
 			
             dic = {}
-            template_render = self.template_renderer(temp_file, dic)
+            template_render = self.template_renderer(temp_file, dic, signature_file)
             temp_file_name_pdf = template_render['name'] + ".pdf"
 
             os_cmd = os.system("soffice --headless --convert-to pdf --outdir %s %s" % (template_render['folder'], template_render['name']) )
@@ -66,19 +83,19 @@ class ResPartner(models.Model):
             'folder_id': folder_id.id
         })
     
-    def template_renderer(self, docTemplate, dataTemplate, field_not_found = False):
+    def template_renderer(self, docTemplate, dataTemplate, signature_file, field_not_found = False):
         docTemplate_new =self.generateTempFile()
         jinja_env = jinja2.Environment(autoescape=True)
         tpl = DocxTemplate(docTemplate['name'])
+        #image_path = ''.join([os.path.dirname(os.path.abspath(__file__)),'/','signature_pyratex.png'])
+        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), height=Mm(10))
         try:
             tpl.render(dataTemplate, jinja_env)
             tpl.save(docTemplate_new['name'])
         except Exception as e:
-            ods = self._context.get('active_id')
-            ods_id = self.env['service.order'].browse(ods)
             new_field = e.message.split(' ')[0].replace("'","")
             if (field_not_found == new_field):
                 raise UserError (_("Campo %s no encontrado" % ( new_field )))
-            dataTemplate[new_field] = getattr(ods_id, new_field, None)
-            return self.template_renderer(docTemplate, dataTemplate, new_field)
+            #dataTemplate[new_field] = getattr(ods_id, new_field, None)
+            #return self.template_renderer(docTemplate, dataTemplate, new_field)
         return docTemplate_new

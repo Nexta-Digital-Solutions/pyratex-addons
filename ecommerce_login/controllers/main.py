@@ -8,6 +8,7 @@ from odoo.addons.web.controllers.home import ensure_db, Home, SIGN_UP_REQUEST_PA
 from odoo.addons.base_setup.controllers.main import BaseSetup
 from odoo.exceptions import UserError
 from odoo.http import request
+import json
 
 _logger = logging.getLogger(__name__)
 
@@ -62,23 +63,28 @@ class AuthSignupHome(Home):
     def complete_profile(self, **post):
         return request.render('ecommerce_login.complete_your_profile')
     
-    @http.route('/web/signup/saveMldna', type='http', auth='public', website=True, sitemap=False)
+    @http.route('/web/signup/saveMldna', type='http', auth='public', website=True, sitemap=False, csrf = False)
     def web_saveDLNA(self, **post):
         params = post
-        partner_id = self.createContactDLNA(params)        
+        signature = params.get('img')
+        partner_id = self.createContactDLNA(params, signature)        
         user_id = self.createUserDLNA(params, partner_id)
         #user_id.action_reset_password()
-        doc = partner_id.createDocumentMDNA(partner_id, params)
-        #return request.render('ecommerce_login.complete_your_profile')
+        doc = partner_id.createDocumentMDNA(partner_id, params, signature)
 
     def createUserDLNA(self, data, parent_id):
-        name = ' '.join([data.get('name'), data.get('lastname')])
-        email = data.get('email')
+        name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
+        email = data.get('data[email]')
+        country = request.env['res.country'].search([ ('name', '=',  data.get('data[country]')) ])
         user_data = {
             'name': name,
             'login': email,
             'sel_groups_1_9_10': 9,
-            'partner_id': parent_id.id
+            'partner_id': parent_id.id,
+            'street': data.get('data[address1]'),
+            'zip': data.get('data[postalcode]'),
+            'state': data.get('data[city]'),
+            'country_id': country
         }
         
         user = request.env['res.users'].sudo().search([ ('login', '=', email) ])
@@ -86,18 +92,18 @@ class AuthSignupHome(Home):
             user = request.env['res.users'].sudo().create( user_data )
         return user
             
-    def createContactDLNA(self, data):
-        name = ' '.join([data.get('name'), data.get('lastname')])
-        email = data.get('email')
+    def createContactDLNA(self, data, signature):
+        name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
+        email = data.get('data[email]')
         company = {
-            'name': data.get('company')
+            'name': data.get('data[company]')
         }
         
         contact = {
             'name': name,
             'email': email,
-            'profession': data.get('profession'),
-            'about_us': data.get('about_us')
+            'profession': data.get('data[profession]'),
+            'about_us': data.get('data[about_us]')
         }
         
         partner = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
@@ -107,9 +113,9 @@ class AuthSignupHome(Home):
         
     def createInvoiceDLNA(self, data):
         invoice_address = {
-            'name': data.get('invoice_name'),
-            'vat': data.get('invoice_vat'),
-            'street': data.get('invoice_address1'),
-            'street2': data.get('invoice_address2'),
-            'zip': data.get('invoice_postaldate')
+            'name': data.get('data[invoice_name]'),
+            'vat': data.get('data[invoice_vat]'),
+            'street': data.get('data[invoice_address1]'),
+            'street2': data.get('data[invoice_address2]'),
+            'zip': data.get('data[invoice_postaldate]')
         }

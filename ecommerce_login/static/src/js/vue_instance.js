@@ -6,7 +6,12 @@ $( document ).ready(function(){
       name: '',
       lastname: '',
       email: '',
-      phonenumber: ''
+      phonenumber: '',
+      address1: '',
+      address2: '',
+      postalcode: '',
+      city: '',
+      contry: ''
     },
     });
     
@@ -29,10 +34,15 @@ $( document ).ready(function(){
         modal_save.addEventListener('click', (e) => {
           e.preventDefault();
           var el = $('#form-mlnda');
+          var data = el.serializeJSON();
+          //var data = new FormData(document.getElementById('form-mlnda'));
+          //var field = data.entries();
+          var canvas = document.getElementById('signature-pad');
+          var dataURL = canvas.toDataURL();
           $.ajax({
-              type: el.attr('method'),
+              type: 'POST',
               url: '/web/signup/saveMldna',
-              data: el.serialize(),
+              data: { data, 'img': dataURL},
               context: this
           }).done(function(responseText) {
                 $('#modal_dlna_process_complete').modal('show');
@@ -68,8 +78,10 @@ $( document ).ready(function(){
     }
 
   var canvas = document.getElementById("signature-pad");
-  ctx = canvas.getContext("2d");  
-  canvas.addEventListener("mousedown", pointerDown, false);
-  canvas.addEventListener("mouseup", pointerUp, false); 
+  if (canvas){
+    ctx = canvas.getContext("2d");  
+    canvas.addEventListener("mousedown", pointerDown, false);
+    canvas.addEventListener("mouseup", pointerUp, false); 
+  }
 
 });
