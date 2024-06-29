@@ -88,7 +88,7 @@ class ResPartner(models.Model):
         jinja_env = jinja2.Environment(autoescape=True)
         tpl = DocxTemplate(docTemplate['name'])
         #image_path = ''.join([os.path.dirname(os.path.abspath(__file__)),'/','signature_pyratex.png'])
-        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), height=Mm(10))
+        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), width=Mm(40), height=Mm(20))
         try:
             tpl.render(dataTemplate, jinja_env)
             tpl.save(docTemplate_new['name'])
