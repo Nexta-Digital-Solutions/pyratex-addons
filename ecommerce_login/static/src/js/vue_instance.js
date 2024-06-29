@@ -35,8 +35,6 @@ $( document ).ready(function(){
           e.preventDefault();
           var el = $('#form-mlnda');
           var data = el.serializeJSON();
-          //var data = new FormData(document.getElementById('form-mlnda'));
-          //var field = data.entries();
           var canvas = document.getElementById('signature-pad');
           var dataURL = canvas.toDataURL();
           $.ajax({
@@ -54,7 +52,7 @@ $( document ).ready(function(){
       if (btn_modal_complete) {
         btn_modal_complete.addEventListener('click', (e) => {
           e.preventDefault();
-          $('#modal_save').modal('toggle');
+          $('#modal_lnda').hide();
         });
       }
 

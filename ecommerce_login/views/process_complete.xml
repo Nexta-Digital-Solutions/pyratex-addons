@@ -23,7 +23,7 @@
                             </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="button" name ="btn_close_process_complete" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" id = "btn_close_process_complete" name ="btn_close_process_complete" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                           </div>
                         </div>
                       </div>

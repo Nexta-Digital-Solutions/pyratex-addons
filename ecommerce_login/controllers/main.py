@@ -67,10 +67,13 @@ class AuthSignupHome(Home):
     def web_saveDLNA(self, **post):
         params = post
         signature = params.get('img')
-        partner_id = self.createContactDLNA(params, signature)        
-        user_id = self.createUserDLNA(params, partner_id)
-        #user_id.action_reset_password()
-        doc = partner_id.createDocumentMDNA(partner_id, params, signature)
+        partner_id = self.createContactDLNA(params, signature)
+        if (partner_id):        
+            user_id = self.createUserDLNA(params, partner_id)
+            #user_id.action_reset_password()
+            doc = partner_id.createDocumentMDNA(partner_id, params, signature)
+        else:
+            return request.redirect('/web/login')
 
     def createUserDLNA(self, data, parent_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
@@ -108,8 +111,8 @@ class AuthSignupHome(Home):
         
         partner = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
         if (not partner):
-           partner = request.env['res.partner'].sudo().create( contact )
-        return partner
+           partner_id = request.env['res.partner'].sudo().create( contact )
+        return False if partner else partner_id
         
     def createInvoiceDLNA(self, data):
         invoice_address = {
