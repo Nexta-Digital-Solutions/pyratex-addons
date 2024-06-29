@@ -29,7 +29,6 @@ $( document ).ready(function(){
       };
 
       let modal_save = document.getElementById('modal_save');
-      let modal_complete = document.querySelector('#modal_dlna_process_complete');
       if (modal_save){
         modal_save.addEventListener('click', (e) => {
           e.preventDefault();
@@ -53,10 +52,12 @@ $( document ).ready(function(){
         btn_modal_complete.addEventListener('click', (e) => {
           e.preventDefault();
           $('#modal_lnda').hide();
+          with (window.location){
+           const url = `${protocol}//${host}/web/login`;
+           window.location.href = url;
+          }
         });
       }
-
-         
 
     //firma
     function pointerDown(evt) {

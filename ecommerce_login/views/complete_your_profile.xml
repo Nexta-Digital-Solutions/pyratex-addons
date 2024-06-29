@@ -14,22 +14,22 @@
                             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
                             <div class="form-group">
-                                <input type="text" v-model = "name" class="form-control" id="name" name = "name" placeholder="Name" />
+                                <input type="text" v-model = "name" class="form-control" id="name" name = "name" placeholder="Name*" required = "required"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "lastname" class="form-control" id="lastname" name = "lastname" placeholder="Last name" />
+                                <input type="text" v-model = "lastname" class="form-control" id="lastname" name = "lastname" placeholder="Last name*" required = "required"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "email" class="form-control" id="email" name = "email" placeholder="email" />
+                                <input type="text" v-model = "email" class="form-control" id="email" name = "email" placeholder="email*" required = "required" />
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="company" name = "company" placeholder="Company Name" />
+                                <input type="text" class="form-control" id="company" name = "company" placeholder="Company Name" required = "required"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number" />
+                                <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number*" required = "required"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "address1" class="form-control" id="address1" name = "address1" placeholder="Address 1" />
+                                <input type="text" v-model = "address1" class="form-control" id="address1" name = "address1" placeholder="Address 1*" required = "required" />
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="address2" name = "address2" placeholder="Address 2"/>
@@ -40,10 +40,10 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code" />
+                                    <input type="text" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code*" required = "required"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" id="city" placeholder="City" />
+                                    <input type="text" class="form-control" id="city" placeholder="City*" required = "required"/>
                                 </div>
                             </div>
 
@@ -51,9 +51,10 @@
                                 <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
                                 <t t-if="countries">
                                     <select class="form-select css_attribute_select mb-2" name="country" >
-                                        <option value="" selected="true">Country</option>
+                                        <!-- <option value="" selected="true">Country</option> -->
                                         <t t-foreach="countries" t-as="country">
-                                            <option t-att-value="country.id" t-esc="country.name"/>
+                                            <t t-if="country.name=='Spain'"><option t-att-value="country.id" t-esc="country.name" selected="selected" /></t>
+                                            <t t-if="country.name!='Spain'"><option t-att-value="country.id" t-esc="country.name" /></t>
                                         </t>
                                     </select>
                                 </t>
