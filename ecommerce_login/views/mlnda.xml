@@ -15,7 +15,7 @@
                             <span>
                               This  Confiden iali  Agreemen  is made and entered into on {{ name }} {{ lastname }},
 BETWEEN 
-(1)  {{ name }} {{ lastname }} whose registered office is at ___________________________________________and
+(1)  {{ name }} {{ lastname }} whose registered office is at {{ address1 }} - {{ postalcode }} - {{ city}} and
 
 ( ) PYRATES  mar  fabric  SL whose registered office is at Paseo del General Martínez Campos 15, 3 izq., 28010 Madrid, Spain, with N.I.F. B-87987681.
 </span>
