@@ -89,7 +89,7 @@ BETWEEN
 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id = "modal_save" class="btn btn-primary">Next</button>
+                            <button type="button" id = "modal_save" class="btn btn-secondary">Next</button>
                           </div>
                         </div>
                       </div>

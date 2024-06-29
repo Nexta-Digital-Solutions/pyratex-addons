@@ -40,10 +40,10 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code*" required = "required"/>
+                                    <input type="text" v-model = "postalcode" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code*" required = "required"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" class="form-control" id="city" placeholder="City*" required = "required"/>
+                                    <input type="text" v-model = "city" class="form-control" id="city" placeholder="City*" required = "required"/>
                                 </div>
                             </div>
 
