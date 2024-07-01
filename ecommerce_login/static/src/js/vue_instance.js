@@ -6,7 +6,12 @@ $( document ).ready(function(){
       name: '',
       lastname: '',
       email: '',
-      phonenumber: ''
+      phonenumber: '',
+      address1: '',
+      address2: '',
+      postalcode: '',
+      city: '',
+      contry: ''
     },
     });
     
@@ -23,8 +28,36 @@ $( document ).ready(function(){
         });
       };
 
+      let modal_save = document.getElementById('modal_save');
+      if (modal_save){
+        modal_save.addEventListener('click', (e) => {
+          e.preventDefault();
+          var el = $('#form-mlnda');
+          var data = el.serializeJSON();
+          var canvas = document.getElementById('signature-pad');
+          var dataURL = canvas.toDataURL();
+          $.ajax({
+              type: 'POST',
+              url: '/web/signup/saveMldna',
+              data: { data, 'img': dataURL},
+              context: this
+          }).done(function(responseText) {
+                $('#modal_dlna_process_complete').modal('show');
+          });
+        })
+      }
 
-         
+      let btn_modal_complete = document.querySelector('#btn_close_process_complete');
+      if (btn_modal_complete) {
+        btn_modal_complete.addEventListener('click', (e) => {
+          e.preventDefault();
+          $('#modal_lnda').hide();
+          with (window.location){
+           const url = `${protocol}//${host}/web/login`;
+           window.location.href = url;
+          }
+        });
+      }
 
     //firma
     function pointerDown(evt) {
@@ -44,8 +77,10 @@ $( document ).ready(function(){
     }
 
   var canvas = document.getElementById("signature-pad");
-  ctx = canvas.getContext("2d");  
-  canvas.addEventListener("mousedown", pointerDown, false);
-  canvas.addEventListener("mouseup", pointerUp, false); 
+  if (canvas){
+    ctx = canvas.getContext("2d");  
+    canvas.addEventListener("mousedown", pointerDown, false);
+    canvas.addEventListener("mouseup", pointerUp, false); 
+  }
 
 });
