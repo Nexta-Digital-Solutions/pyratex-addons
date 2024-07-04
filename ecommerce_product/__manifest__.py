@@ -61,8 +61,8 @@
             'ecommerce_product/static/src/js/add_to_the_pack.js',
             'ecommerce_product/static/src/js/show_pack_price.js',
             'ecommerce_product/static/src/js/add_to_cart.js',
-            'ecommerce_product/static/src/js/website_sale.js'
-            'ecommerce_product/static/src/js/remove_from_cart.js'
+            'ecommerce_product/static/src/js/website_sale.js',
+            'ecommerce_product/static/src/js/remove_from_cart.js',
         ]
 
     }
