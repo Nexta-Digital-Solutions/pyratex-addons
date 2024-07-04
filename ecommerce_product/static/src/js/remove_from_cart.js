@@ -56,9 +56,6 @@ odoo.define('ecommerce_product.remove_from_cart', function (require) {
                 $row.find('.js_quantity').val(0).trigger('change');
                 console.log('Product:', productName);
             }
-            else{
-                console.log('FALLANDO:', productName);
-            }
         },
 });
 });
