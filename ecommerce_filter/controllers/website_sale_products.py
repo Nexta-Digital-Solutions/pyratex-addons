@@ -208,6 +208,13 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         offset = pager['offset']
         products = search_product[offset:offset + ppg]
 
+        products_with_variants = []
+        for product in products:
+            for product_variant in product.product_variant_ids:
+                if product_variant.is_published == True:
+                    products_with_variants.append(product.id)
+        products = products.search([ ('id','in',products_with_variants) ])
+        
         ProductAttribute = request.env['product.attribute']
         if products:
             # get all products without limit
