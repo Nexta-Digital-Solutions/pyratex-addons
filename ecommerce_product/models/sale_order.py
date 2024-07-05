@@ -22,9 +22,10 @@ class SaleOrder(models.Model):
         # all_stock = all(line.product_id.producttype_id and line.product_id.producttype_id.name == "Swatches" or
         #                          line.product_id.producttype_id.name == "Fabrics" for line in order_lines)
 
+
+        # ATENCION SOLO FALLA EN LOCAL!!!!
         if all_swatches:
             values["x_studio_type_of_order"] = "e-shop Swatches"
-        # elif all_stock:
         else:
             values["x_studio_type_of_order"] = "eshop Stock"
         return values
