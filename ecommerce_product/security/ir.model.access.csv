@@ -11,3 +11,5 @@ access_availablemeters,Available Meters,model_product_available_meters,base.grou
 access_composition,Composition,model_composition,base.group_user,1,1,1,1
 access_openpack,Open Pack,model_open_pack,base.group_user,1,1,1,1
 access_useropenpack,User Open Pack,model_user_open_pack,base.group_user,1,1,1,1
+access_stock_location,stock location public,stock.model_stock_location,,1,0,0,0
+access_barcode_nomenclature,barcode nomenclature public,barcodes.model_barcode_nomenclature,,1,0,0,0
