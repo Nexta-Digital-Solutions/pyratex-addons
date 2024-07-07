@@ -43,7 +43,7 @@ class ResPartner(models.Model):
         folder = 'Templates'
         template_name = "mnda.docx"
         folder_id = self.env['documents.folder'].search([ ('name', '=', folder)])
-        docs = self.env['documents.document'].search( [('folder_id', '=', folder_id.id), ('name', '=', template_name)])
+        docs = self.env['documents.document'].search( [('folder_id', '=', folder_id.id), ('name', '=', template_name)], limit = 1)
         merger = PdfFileMerger()
         signature_file = self.createDocumentSignature(signature)
         for doc in docs:
@@ -96,6 +96,4 @@ class ResPartner(models.Model):
             new_field = e.message.split(' ')[0].replace("'","")
             if (field_not_found == new_field):
                 raise UserError (_("Campo %s no encontrado" % ( new_field )))
-            #dataTemplate[new_field] = getattr(ods_id, new_field, None)
-            #return self.template_renderer(docTemplate, dataTemplate, new_field)
         return docTemplate_new

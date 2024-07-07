@@ -68,9 +68,12 @@ class AuthSignupHome(Home):
         params = post
         signature = params.get('img')
         partner_id = self.createContactDLNA(params, signature)
-        if (partner_id):        
-            user_id = self.createUserDLNA(params, partner_id)
-            #user_id.action_reset_password()
+        if (partner_id): 
+            try:       
+                user_id = self.createUserDLNA(params, partner_id)
+                user_id.action_reset_password()
+            except:
+                pass
             doc = partner_id.createDocumentMDNA(partner_id, params, signature)
         else:
             return request.redirect('/web/login')
@@ -78,16 +81,20 @@ class AuthSignupHome(Home):
     def createUserDLNA(self, data, parent_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
         email = data.get('data[email]')
-        country = request.env['res.country'].search([ ('name', '=',  data.get('data[country]')) ])
+        country = request.env['res.country'].search([ ('id', '=',  int(data.get('data[country]'))) ])
         user_data = {
             'name': name,
             'login': email,
             'sel_groups_1_9_10': 9,
             'partner_id': parent_id.id,
+            'mobile': data.get('data[phone]'),
             'street': data.get('data[address1]'),
+            'street2': data.get('data[address2]'),
             'zip': data.get('data[postalcode]'),
-            'state': data.get('data[city]'),
-            'country_id': country
+            'city': data.get('data[city]'),
+            'state': False,
+            'country_id': country.id if country else False,
+            'function': data.get('data[position]')     
         }
         
         user = request.env['res.users'].sudo().search([ ('login', '=', email) ])
