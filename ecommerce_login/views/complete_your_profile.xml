@@ -22,8 +22,9 @@
                             <div class="form-group">
                                 <input type="text" v-model = "email" class="form-control" id="email" name = "email" placeholder="email*" required = "required" />
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style = "display:flex">
                                 <input type="text" class="form-control" id="company" name = "company" placeholder="Company Name*" required = "required"/>
+                                <input type="text" class="form-control" id="company_vat" placeholder="VAT Number"/>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number*" required = "required"/>
@@ -132,6 +133,7 @@
 
                 <t t-call = "ecommerce_login.mldna"/>
                 <t t-call = "ecommerce_login.dlna_process_complete"/>
+                <t t-call = "ecommerce_login.template_loader"/>
 
             </div>
         </form>

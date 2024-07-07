@@ -11,24 +11,33 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
+                            <div class = "col-sd-6">
+                          <span>
+PYRATEX® is a start-up company which invests heavily in Research &amp; Development in order to bring innovative fiber solutions to the market as scalable high-quality fabrics, ready to be used by designers and brands. PYRATEX® products are based on various sources of creativity and specific expertises. 
+We often work with new brands, people from the industry who are launching new innovative projects and who confide in PYRATEX® to bring them to market.
+In order to protect our Intellectual Property and of our customers, we ask all potential clients to sign a confidentiality agreement, a formality that forms part of our commercial process. This Mutual Non-Disclosure Agreement (MNDA) protects both parties and allows for information to be shared freely. 
+
+Please view and sign the document below. Unfortunately we cannot accept any orders of swatches or stock without a signed MNDA. If you have any questions or concerns about the document, please contact legal@pyratexfabrics.com.
+</span>
+                            </div>
                             <div class="col-sd-6">
                             <span>
-                              This  Confiden iali  Agreemen  is made and entered into on {{ name }} {{ lastname }},
+                              This  Confideniali  Agreement  is made and entered into on {{ name }} {{ lastname }}, (the “E Da”) 
 BETWEEN 
 (1)  {{ name }} {{ lastname }} whose registered office is at {{ address1 }} - {{ postalcode }} - {{ city}} and
 
 ( ) PYRATES  mar  fabric  SL whose registered office is at Paseo del General Martínez Campos 15, 3 izq., 28010 Madrid, Spain, with N.I.F. B-87987681.
 </span>
 </div>
-<div class="col-sd-6">
+<div class="col-sd-6 mt-2">
   <span><strong>WHEREAS</strong></span>
 </div>
 <div class = "col-sd-6">
   <span>
-  The Parties intend to enter into negotiations with regard to a possible future collaboration relating to the use of sustainable and innovative fabrics (the “P rpo e”), and have agreed to comply with this agreement in connection with the disclosure or delivery of documents, components, parts, information, drawings, data, sketches, specifications, techniques, processes, inventions, fabric/fibers/yarns/textile/product samples and other materials, material compositions of the goods, label s rules, technical specification, notes, summaries, etc., both written and oral, of a secret, confidential or proprietary nature, including without limitation any and all information relating to marketing, finance, forecasts, invention, research, any proprietary information, design, know-how, trademarks, trade secret, any supportive or incidental information, and any and all subject matter claimed in or disclosed by any patent application (the “C	         a  I	a       ”) in order to execute the Purpose.(B) In the course of discussing the Project, the Parties may disclose confidential information about their business and operation to each other. Therefore, the Parties have agreed to enter into this non-disclosure agreement (the “A	”) to set out the terms upon which the Party disclosing confidential information (“Di clo ing Par ”) is prepared to discuss the Project and disclose information to the Party receiving such confidential information (“Recei ing Par ”).
+  The Parties intend to enter into negotiations with regard to a possible future collaboration relating to the use of sustainable and innovative fabrics (the “P rpo e”), and have agreed to comply with this agreement in connection with the disclosure or delivery of documents, components, parts, information, drawings, data, sketches, specifications, techniques, processes, inventions, fabric/fibers/yarns/textile/product samples and other materials, material compositions of the goods, label s rules, technical specification, notes, summaries, etc., both written and oral, of a secret, confidential or proprietary nature, including without limitation any and all information relating to marketing, finance, forecasts, invention, research, any proprietary information, design, know-how, trademarks, trade secret, any supportive or incidental information, and any and all subject matter claimed in or disclosed by any patent application (the “C	         a  I	a       ”) in order to execute the Purpose.(B) In the course of discussing the Project, the Parties may disclose confidential information about their business and operation to each other. Therefore, the Parties have agreed to enter into this non-disclosure agreement (the “A	”) to set out the terms upon which the Party disclosing confidential information (“Dicloing Par”) is prepared to discuss the Project and disclose information to the Party receiving such confidential information (“Receiving Par ”).
   </span>
 </div>
-<div class = "col-sd-6">
+<div class = "col-sd-6 mt-2">
 <span><strong>NOW IT IS HEREBY AGREED as follows:</strong></span>
 <ol>
   <li>The Parties for their mutual benefit and pursuant to a working relationship which has been or may be established, hereby agrees:</li>
@@ -67,6 +76,7 @@ BETWEEN
           <td>
             <div class="flex-row">
               <div class="wrapper">
+                <canvas id='blank' style='display:none'></canvas>
                 <canvas id="signature-pad" name = "signature-pad" width="400" height="200"></canvas>
               </div>
             </div>
@@ -78,10 +88,11 @@ BETWEEN
             <span>Regina Polanco - CEO</span>
           </td>
           <td></td>
-          <td><input type = "text" placeholder = "Name - position"/></td>
+          <td><input id = "position" name = "position" type = "text" placeholder = "position*"/></td>
         </tr>
       </tbody>
     </table>
+    <div id="liveAlertPlaceholder"></div>
   </div>
 
   </div>
