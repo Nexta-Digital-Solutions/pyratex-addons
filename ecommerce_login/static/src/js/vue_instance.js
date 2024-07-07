@@ -36,12 +36,19 @@ $( document ).ready(function(){
           var data = el.serializeJSON();
           var canvas = document.getElementById('signature-pad');
           var dataURL = canvas.toDataURL();
+          if (canvas.toDataURL() == document.getElementById('blank').toDataURL() 
+            || document.querySelector('#position').value =='') {
+            appendAlert('Sign and fill your position !!!', 'danger');
+            return;
+          }
+          $('#modal_loader').show();
           $.ajax({
               type: 'POST',
               url: '/web/signup/saveMldna',
               data: { data, 'img': dataURL},
               context: this
           }).done(function(responseText) {
+                $('#modal_loader').hide();
                 $('#modal_dlna_process_complete').modal('show');
           });
         })
@@ -82,5 +89,20 @@ $( document ).ready(function(){
     canvas.addEventListener("mousedown", pointerDown, false);
     canvas.addEventListener("mouseup", pointerUp, false); 
   }
+
+  //alert message MDNA
+  const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+  const appendAlert = (message, type) => {
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = [
+      `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+      `   <div>${message}</div>`,
+      '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+      '</div>'
+    ].join('')
+
+    alertPlaceholder.append(wrapper)
+  }
+
 
 });
