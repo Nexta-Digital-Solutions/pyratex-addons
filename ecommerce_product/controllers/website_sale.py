@@ -65,7 +65,7 @@ class WebsiteSaleCart(ProductsFilter):
 
         parent_pack = request.env['product.product'].search([('name', '=', 'Customized Swatchpack')], limit=1)
         if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-            swatches_lines = order.order_line.filtered(lambda l: l.product_template_id.producttype.name == "Swatches")
+            swatches_lines = order.order_line.filtered(lambda l: l.product_template_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
                 order._cart_update(product_id=line.product_id.id, set_qty=0)
 
