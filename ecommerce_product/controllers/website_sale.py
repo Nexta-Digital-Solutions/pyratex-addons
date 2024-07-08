@@ -67,11 +67,8 @@ class WebsiteSaleCart(ProductsFilter):
         if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
             swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
-                order._cart_update(
-                    product_id=line.product_id.id,
-                    line_id=line.id,
-                    set_qty=0,
-                )
+                line.unlink()
+
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
         values['cart_quantity'] = order.cart_quantity
