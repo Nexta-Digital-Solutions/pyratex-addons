@@ -20,7 +20,7 @@ from odoo.tools.json import scriptsafe as json_scriptsafe
 class WebsiteSaleCart(ProductsFilter):
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update_json(
-        self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
+        self, product_id, line_id=None, add_qty=None, set_qty=None, x_studio_type_of_order=None, display=True,
         product_custom_attribute_values=None, no_variant_attribute_values=None, price_unit = None,**kw
     ):
         order = request.website.sale_get_order(force_create=True)
@@ -42,6 +42,7 @@ class WebsiteSaleCart(ProductsFilter):
             line_id=line_id,
             add_qty=add_qty,
             set_qty=set_qty,
+            x_studio_type_of_order=x_studio_type_of_order,
             product_custom_attribute_values=product_custom_attribute_values,
             no_variant_attribute_values=no_variant_attribute_values,
             **kw
