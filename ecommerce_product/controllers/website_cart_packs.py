@@ -12,7 +12,7 @@ class clearCartAllProducts(http.Controller):
         line_ids = order_line.search([('order_id', '=', order.id)])
         for line in line_ids:
             line_obj = order_line.browse([int(line)])
-            if line_obj and line_obj.product_id.producttype_id == 'Swatches':
+            if line_obj and line_obj.product_id.producttype_id.name == 'Swatches':
                 line_obj.unlink()
         return request.redirect("/shop/cart")
         
