@@ -20,7 +20,7 @@ from odoo.tools.json import scriptsafe as json_scriptsafe
 class WebsiteSaleCart(ProductsFilter):
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update_json(
-        self, product_id, line_id=None, add_qty=None, set_qty=None, x_studio_type_of_order=None, display=True,
+        self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
         product_custom_attribute_values=None, no_variant_attribute_values=None, price_unit = None,**kw
     ):
         order = request.website.sale_get_order(force_create=True)
@@ -42,7 +42,6 @@ class WebsiteSaleCart(ProductsFilter):
             line_id=line_id,
             add_qty=add_qty,
             set_qty=set_qty,
-            x_studio_type_of_order=x_studio_type_of_order,
             product_custom_attribute_values=product_custom_attribute_values,
             no_variant_attribute_values=no_variant_attribute_values,
             **kw
@@ -68,7 +67,7 @@ class WebsiteSaleCart(ProductsFilter):
         if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
             swatches_lines = order.order_line.filtered(lambda l: l.product_template_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
-                order._cart_update(product_id=line.product_id.id, set_qty=0)
+                order._cart_update(product_id=line.product_template_id.id, set_qty=0)
 
         values['cart_quantity'] = order.cart_quantity
         values['minor_amount'] = payment_utils.to_minor_currency_units(
