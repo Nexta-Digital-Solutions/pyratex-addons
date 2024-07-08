@@ -27,5 +27,5 @@ class SaleOrder(models.Model):
         if all_swatches:
             values["x_studio_type_of_order"] = "e-shop Swatches"
         else:
-            values["x_studio_type_of_order"] = "eshop Stock"
+            values["x_studio_type_of_order"] = "e-shop Stock"
         return values
