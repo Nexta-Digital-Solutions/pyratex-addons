@@ -69,7 +69,6 @@ class WebsiteSaleCart(ProductsFilter):
             for line in swatches_lines:
                 order._cart_update(
                     product_id=line.product_id.id,
-                    line_id=line.line_id,
                     set_qty=0,
                 )
 
