@@ -68,8 +68,8 @@ class WebsiteSaleCart(ProductsFilter):
             swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
                 # order._cart_update(product_id=line.product_id.id, set_qty=0)
-                line._cart_update(
-                    product_id=product_id,
+                order._cart_update(
+                    product_id=line.product_id,
                     line_id=line_id,
                     add_qty=add_qty,
                     set_qty=0,
