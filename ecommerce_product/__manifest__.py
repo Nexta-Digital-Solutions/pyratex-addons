@@ -46,7 +46,7 @@
         'views/website/website_search_box_hide.xml',
         'views/website/dynamic_filter.xml',
         'views/website/product_details.xml',
-        'views/website/cart_packs.xml',
+        # 'views/website/cart_packs.xml',
         'views/website/product_alternatives_price.xml'
     ],
     'demo': [
