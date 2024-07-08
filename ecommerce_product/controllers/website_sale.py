@@ -69,8 +69,10 @@ class WebsiteSaleCart(ProductsFilter):
             for line in swatches_lines:
                 order._cart_update(
                     product_id=line.product_id.id,
+                    line_id=line.id,
                     set_qty=0,
                 )
+        request.session['website_sale_cart_quantity'] = order.cart_quantity
 
         values['cart_quantity'] = order.cart_quantity
         values['minor_amount'] = payment_utils.to_minor_currency_units(
