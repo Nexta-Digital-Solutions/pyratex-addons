@@ -215,19 +215,19 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         products_with_variants = []
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
 
-        # for product in products:
-        #     if product.producttype_id.name != 'Swatches':
-        #         for product_variant in product.product_variant_ids:
-        #             if (product_variant.is_published == True):
-        #                 if (not availablemeters_set):
-        #                     products_with_variants.append(product.id)
-        #                 else:
-        #                     stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id),
-        #                                                                                 ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),
-        #                                                                                 ('location_id', '=', location_id.id)])
-        #                     if (stock_product_variant):
-        #                         products_with_variants.append(product.id)
-        # products = products.search([ ('id','in',products_with_variants) ])
+        if product.producttype_id.name != 'Swatches':
+            for product in products:
+                for product_variant in product.product_variant_ids:
+                    if (product_variant.is_published == True):
+                        if (not availablemeters_set):
+                            products_with_variants.append(product.id)
+                        else:
+                            stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id),
+                                                                                        ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),
+                                                                                        ('location_id', '=', location_id.id)])
+                            if (stock_product_variant):
+                                products_with_variants.append(product.id)
+        products = products.search([ ('id','in',products_with_variants) ])
            
             
         ProductAttribute = request.env['product.attribute']
