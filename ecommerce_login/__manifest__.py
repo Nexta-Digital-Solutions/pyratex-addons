@@ -14,7 +14,7 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.0.6',
+    'version': '16.0.1.0',
     'license': 'LGPL-3',
 
     'depends': [
@@ -32,7 +32,8 @@
         'views/billing_address.xml',
         'views/signup_custom.xml',
         'views/mlnda.xml',
-        'views/process_complete.xml' 
+        'views/process_complete.xml',
+        'views/loader.xml' 
     ],
     
     'assets': {
@@ -40,7 +41,8 @@
             'ecommerce_login/static/src/js/vue@2.7.14.js',
             'ecommerce_login/static/src/js/vue_instance.js',
             'ecommerce_login/static/src/scss/signature.scss',
-            'ecommerce_login/static/src/js/jquery.serializejson.min.js'
+            'ecommerce_login/static/src/js/jquery.serializejson.min.js',
+            'ecommerce_login/static/src/scss/loader.scss'
         ]
     }
 }
