@@ -215,7 +215,8 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         products_with_variants = []
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
 
-        if producttype_set != 'Swatches':
+        producttype_set_name = request.env['product.product'].search( [ ('name', '=', 'Swatches') ])
+        if not producttype_set_name:
             for product in products:
                 for product_variant in product.product_variant_ids:
                     if (product_variant.is_published == True):
