@@ -217,7 +217,14 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
 
        
-        if producttype_set_not_swatches:
+        
+        if not producttype_set:
+            for product in products:
+                for product_variant in product.product_variant_ids:
+                    if (product_variant.is_published and product_variant.producttype_id.name and product_variant.producttype_id.name.lower() !="swatches"):
+                            products_with_variants.append(product.id)
+            products = products.search([ ('id','in',products_with_variants) ])
+        elif producttype_set_not_swatches:
             for product in products:
                 for product_variant in product.product_variant_ids:
                     if (product_variant.is_published == True):
@@ -225,8 +232,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
                             products_with_variants.append(product.id)
                         else:
                             stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id),
-                                                                                            ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),
-                                                                                            ('location_id', '=', location_id.id)])
+                                                                                        ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),                                                              ('location_id', '=', location_id.id)])
                             if (stock_product_variant):
                                 products_with_variants.append(product.id)
             products = products.search([ ('id','in',products_with_variants) ])
