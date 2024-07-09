@@ -15,7 +15,8 @@
                             <strong>Weight</strong>
                         </li>
                         <p>
-                            <span t-field="product.weight"/><span> gsm</span>
+                            <span t-field="product.weight"/>
+                            <span>gsm</span>
                         </p>
                     </ul>
                     <ul t-if="product.width &gt; 0.0" style="list-style: none;">
@@ -23,7 +24,8 @@
                             <strong>Width</strong>
                         </li>
                         <p>
-                             <span t-field="product.width"/><span> cm</span> 
+                            <span t-field="product.width"/>
+                            <span>cm</span>
                         </p>
                     </ul>
                     <ul t-if="product.structure_id" style="list-style: none;">
@@ -115,8 +117,10 @@
                t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"
                href="#">
                 <i class="fa fa-shopping-cart me-2"/>
-                <span t-if="not product.pack_ok" style="font-weight: bold">ADD TO CART</span>
-                <span t-if="product.pack_ok" style="font-weight: bold">ADD SWATCH PACK TO THE CART</span>
+                <span t-if="product.producttype_id.name != 'Swatches'" style="font-weight: bold">ADD TO CART</span>
+                <span t-if="product.producttype_id.name == 'Swatches'" style="font-weight: bold">ADD SWATCH PACK TO THE
+                    CART
+                </span>
             </a>
         </xpath>
 
