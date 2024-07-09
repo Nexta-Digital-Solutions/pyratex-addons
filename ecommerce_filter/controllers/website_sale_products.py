@@ -107,9 +107,10 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         if post.get('availablemeters', False):
             availablemeters_set = request.env['product.available.meters'].search([ ('id', '=',  int(post.get('availablemeters'))) ])
             
-        producttype_set = False
+        producttype_set = producttype_set_not_swatches = False
         if post.get('producttype'):
             producttype_set = int(post.get('producttype', False))
+            producttype_set_not_swatches = not bool (request.env['product.type'].sudo().search( [ ('name', 'ilike', 'swatches%'), ('id','=', producttype_set)], limit = 1))
         careinstructions_set = False
         if post.get('careinstructions'):
             careinstructions_set = int(post.get('careinstructions', False))
@@ -214,18 +215,21 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             se mostrara sino no"""
         products_with_variants = []
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
-        for product in products:
-            for product_variant in product.product_variant_ids:
-                if (product_variant.is_published == True):
-                    if (not availablemeters_set):
-                        products_with_variants.append(product.id)
-                    else:
-                        stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id), 
-                                                                                    ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),
-                                                                                    ('location_id', '=', location_id.id)])
-                        if (stock_product_variant):
-                            products_with_variants.append(product.id) 
-        products = products.search([ ('id','in',products_with_variants) ])
+
+       
+        if producttype_set_not_swatches:
+            for product in products:
+                for product_variant in product.product_variant_ids:
+                    if (product_variant.is_published == True):
+                        if (not availablemeters_set):
+                            products_with_variants.append(product.id)
+                        else:
+                            stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id),
+                                                                                            ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),
+                                                                                            ('location_id', '=', location_id.id)])
+                            if (stock_product_variant):
+                                products_with_variants.append(product.id)
+            products = products.search([ ('id','in',products_with_variants) ])
            
             
         ProductAttribute = request.env['product.attribute']

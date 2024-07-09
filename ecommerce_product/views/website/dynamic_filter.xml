@@ -5,7 +5,7 @@
         <template id="dynamic_filter_template_product_product_add_to_cart" inherit_id = "website_sale.dynamic_filter_template_product_product_add_to_cart" >
             <t t-foreach="records" t-as="data" data-thumb="/website_sale/static/src/img/snippets_options/product_add_to_cart.svg">
                 <t t-set="record" t-value="data['_record']"/>
-                <t t-if = "record.ispublished">
+                <t t-if = "record.is_published">
                     <div class="o_carousel_product_card card h-100 w-100" t-att-data-add2cart-rerender="data.get('_add2cart_rerender')">
                         <div t-if="is_sample" class="h5 o_ribbon_right bg-primary text-uppercase">Sample</div>
                         <input type="hidden" name="product-id" t-att-data-product-id="record.id"/>
