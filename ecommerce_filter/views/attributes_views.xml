@@ -15,10 +15,12 @@
                             aria-label="Search" title="Search" style="flex-shrink: 0;">
                         <i class="oi oi-search"/>
                         <span t-if="search" class="oe_search_found">
+                            <!--
                             <small>(
                                 <t t-out="search_count or 0"/>
                                 found)
                             </small>
+                            -->
                         </span>
                     </button>
                 </div>
