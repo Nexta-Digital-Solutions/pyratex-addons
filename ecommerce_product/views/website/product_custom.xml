@@ -57,8 +57,10 @@
                         <div class="d-flex flex-wrap align-items-start">
                             <t t-if="product.property_id">
                                 <t t-foreach="product.property_id" t-as="property">
-                                    <img t-att-src="image_data_uri(property.image)" style="width: 5%; height: 3%;"/>
-                                    <p t-field="property.name" class="p-1"/>
+                                    <t t-if = "property.image">
+                                        <img t-att-src="image_data_uri(property.image)" style="width: 5%; height: 3%;"/>
+                                        <p t-field="property.name" class="p-1"/>
+                                    </t>
                                 </t>
                             </t>
                         </div>
