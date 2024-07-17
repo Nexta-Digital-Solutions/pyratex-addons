@@ -21,7 +21,7 @@
         'views/filmstrip_categories_category_views.xml',
         'views/portrait_categories_views.xml',
         'views/products_attributes_add_categories_views.xml',
-        'views/attributes_views.xml'
+        'views/attributes_views.xml',
         'views/filter_products_price.xml'
     ],
     'assets':{
