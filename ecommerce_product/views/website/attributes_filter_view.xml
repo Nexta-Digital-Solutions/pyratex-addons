@@ -89,7 +89,7 @@
                         </t>
 
 
-                        <!--Ahora solo se muestran las bolas de los colores que estén rellenados-->
+                        <!--
                         <div t-foreach="product.product_variant_ids.mapped('product_template_attribute_value_ids')"
                              t-as="variant" class="d-inline-flex">
                             <t t-if="variant.html_color">
@@ -99,6 +99,7 @@
                                 </label>
                             </t>
                         </div>
+                        -->
 
                         <!--Esto muestra las bolas de todos los colores aunque no estén rellenados-->
                         <!--<t t-if="ptal.attribute_id.display_type == 'color'">-->
