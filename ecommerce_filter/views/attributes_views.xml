@@ -5,7 +5,23 @@
             <!--            <form t-if="attributes" class="js_attributes position-relative mb-2" method="get">-->
             <!--            <form class="js_attributes position-relative mb-2" method="get">-->
             <form class="position-relative mb-2">
-
+                <div t-attf-class="input-group #{_classes}" role="search" style="display: flex; align-items: center;">
+                    <t t-set="search_placeholder">Search...</t>
+                    <input type="search" name="search"
+                           t-att-class="'search-query form-control oe_search_box %s' % _input_classes"
+                           t-att-placeholder="placeholder if placeholder else search_placeholder" t-att-value="search"
+                           style="flex: 1;margin:0 !important"/>
+                    <button type="submit" t-att-class="'btn oe_search_button %s' % (_submit_classes or 'btn-primary')"
+                            aria-label="Search" title="Search" style="flex-shrink: 0;">
+                        <i class="oi oi-search"/>
+                        <span t-if="search" class="oe_search_found">
+                            <small>(
+                                <t t-out="search_count or 0"/>
+                                found)
+                            </small>
+                        </span>
+                    </button>
+                </div>
                 <!--Añade los atributos con el formato que piden en el Figma-->
 
                 <h6 class="mb-3">
