@@ -217,7 +217,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
 
        
-        
+        products = search_product 
         if not producttype_set:
             for product in products:
                 for product_variant in product.product_variant_ids:
