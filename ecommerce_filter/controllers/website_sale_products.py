@@ -199,6 +199,9 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
                 [('product_tmpl_ids', 'in', search_product.ids)] + website_domain
             ).parents_and_self
             categs_domain.append(('id', 'in', search_categories.ids))
+            search_product = request.env['product.template'].search([ '|',('name', 'ilike', search),
+                                                                      ('default_code', 'ilike', search)])
+            product_count = len(search_product.ids)
         else:
             search_categories = Category
         categs = lazy(lambda: Category.search(categs_domain))
@@ -217,7 +220,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
 
        
-        
+        products = search_product 
         if not producttype_set:
             for product in products:
                 for product_variant in product.product_variant_ids:

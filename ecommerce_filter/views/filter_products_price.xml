@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="filter_products_price_disabled">
+        <field name="name">filter.products.price.disabled</field>
+        <field name="inherit_id" ref="website_sale.filter_products_price"/>
+        <field name="active">False</field>
+    </record>
+</odoo>
