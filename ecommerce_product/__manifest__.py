@@ -13,7 +13,7 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.0.5',
+    'version': '16.0.0.7',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web', 'stock','barcodes', 'web_studio'],
@@ -47,7 +47,9 @@
         'views/website/dynamic_filter.xml',
         'views/website/product_details.xml',
         # 'views/website/cart_packs.xml',
-        'views/website/product_alternatives_price.xml'
+        'views/website/product_alternatives_price.xml',
+        'data/system_parameter.xml'
+
     ],
     'demo': [
     ],
