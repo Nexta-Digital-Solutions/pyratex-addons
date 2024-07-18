@@ -1,0 +1,17 @@
+<odoo>
+    <template id="configure_optional_products_custom" inherit_id="sale_product_configurator.configure_optional_products">
+
+        <xpath expr="//table//thead//tr//th[2]" position="replace">
+            <th>
+                <span class="label">Attributes</span>
+            </th>
+        </xpath>
+
+
+        <xpath expr="//div[@t-field='product.description_sale')]" position="after">
+            <span>Qty. Available:</span>
+            <span t-field="product.qty_available"/>
+        </xpath>
+
+    </template>
+</odoo>
