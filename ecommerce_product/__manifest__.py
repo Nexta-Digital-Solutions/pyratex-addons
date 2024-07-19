@@ -16,7 +16,8 @@
     'version': '16.0.0.7',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'website_sale', 'product', 'website', 'web', 'stock','barcodes', 'web_studio'],
+    'depends': ['base', 'website_sale', 'product', 'website', 'web',
+                'stock','barcodes', 'web_studio', 'sale_product_configurator'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -46,6 +47,7 @@
         'views/website/website_search_box_hide.xml',
         'views/website/dynamic_filter.xml',
         'views/website/product_details.xml',
+        'views/website/configure_optional_products_custom.xml',
         # 'views/website/cart_packs.xml',
         'views/website/product_alternatives_price.xml',
         'data/system_parameter.xml'
