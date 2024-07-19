@@ -16,7 +16,8 @@
     'version': '16.0.0.7',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'website_sale', 'product', 'website', 'web', 'stock','barcodes', 'web_studio'],
+    'depends': ['base', 'website_sale', 'product', 'website', 'web',
+                'stock','barcodes', 'web_studio', 'sale_product_configurator'],
 
     'data': [
         'security/ir.model.access.csv',
