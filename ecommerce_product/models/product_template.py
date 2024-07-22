@@ -17,7 +17,7 @@ class ProductTemplate(models.Model):
     certification_id = fields.Many2many('certification', string='Certification')
     composition_id = fields.Many2many('composition', string='Composition')
 
-    def _get_combination_info(self, combination=False, product_id=False, qty_available=False, add_qty=1, pricelist=False, parent_combination=False, only_template=False):
+    def _get_combination_info(self, combination=False, product_id=False, add_qty=1, pricelist=False, parent_combination=False, only_template=False):
         """Override for website, where we want to:
             - take the website pricelist if no pricelist is set
             - apply the b2b/b2c setting to the result
@@ -42,7 +42,7 @@ class ProductTemplate(models.Model):
             product = self.env['product.product'].browse(combination_info['product_id']) or self
             partner = self.env.user.partner_id
             company_id = current_website.company_id
-
+            qty_available = self.qty_available
             fpos_id = self.env['website'].sudo()._get_current_fiscal_position_id(partner)
             fiscal_position = self.env['account.fiscal.position'].sudo().browse(fpos_id)
             product_taxes = product.sudo().taxes_id.filtered(lambda x: x.company_id == company_id)
