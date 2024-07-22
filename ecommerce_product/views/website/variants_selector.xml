@@ -5,7 +5,7 @@
                t-value="ptal.product_tmpl_id.product_variant_ids.filtered(lambda x: x.is_published).mapped('product_template_attribute_value_ids.name')"/>
             <strong t-if="published_variants" t-field="ptal.attribute_id.name" class="attribute_name"/>
         </xpath>
-        <xpath expr="//t[@t-if='ptal.attribute_id.display_type == 'select'']" position="replace">
+        <xpath expr="//t[@t-if][1]" position="replace">
 
             <t t-if="ptal.attribute_id.display_type == 'select' and published_variants">
                 <select t-att-data-attribute_id="ptal.attribute_id.id"
