@@ -47,6 +47,7 @@
         'views/website/website_search_box_hide.xml',
         'views/website/dynamic_filter.xml',
         'views/website/product_details.xml',
+        'views/website/variants_selector.xml',
         'views/website/configure_optional_products_custom.xml',
         # 'views/website/cart_packs.xml',
         'views/website/product_alternatives_price.xml',
