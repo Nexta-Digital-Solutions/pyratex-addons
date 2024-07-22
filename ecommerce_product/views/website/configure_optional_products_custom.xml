@@ -20,7 +20,7 @@
 
         <xpath expr="//td[hasclass('td-product_name')]" position="after">
             <td class="text-center td-qty">
-                <t t-call="sale_product_configurator.product_quantity_config"/>
+                <span t-field="product.qty_available"/>
             </td>
         </xpath>
 
