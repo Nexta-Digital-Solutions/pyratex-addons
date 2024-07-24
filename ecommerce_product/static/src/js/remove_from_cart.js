@@ -52,7 +52,7 @@ odoo.define('ecommerce_product.remove_from_cart', function (require) {
             var productName = $row.find('.td-product_name').text().trim();
             console.log('Product antes:', productName);
 
-            if (productName === 'Customized Swatchpack') {
+            if (productName === 'Swatches') {
                 $row.find('.js_quantity').val(0).trigger('change');
                 console.log('Product:', productName);
             }
