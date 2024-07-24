@@ -12,10 +12,9 @@
         </xpath>
 
 
-        <!--        <xpath expr="//div[@t-field='product.description_sale']" position="after">-->
-        <!--            <span>Qty. Available:</span>-->
-        <!--            <span t-field="product.qty_available"/>-->
-        <!--        </xpath>-->
+        <xpath expr="//tr[hasclass('o_select_options')]" position="attributes">
+            <attribute name="t-if">1!=1</attribute>
+        </xpath>
 
 
         <xpath expr="//td[hasclass('td-product_name')]" position="after">
