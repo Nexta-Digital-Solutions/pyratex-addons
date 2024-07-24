@@ -61,11 +61,11 @@ $(document).on('click', '#o_add_to_Cart', async function () {
         const packPrice = window.selectedPackPrice;
         console.log('Pack Price:', packPrice);
 
-        const resultIdOpenPack = await getIdFromProductName('Customized Swatchpack');
+        const resultIdOpenPack = await getIdFromProductName('Swatches');
         console.log('Result ID Open Pack:', resultIdOpenPack);
 
         if (resultIdOpenPack.length === 0) {
-            throw new Error('Customized Swatchpack not found');
+            throw new Error('Customized Swatch not found');
         }
 
         resultIdOpenPack[0].list_price = packPrice;
