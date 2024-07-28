@@ -47,9 +47,29 @@ class WebsiteSaleCart(ProductsFilter):
             **kw
         )
         
+        """type_of_order"""
+        type_of_order = order.order_line[0].product_id.product_tmpl_id.producttype_id.type_of_order if  order.order_line else False
+        order.update({
+            'x_studio_type_of_order': type_of_order if not order.x_studio_type_of_order else order.x_studio_type_of_order
+        })
+        
         if (price_unit):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
             price_reduce = price_unit / (1 + line_id.tax_id.amount /100 )
+            line_id.update ({
+                'price_reduce': price_reduce,
+                'price_tax': float(price_unit - price_reduce),
+                'price_subtotal': float(price_reduce),
+                'price_total': line_id.product_qty * float(price_reduce)
+            })
+
+        """ Incremento el precio del product Fabric - añadir 25 % adicional al pvp"""
+        is_fabric = request.env['product.product'].search([ ('id','=', product_id), ('producttype_id.name','ilike','fabric') ])
+        if (is_fabric):
+            line_id = request.env['sale.order.line'].browse(values['line_id'])
+            price_unit = line_id.price_unit
+            percentage_additional = request.env['ir.config_parameter'].get_param('fabric_percentage_additional', 1)
+            price_reduce = price_unit * (1 + percentage_additional / 100) / (1 + line_id.tax_id.amount /100 )
             line_id.update ({
                 'price_reduce': price_reduce,
                 'price_tax': float(price_unit - price_reduce),
