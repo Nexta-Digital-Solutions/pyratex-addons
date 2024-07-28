@@ -68,7 +68,7 @@ class WebsiteSaleCart(ProductsFilter):
         if (is_fabric):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
             price_unit = line_id.price_unit
-            percentage_additional = request.env['ir.config_parameter'].get_param('fabric_percentage_additional', 1)
+            percentage_additional = request.env['ir.config_parameter'].get_param('Fabric Percentage', 1)
             price_reduce = price_unit * (1 + percentage_additional / 100) / (1 + line_id.tax_id.amount /100 )
             line_id.update ({
                 'price_reduce': price_reduce,
