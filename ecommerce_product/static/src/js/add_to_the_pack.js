@@ -1,13 +1,20 @@
 odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     "use strict";
 
+    const session = require('web.session');
     let selectedProductIds = [];
     let packElementsNumber = 0;
 
     $(document).on('click', '#o_add_to_the_pack', async function (event) {
-        event.preventDefault(); // Evitar el envío del formulario
+        event.preventDefault();
         const productId = $(this).data('product-id');
-        console.log('Product ID:', productId);
+        
+        const user_id = session.uid;
+        if (user_id === false){ 
+            const url = "/web/login";
+            window.location.href = url;
+        }
+        
 
         if (packElementsNumber < await getMaxPackElementsNumber()) {
             await addToThePack(productId);

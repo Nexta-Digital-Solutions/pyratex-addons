@@ -17,7 +17,7 @@
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
-                'stock','barcodes', 'web_studio', 'sale_product_configurator'],
+                'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp'],
 
     'data': [
         'security/ir.model.access.csv',

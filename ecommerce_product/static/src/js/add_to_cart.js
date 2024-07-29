@@ -3,6 +3,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     const rpc = require('web.rpc');
     const ajax = require('web.ajax');
     var wSaleUtils = require('website_sale.utils');
+    const session = require('web.session');
 
     const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
@@ -45,9 +46,25 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         return result;
     }
 
+    $(document).on('click', '#add_to_cart', async function () {
+        const user_id = session.user_id;
+        if (user_id === false){ 
+            const url = "/web/login";
+            window.location.href = url;
+        }
+        
+    });
+
     // Esta funcion es para el pack abierto
 $(document).on('click', '#o_add_to_Cart', async function () {
     let product_ids = [];
+    const user_id = session.user_id;
+    
+    if (user_id === false){ 
+        const url = "/web/login";
+        window.location.href = url;
+    }
+
     const selectedProductIds = getSelectedProductIds();
 
     try {
