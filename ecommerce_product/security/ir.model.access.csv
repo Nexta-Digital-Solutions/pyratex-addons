@@ -14,3 +14,8 @@ access_openpack,Open Pack,model_open_pack,base.group_user,1,1,1,1
 access_useropenpack,User Open Pack,model_user_open_pack,base.group_user,1,1,1,1
 access_stock_location,stock location public,stock.model_stock_location,,1,0,0,0
 access_barcode_nomenclature,barcode nomenclature public,barcodes.model_barcode_nomenclature,,1,0,0,0
+stock.access_stock_quant_all_users,stock.quant all_users,stock.model_stock_quant,,1,0,0,0
+mrp.access_mrp_all_users,mrp.bom all_users,mrp.model_mrp_bom,,1,0,0,0
+stock.access_stock_location_all_users,stock.location all_users,stock.model_stock_location,,1,0,0,0
+stock.access_stock_warehouse_all_users,stock.warehouse all_users,stock.model_stock_warehouse,,1,0,0,0
+stock.access_stock_move_all_users,stock.move all_users,stock.model_stock_move,,1,0,0,0
