@@ -14,14 +14,15 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.1.0',
+    'version': '16.0.1.1',
     'license': 'LGPL-3',
 
     'depends': [
         'base', 
         'website', 
         'website_sale',
-        'documents'
+        'documents',
+        'documents_account'
     ],
     'external_dependencies': {
         'python': ['python-docx'],
