@@ -239,7 +239,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
                             if (stock_product_variant):
                                 products_with_variants.append(product.id)
             products = products.search([ ('id','in',products_with_variants) ])
-           
+        
             
         ProductAttribute = request.env['product.attribute']
         if products:
@@ -260,6 +260,13 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
             request.session['website_sale_shop_layout_mode'] = layout_mode
 
         products_prices = lazy(lambda: products._get_sales_prices(pricelist))
+
+
+        product_count = len(products) 
+        pager = website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
+        offset = pager['offset']
+        products = products[offset:offset + ppg]
+        
 
         values = {
             'search': fuzzy_search_term or search,
