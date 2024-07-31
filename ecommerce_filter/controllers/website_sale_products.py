@@ -224,10 +224,12 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         if not producttype_set:
             for product in products:
                 for product_variant in product.product_variant_ids:
-                    if (product_variant.is_published and product_variant.producttype_id.name and product_variant.producttype_id.name.lower() !="swatches"):
+                    if (product_variant.is_published ):
+                        #and product_variant.producttype_id.name and product_variant.producttype_id.name.lower() !="swatches"):
                             products_with_variants.append(product.id)
             products = products.search([ ('id','in',products_with_variants) ])
-        elif producttype_set_not_swatches:
+        #elif producttype_set_not_swatches:
+        else:
             for product in products:
                 for product_variant in product.product_variant_ids:
                     if (product_variant.is_published == True):
