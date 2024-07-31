@@ -33,12 +33,14 @@
             <div t-if="not user_id.partner_id.name == 'Public user' and product.producttype_id.name != 'Swatch'"
                  class="product_price" itemprop="offers"
                  itemscope="itemscope" itemtype="http://schema.org/Offer">
+                <!-- 
                 <t t-if="'base_price' in template_price_vals">
                     <del t-attf-class="text-muted me-1 h6 mb-0" style="white-space: nowrap;">
                         <em class="small" t-esc="template_price_vals['base_price']"
                             t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                     </del>
                 </t>
+                -->
                 <span class="h6 mb-0" t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale"
                       t-esc="template_price_vals['price_reduce']"
                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>

@@ -8,8 +8,9 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-class ProductTemplateAnalytic(models.Model):
-    _name = 'product.template.analytic'
+
+class ProductTemplateAnalyticNew(models.Model):
+    _name = 'product.template.analytic.new'
 
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     product_template_id = fields.Many2one('product.template', string='Product Template')
@@ -51,7 +52,8 @@ class ProductTemplateAnalytic(models.Model):
 
     def _cron_compute_new(self):
         _logger.debug("Cron: Compute New Analytic Started")
-        self.sudo().search([]).unlink()
+
+        # self.sudo().search([]).unlink()  # Ya no se borran, se actualizan, para evitar llegar al maximo de ids de postgres
 
         sale_order_line_ids = self.env['sale.order.line'].search([])
 
@@ -170,19 +172,71 @@ class ProductTemplateAnalytic(models.Model):
         # pprint.pp(data)
         for acc_id in data:
             for prod_id in data[acc_id]:
-                self.create({
-                    'analytic_account_id': acc_id,
-                    'product_template_id': prod_id,
-                    'sale_amount': data[acc_id][prod_id]['sale_amount'],
-                    'sale_qty': data[acc_id][prod_id]['sale_qty'],
-                    'customer_bill_amount': data[acc_id][prod_id]['customer_bill_amount'],
-                    'customer_bill_qty': data[acc_id][prod_id]['customer_bill_qty'],
-                    'purchase_amount': data[acc_id][prod_id]['purchase_amount'],
-                    'purchase_qty': data[acc_id][prod_id]['purchase_qty'],
-                    'vendor_bill_amount': data[acc_id][prod_id]['vendor_bill_amount'],
-                    'vendor_bill_qty': data[acc_id][prod_id]['vendor_bill_qty'],
-                })
+                existente_id = self.search([('analytic_account_id', '=', acc_id), ('product_template_id', '=', prod_id)])
+                if existente_id:
+                    existente_id.write({
+                        'sale_amount': data[acc_id][prod_id]['sale_amount'],
+                        'sale_qty': data[acc_id][prod_id]['sale_qty'],
+                        'customer_bill_amount': data[acc_id][prod_id]['customer_bill_amount'],
+                        'customer_bill_qty': data[acc_id][prod_id]['customer_bill_qty'],
+                        'purchase_amount': data[acc_id][prod_id]['purchase_amount'],
+                        'purchase_qty': data[acc_id][prod_id]['purchase_qty'],
+                        'vendor_bill_amount': data[acc_id][prod_id]['vendor_bill_amount'],
+                        'vendor_bill_qty': data[acc_id][prod_id]['vendor_bill_qty'],
+                    })
+                else:
+                    self.create({
+                        'analytic_account_id': acc_id,
+                        'product_template_id': prod_id,
+                        'sale_amount': data[acc_id][prod_id]['sale_amount'],
+                        'sale_qty': data[acc_id][prod_id]['sale_qty'],
+                        'customer_bill_amount': data[acc_id][prod_id]['customer_bill_amount'],
+                        'customer_bill_qty': data[acc_id][prod_id]['customer_bill_qty'],
+                        'purchase_amount': data[acc_id][prod_id]['purchase_amount'],
+                        'purchase_qty': data[acc_id][prod_id]['purchase_qty'],
+                        'vendor_bill_amount': data[acc_id][prod_id]['vendor_bill_amount'],
+                        'vendor_bill_qty': data[acc_id][prod_id]['vendor_bill_qty'],
+                    })
 
         _logger.debug("Cron: Compute New Analytic Finished")
 
 
+
+
+
+class ProductTemplateAnalytic(models.Model):
+    """Old model, not used anymore"""
+    _name = 'product.template.analytic'
+
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    product_template_id = fields.Many2one('product.template', string='Product Template')
+    product_category_id = fields.Many2one('product.category', string='Product Category', related='product_template_id.categ_id', store=True)
+
+
+    sale_amount = fields.Float(string='Sale Amount')
+    sale_qty = fields.Float(string='Sale Quantity')
+
+    customer_bill_amount = fields.Float(string='Customer Amount')
+    customer_bill_qty = fields.Float(string='Customer Quantity')
+
+    customer_payment_pending_amount = fields.Float(string='Customer Payment Pending', compute='_compute_payment_pending_amount', store=False, readonly=True)
+
+    purchase_amount = fields.Float(string='Purchase Amount')
+    purchase_qty = fields.Float(string='Purchase Quantity')
+
+    vendor_bill_amount = fields.Float(string='Vendor Amount')
+    vendor_bill_qty = fields.Float(string='Vendor Quantity')
+
+    vendor_payment_pending_amount = fields.Float(string='Vendor Payment Pending', compute='_compute_payment_pending_amount', store=False, readonly=True)
+
+    def _compute_payment_pending_amount(self):
+        for record in self:
+            record.customer_payment_pending_amount = 0.0
+            record.vendor_payment_pending_amount = 0.0
+
+
+    def _cron_compute_new(self):
+        # Este modelo esta obsoleto, ya no tiene vista ni menu ni accion. Si se llegara a ejecutar el cron que invoca a este metodo
+        # solamente debe limpiar los registros existentes
+        self.sudo().search([]).unlink()
+        _logger.debug("Cron: Compute New Analytic Obsolete, old records deleted")
