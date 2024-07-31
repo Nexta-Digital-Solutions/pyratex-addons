@@ -21,11 +21,13 @@
 
         <xpath expr="//div[hasclass('product_price')]" position="replace">
             <!--Muestra los colores del producto-->
-            <div t-foreach="product.product_variant_ids" t-as="variant">
-                <t t-if="variant.is_published and variant.mapped('product_template_attribute_value_ids').html_color">
-                    <label t-attf-style="background-color:#{variant.mapped('product_template_attribute_value_ids').html_color}" t-attf-class="css_attribute_color">
-                        <input type="radio"/>
-                    </label>
+            <div style="display:flex; flex-wrap: wrap;">
+                <t t-foreach="product.product_variant_ids" t-as="variant">
+                    <div t-if="variant.is_published and variant.mapped('product_template_attribute_value_ids').html_color">
+                        <label t-attf-style="background-color:#{variant.mapped('product_template_attribute_value_ids').html_color}" t-attf-class="css_attribute_color">
+                            <input type="radio"/>
+                        </label>
+                    </div>
                 </t>
             </div>
 
