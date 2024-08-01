@@ -6,13 +6,15 @@
         <field name="inherit_id" ref="product.product_attribute_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='is_custom']" position="after">
-<!--                <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>-->
+                <!--                <field name="icon_id" widget="image" options="{'size': [50, 50]}"/>-->
                 <field name="color_code" widget="color" invisible="1"/>
                 <field name="attribute_name" invisible="1"/>
                 <field name="colorgroup_id" attrs="{ 'invisible': [('attribute_name', '!=', 'Color')] }"/>
             </xpath>
             <xpath expr="//tree/field[@name='html_color']" position="replace">
-                <field string="Color RGB" name="html_color" attrs="{'column_invisible': [('parent.display_type', '!=', 'color')]}" widget="color"/>
+                <field string="Color RGB" name="html_color"
+                       attrs="{'column_invisible': [('parent.display_type', '!=', 'color'), ('parent.display_type', '!=', 'select')]}"
+                       widget="color"/>
             </xpath>
         </field>
     </record>
