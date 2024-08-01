@@ -14,3 +14,11 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.css_attribute_color{
+  position: relative;
+  display: inline-block;
+  border: 2px solid #CED4DA;
+  border-radius: 50%;
+  text-align: center;
+  transition: background-color 0.05s ease-in-out, border-color 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
+ }
