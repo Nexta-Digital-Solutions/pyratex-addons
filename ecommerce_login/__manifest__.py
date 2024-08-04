@@ -14,7 +14,7 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.1.1',
+    'version': '16.0.1.2',
     'license': 'LGPL-3',
 
     'depends': [
@@ -34,7 +34,8 @@
         'views/signup_custom.xml',
         'views/mlnda.xml',
         'views/process_complete.xml',
-        'views/loader.xml' 
+        'views/loader.xml',
+        'views/res_country_website.xml'
     ],
     
     'assets': {
