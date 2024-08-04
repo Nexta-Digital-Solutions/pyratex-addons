@@ -25,7 +25,7 @@
         'documents_account'
     ],
     'external_dependencies': {
-        'python': ['python-docx'],
+        'python': ['python-docx', 'docxtpl'],
     },
 
     'data': [
