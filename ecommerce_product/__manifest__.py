@@ -13,7 +13,7 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.0.8',
+    'version': '16.0.0.9',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
@@ -73,6 +73,7 @@
             'ecommerce_product/static/src/js/add_to_cart.js',
             # 'ecommerce_product/static/src/js/website_sale.js',
             'ecommerce_product/static/src/js/remove_from_cart.js',
+            'ecommerce_product/static/src/js/variant_mixin.js'
         ]
 
     }

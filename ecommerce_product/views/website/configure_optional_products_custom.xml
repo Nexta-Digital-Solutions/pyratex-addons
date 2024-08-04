@@ -18,8 +18,8 @@
 
 
         <xpath expr="//td[hasclass('td-product_name')]" position="after">
-            <td class="text-center td-qty">
-                <span t-field="product.qty_available"/>
+            <td class="text-center td-qty-available">
+                <span t-field="product.qty_available" class ="oe_qty_available"/>
             </td>
         </xpath>
 
