@@ -1,5 +1,8 @@
 <odoo>
     <template id="products_item_custom" inherit_id="website_sale.products_item">
+        <xpath expr ="//form/div[2]/div[2][hasclass('o_wsale_product_sub')]" position = "attributes">
+            <attribute name="class" add="flex-column" separator=" "></attribute>
+        </xpath>
         <xpath expr="//form/div/div[hasclass('o_wsale_product_information_text')]" position="replace">
             <div class="o_wsale_product_information_text flex-grow-1 d-flex mr-1">
                 <h6 class="o_wsale_products_item_title mb-2">
@@ -21,7 +24,7 @@
 
         <xpath expr="//div[hasclass('product_price')]" position="replace">
             <!--Muestra los colores del producto-->
-            <div style="display:flex; flex-wrap: wrap;">
+            <div style="display:flex; flex-wrap:wrap; ">
                 <t t-foreach="product.product_variant_ids" t-as="variant">
                     <div t-if="variant.is_published and variant.mapped('product_template_attribute_value_ids').html_color">
                         <label t-attf-style="background-color:#{variant.mapped('product_template_attribute_value_ids').html_color}" t-attf-class="css_attribute_color">
