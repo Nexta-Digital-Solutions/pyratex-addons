@@ -8,6 +8,7 @@
                 <tree editable="bottom">
                     <field name="name"/>
                     <field name = "type_of_order"/>
+                    <field name = "journal_id"/>
                 </tree>
             </field>
         </record>
