@@ -42,7 +42,7 @@ class ProductTemplate(models.Model):
             product = self.env['product.product'].browse(combination_info['product_id']) or self
             partner = self.env.user.partner_id
             company_id = current_website.company_id
-            qty_available = self.qty_available
+            qty_available = product.qty_available or 0
             fpos_id = self.env['website'].sudo()._get_current_fiscal_position_id(partner)
             fiscal_position = self.env['account.fiscal.position'].sudo().browse(fpos_id)
             product_taxes = product.sudo().taxes_id.filtered(lambda x: x.company_id == company_id)
