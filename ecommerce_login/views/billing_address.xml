@@ -41,7 +41,7 @@
         </div>
 
         <div>
-            <t t-set="countries" t-value="env['res.country'].sudo().search([])"/>
+            <t t-set="countries" t-value="env['res.country'].sudo().search([('not_show_website' == False)])"/>
             <t t-if="countries">
                 <select class="form-select css_attribute_select mb-2" name="invoice_country">
                     <option value="" selected="true">Country</option>
