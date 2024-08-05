@@ -13,11 +13,12 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.0.9',
+    'version': '16.0.1.0',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
-                'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp'],
+                'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp',
+                'account_accountant'],
 
     'data': [
         'security/ir.model.access.csv',
