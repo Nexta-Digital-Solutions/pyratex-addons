@@ -13,7 +13,7 @@
     'website': "https://nextads.es/",
 
     'category': 'Accounting',
-    'version': '16.0.0.1',
+    'version': '16.0.1.1',
 
     'depends': [
         'purchase',
