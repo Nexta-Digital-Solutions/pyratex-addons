@@ -19,7 +19,12 @@
 
         <xpath expr="//td[hasclass('td-product_name')]" position="after">
             <td class="text-center td-qty-available">
-                <span t-field="product.qty_available" class ="oe_qty_available"/>
+                <div>
+                    <span t-field="product.qty_available" class ="oe_qty_available"/>
+                </div>
+                <div>
+                    <span class  ="oe_message_stock" style ="display:none;color:red"> No stock for this quantity</span>
+                </div>
             </td>
         </xpath>
 
