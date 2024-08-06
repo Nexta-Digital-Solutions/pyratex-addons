@@ -24,3 +24,4 @@ class ProductType(models.Model):
 
     name = fields.Char(string='Nombre')
     type_of_order = fields.Selection (TYPES, string = "Type_of_order", default=TYPES[0][0])
+    journal_id = fields.Many2one('account.journal', string = "Journal")
