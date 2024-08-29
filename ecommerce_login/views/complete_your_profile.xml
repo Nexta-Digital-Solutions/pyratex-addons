@@ -53,7 +53,7 @@
                                 <t t-if="countries">
                                     <select class="form-select css_attribute_select mb-2" name="country" >
                                         <!-- <option value="" selected="true">Country</option> -->
-                                        <t t-foreach="countries.filtered(lambda x: x.not_show_website == False)" t-as="country">
+                                        <t t-foreach="countries.filtered(lambda x: x.show_website == True)" t-as="country">
                                             <t t-if="country.name=='Spain'"><option t-att-value="country.id" t-esc="country.name" selected="selected" /></t>
                                             <t t-if="country.name!='Spain'"><option t-att-value="country.id" t-esc="country.name" /></t>
                                         </t>
