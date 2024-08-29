@@ -10,12 +10,12 @@
             <div style="display: flex; flex-direction: row; flex-wrap: wrap;"
                  t-if="user_id.partner_id.name != 'Public user'">
                 <div style="width: 20%;">
-                    <ul t-if="product.weight &gt; 0.0" style="list-style: none;">
+                    <ul t-if="product.x_studio_weight &gt; 0.0" style="list-style: none;">
                         <li>
                             <strong>Weight</strong>
                         </li>
                         <p>
-                            <span t-field="product.weight"/>
+                            <span t-field="product.x_studio_weight"/>
                             <span>gsm</span>
                         </p>
                     </ul>
