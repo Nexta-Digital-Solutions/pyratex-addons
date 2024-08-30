@@ -217,7 +217,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
         """ ademas si se filtra por los metros, mira en el almacen correspondiente y entonces si cumple el filtro
             se mostrara sino no"""
         products_with_variants = []
-        location_id = request.env['stock.location'].search( [ ('name', '=', 'Spain/External Warehouse') ])
+        location_id = request.env['stock.location'].sudo().search( [ ('name', '=', 'Spain/External Warehouse') ])
 
        
         products = search_product 
@@ -236,7 +236,7 @@ class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
                         if (not availablemeters_set):
                             products_with_variants.append(product.id)
                         else:
-                            stock_product_variant = request.env['stock.quant'].search([ ('product_id', '=', product_variant.id),
+                            stock_product_variant = request.env['stock.quant'].sudo().search([ ('product_id', '=', product_variant.id),
                                                                                         ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),                                                              ('location_id', '=', location_id.id)])
                             if (stock_product_variant):
                                 products_with_variants.append(product.id)
