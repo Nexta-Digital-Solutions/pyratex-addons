@@ -43,8 +43,7 @@
         <div>
             <t t-set="countries" t-value="env['res.country'].sudo().search([('show_website','=',True)])"/>
             <t t-if="countries">
-                <select class="form-select css_attribute_select mb-2" name="invoice_country">
-                    <option value="" selected="true">Country</option>
+                <select class="form-select css_attribute_select mb-2" name="invoice_country" id="invoice_country">
                     <t t-foreach="countries" t-as="country">
                         <option t-att-value="country.id" t-esc="country.name"/>
                     </t>

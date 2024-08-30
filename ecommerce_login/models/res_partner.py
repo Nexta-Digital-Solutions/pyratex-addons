@@ -40,10 +40,14 @@ class ResPartner(models.Model):
         return temp_file
     
     def createDocumentMDNA(self, partner_id, data, signature):
-        folder = 'Templates'
-        template_name = "mnda.docx"
+        folder = 'mlnda'
+        template_name = "mlnda.docx"
         folder_id = self.env['documents.folder'].search([ ('name', '=', folder)])
         docs = self.env['documents.document'].search( [('folder_id', '=', folder_id.id), ('name', '=', template_name)], limit = 1)
+        
+        if (not docs):
+            return
+        
         merger = PdfFileMerger()
         signature_file = self.createDocumentSignature(signature)
         for doc in docs:
