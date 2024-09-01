@@ -24,7 +24,7 @@
                             </div>
                             <div class="form-group" style = "display:flex">
                                 <input type="text" class="form-control" id="company" name = "company" placeholder="Company Name*" required = "required"/>
-                                <input type="text" class="form-control" id="company_vat" placeholder="VAT Number"/>
+                                <input type="text" class="form-control" id="company_vat" name = "company_vat" placeholder="VAT Number"/>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number*" required = "required"/>
@@ -44,7 +44,7 @@
                                     <input type="text" v-model = "postalcode" class="form-control" id="postalcode" name = "postalcode" placeholder="Postal Code*" required = "required"/>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <input type="text" v-model = "city" class="form-control" id="city" placeholder="City*" required = "required"/>
+                                    <input type="text" v-model = "city" class="form-control" id="city" name = "city" placeholder="City*" required = "required"/>
                                 </div>
                             </div>
 

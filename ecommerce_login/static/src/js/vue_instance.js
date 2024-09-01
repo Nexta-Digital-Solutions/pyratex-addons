@@ -1,5 +1,5 @@
 $( document ).ready(function(){
-
+    Vue.config.devtools = true
     let divFields = new Vue({
     el: '#divFields',
     data: {
@@ -11,7 +11,8 @@ $( document ).ready(function(){
       address2: '',
       postalcode: '',
       city: '',
-      contry: ''
+      country: '',
+      'invoice_name':''
     },
     });
     
@@ -21,9 +22,23 @@ $( document ).ready(function(){
       if (checkbox){
         checkbox.addEventListener("change", function() {
           if (this.checked) {
-          billingAddressContainer.style.display = "block";
+            billingAddressContainer.style.display = "block";
+            Array.from(
+              document.querySelectorAll('[id^="invoice_"]'))
+              .forEach(function (x) { 
+                  if (! x.hasAttribute('data-norequired')) {
+                    x.setAttribute('required', true)
+                  }
+              }
+            ); 
           } else {
-          billingAddressContainer.style.display = "none";
+            Array.from(
+              document.querySelectorAll('[id^="invoice_"]'))
+              .forEach(function (x) { 
+                  x.removeAttribute('required')
+              }
+            );
+            billingAddressContainer.style.display = "none";
           }
         });
       };
