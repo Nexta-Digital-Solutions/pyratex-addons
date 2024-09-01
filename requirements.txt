@@ -1,5 +1,5 @@
 python-docx
 docxtpl 
-libreoffice
+soffice
 pdfminer
 phonenumbers
