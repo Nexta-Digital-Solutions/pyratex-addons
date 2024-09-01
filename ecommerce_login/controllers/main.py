@@ -76,7 +76,11 @@ class AuthSignupHome(Home):
                 user_id.action_reset_password()
             except:
                 pass
-            doc = partner_id.createDocumentMDNA(partner_id, params, signature)
+            doc_id = partner_id.createDocumentMDNA(partner_id, params, signature)
+            if (doc_id):
+                partner_id.sudo().update ({
+                    'x_studio_mnda_signed': 'Yes'
+                })
         else:
             return request.redirect('/web/login')
 
@@ -112,11 +116,12 @@ class AuthSignupHome(Home):
             'company_type': 'company',
             'vat': vat,
             'name': company,
-            'street': data.get('data[street]'),
-            'street2': data.get('data[street2]'),
-            'zip': data.get('data[zip]'),
+            'street': data.get('data[address1]'),
+            'street2': data.get('data[address2]'),
+            'zip': data.get('data[postalcode]'),
             'country_id':  int(data.get('data[country]')),
-            'city': data.get('data[city]')
+            'city': data.get('data[city]'),
+            'comment': data.get('data[additional_instructions]')
         } 
         if (not company_id):
             company_id = request.env['res.partner'].sudo().create( contact )
@@ -161,8 +166,8 @@ class AuthSignupHome(Home):
             'street2': data.get('data[invoice_address2]'),
             'city': data.get('data[invoice_city]'),
             'zip': data.get('data[invoice_postalcode]'),
-            'country_id': company.country_id.id,
-            'comment': data.get('data[additional]')
+            'country_id':  int(data.get('data[invoice_country]')),
+            'comment': data.get('data[invoice_additional]')
         }
         partner_id = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
         if (not partner_id):
