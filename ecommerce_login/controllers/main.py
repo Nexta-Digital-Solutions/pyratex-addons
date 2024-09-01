@@ -111,7 +111,7 @@ class AuthSignupHome(Home):
     def createCompanyDLNA(self, data):
         vat = data.get('data[company_vat]')
         company = data.get('data[company]')
-        company_id = request.env['res.partner'].sudo().search([ '&',('company_type','=','company'), '|',('vat', '=', vat), ('name', 'ilike', company) ], limit = 1)
+        company_id = request.env['res.partner'].sudo().search([ '|',('vat', '=', vat), ('name', 'ilike', company) ], limit = 1)
         contact = {
             'company_type': 'company',
             'vat': vat,
