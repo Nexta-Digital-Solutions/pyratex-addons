@@ -91,7 +91,7 @@ class ResPartner(models.Model):
         docTemplate_new =self.generateTempFile()
         jinja_env = jinja2.Environment(autoescape=True)
         tpl = DocxTemplate(docTemplate['name'])
-        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), width=Mm(40), height=Mm(40))
+        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), width=Mm(30), height=Mm(20))
         try:
             tpl.render(dataTemplate, jinja_env)
             tpl.save(docTemplate_new['name'])

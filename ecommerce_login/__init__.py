@@ -10,7 +10,7 @@ import base64
 def  post_init_hook (cr, registry):
     env = api.Environment(cr, SUPERUSER_ID, {})
     folder = 'templates'
-    template_name = "mlnda.docx"
+    template_name = "mldna.docx"
     path_template = "%s/templates/%s" % (os.path.dirname(__file__), template_name)
     folder_id = env['documents.folder'].search([ ('name', '=', folder)])
     if (not folder_id):
