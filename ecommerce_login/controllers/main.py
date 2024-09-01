@@ -69,7 +69,7 @@ class AuthSignupHome(Home):
         signature = params.get('img')
         company_id = self.createCompanyDLNA(params)
         partner_id = self.createContactDLNA(params, signature, company_id)
-        invoice_id = self.createInvoiceDLNA(params,company_id)
+        invoice_id = self.createInvoiceDLNA(params,company_id, partner_id)
         if (partner_id): 
             try:       
                 user_id = self.createUserDLNA(params, partner_id)
@@ -151,8 +151,9 @@ class AuthSignupHome(Home):
            partner_id = request.env['res.partner'].sudo().create( contact )
         return partner_id
         
-    def createInvoiceDLNA(self, data, company_id):
+    def createInvoiceDLNA(self, data, company_id, partner_id):
         invoice_name =  data.get('data[invoice_name]')
+        email = partner_id.email
         if (not invoice_name):
             return
         
@@ -161,6 +162,7 @@ class AuthSignupHome(Home):
             'parent_id': company_id.id,
             'company_type': 'person',
             'type': 'invoice',
+            'email': email,
             'x_studio_vat2': data.get('data[invoice_vat]'),
             'street': data.get('data[invoice_address1]'),
             'street2': data.get('data[invoice_address2]'),
