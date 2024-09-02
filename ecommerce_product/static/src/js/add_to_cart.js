@@ -14,7 +14,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         await rpc.query({
             model: 'product.product',
             method: 'search_read',
-			args: [[ ['name','=', ProductName]], ['id'] ]
+			args: [[ ['name','ilike', ProductName]], ['id'] ]
         }).then(function (data) {
             console.log('Data', data);
             result = data});
@@ -78,7 +78,7 @@ $(document).on('click', '#o_add_to_Cart', async function () {
         const packPrice = window.selectedPackPrice;
         console.log('Pack Price:', packPrice);
 
-        const resultIdOpenPack = await getIdFromProductName('Swatches');
+        const resultIdOpenPack = await getIdFromProductName('Swatch');
         console.log('Result ID Open Pack:', resultIdOpenPack);
 
         if (resultIdOpenPack.length === 0) {
