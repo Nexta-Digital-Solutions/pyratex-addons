@@ -165,7 +165,7 @@ class AuthSignupHome(Home):
             'country_id':  int(data.get('data[invoice_country]')),
             'comment': data.get('data[invoice_additional]')
         }
-        partner_id = request.env['res.partner'].sudo().search([ ('name', 'iline', name) ], limit = 1)
+        partner_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', name) ], limit = 1)
         if (not partner_id):
            partner_id = request.env['res.partner'].sudo().create( contact )
         return partner_id
