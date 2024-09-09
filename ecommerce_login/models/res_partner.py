@@ -40,10 +40,15 @@ class ResPartner(models.Model):
         return temp_file
     
     def createDocumentMDNA(self, partner_id, data, signature):
-        folder = 'Templates'
-        template_name = "mnda.docx"
-        folder_id = self.env['documents.folder'].search([ ('name', '=', folder)])
-        docs = self.env['documents.document'].search( [('folder_id', '=', folder_id.id), ('name', '=', template_name)], limit = 1)
+        folder = 'mldna'
+        template_name = "mldna.docx"
+        folder_template_id =  self.env['documents.folder'].sudo().search([ ('name', '=', 'templates')])
+        folder_id = self.env['documents.folder'].sudo().search([ ('name', '=', folder)])
+        docs = self.env['documents.document'].sudo().search( [('folder_id', '=', folder_template_id.id), ('name', '=', template_name)], limit = 1)
+        
+        if (not docs):
+            return
+        
         merger = PdfFileMerger()
         signature_file = self.createDocumentSignature(signature)
         for doc in docs:
@@ -73,8 +78,7 @@ class ResPartner(models.Model):
         
         byte_str = myio.read()
         fileAscii = base64.b64encode(byte_str).decode('ASCII')
-        folder_id = self.env['documents.folder'].search([ ('name', '=', 'MDNA')])
-        self.env['documents.document'].create ({
+        return self.env['documents.document'].sudo().create ({
             'name': 'mdna.pdf',
             'partner_id': partner_id.id,
             'datas': fileAscii,
@@ -87,8 +91,7 @@ class ResPartner(models.Model):
         docTemplate_new =self.generateTempFile()
         jinja_env = jinja2.Environment(autoescape=True)
         tpl = DocxTemplate(docTemplate['name'])
-        #image_path = ''.join([os.path.dirname(os.path.abspath(__file__)),'/','signature_pyratex.png'])
-        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), width=Mm(40), height=Mm(20))
+        dataTemplate['signature'] =  InlineImage(tpl,  signature_file.get('name'), width=Mm(30), height=Mm(20))
         try:
             tpl.render(dataTemplate, jinja_env)
             tpl.save(docTemplate_new['name'])

@@ -22,6 +22,8 @@ class SaleOrder(models.Model):
         # all_stock = all(line.product_id.producttype_id and line.product_id.producttype_id.name == "Swatches" or
         #                          line.product_id.producttype_id.name == "Fabrics" for line in order_lines)
 
+    def _get_delivery_methods(self):
+        return self.env['delivery.carrier'].sudo().search([('website_published', '=', True)])
 
         # ATENCION SOLO FALLA EN LOCAL!!!!
         if all_swatches:

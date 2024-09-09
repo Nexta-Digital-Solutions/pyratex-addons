@@ -49,12 +49,18 @@ class WebsiteSaleCart(ProductsFilter):
         
         """type_of_order: prevalece el de fabrics"""
         saleorder_line_ids = order.order_line if order.order_line else False
-        if (saleorder_line_ids and set_qty > 0):
+        if (saleorder_line_ids and ((set_qty  and set_qty > 0 ) or (add_qty and add_qty > 0))):
             type_of_order_fabrics = saleorder_line_ids.filtered(lambda x: x.product_id.product_tmpl_id.producttype_id.name.lower() == "fabrics")
             type_of_order = type_of_order_fabrics[0].product_id.product_tmpl_id.producttype_id.type_of_order \
                             if type_of_order_fabrics else saleorder_line_ids[0].product_id.product_tmpl_id.producttype_id.type_of_order if  order.order_line else False
+           
+            type_of_order_current = type_of_order if not order.x_studio_type_of_order else order.x_studio_type_of_order
+            type_of_order_fabrics = request.env['product.type'].sudo().search([ ('name','=','Fabrics') ], limit = 1).type_of_order
+            if (type_of_order_current == type_of_order_fabrics 
+                and type_of_order !=  type_of_order_fabrics):
+                type_of_order = type_of_order_fabrics
             order.update({
-                'x_studio_type_of_order': type_of_order if not order.x_studio_type_of_order else order.x_studio_type_of_order
+                'x_studio_type_of_order': type_of_order 
             })
         
         if (price_unit):
