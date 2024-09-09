@@ -153,8 +153,9 @@ class AuthSignupHome(Home):
         if (not invoice_name):
             return
         
+        name = ' '.join([data.get('data[invoice_name]'), data.get('data[invoice_lastname]')])
         invoice_address = {
-            'name': ' '.join([data.get('data[invoice_name]'), data.get('data[invoice_lastname]')]),
+            'name': name,
             'parent_id': company_id.id,
             'company_type': 'person',
             'type': 'invoice',
