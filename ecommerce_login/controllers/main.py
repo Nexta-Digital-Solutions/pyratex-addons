@@ -67,21 +67,26 @@ class AuthSignupHome(Home):
     def web_saveDLNA(self, **post):
         params = post
         signature = params.get('img')
-        partner_id = self.createContactDLNA(params, signature)
+        company_id = self.createCompanyDLNA(params)
+        partner_id = self.createContactDLNA(params, signature, company_id)
+        invoice_id = self.createInvoiceDLNA(params,company_id, partner_id)
         if (partner_id): 
             try:       
                 user_id = self.createUserDLNA(params, partner_id)
                 user_id.action_reset_password()
             except:
                 pass
-            doc = partner_id.createDocumentMDNA(partner_id, params, signature)
+            doc_id = partner_id.createDocumentMDNA(partner_id, params, signature)
+            if (doc_id):
+                partner_id.sudo().update ({
+                    'x_studio_mnda_signed': 'Yes'
+                })
         else:
             return request.redirect('/web/login')
 
     def createUserDLNA(self, data, parent_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
         email = data.get('data[email]')
-        country = request.env['res.country'].search([ ('id', '=',  int(data.get('data[country]'))) ])
         user_data = {
             'name': name,
             'login': email,
@@ -93,7 +98,7 @@ class AuthSignupHome(Home):
             'zip': data.get('data[postalcode]'),
             'city': data.get('data[city]'),
             'state': False,
-            'country_id': country.id if country else False,
+            'country_id':  int(data.get('data[country]')),
             'function': data.get('data[position]')     
         }
         
@@ -101,31 +106,67 @@ class AuthSignupHome(Home):
         if (not user):
             user = request.env['res.users'].sudo().create( user_data )
         return user
-            
-    def createContactDLNA(self, data, signature):
+    
+    def createCompanyDLNA(self, data):
+        company = data.get('data[company]')
+        company_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', company) ], limit = 1)
+        contact = {
+            'company_type': 'company',
+            'name': company,
+            'street': data.get('data[address1]'),
+            'street2': data.get('data[address2]'),
+            'zip': data.get('data[postalcode]'),
+            'country_id':  int(data.get('data[country]')),
+            'city': data.get('data[city]'),
+            'comment': data.get('data[additional_instructions]')
+        } 
+        if (not company_id):
+            company_id = request.env['res.partner'].sudo().create( contact )
+        return company_id     
+     
+    def createContactDLNA(self, data, signature, company_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
         email = data.get('data[email]')
-        company = {
-            'name': data.get('data[company]')
-        }
         
         contact = {
+            'parent_id': company_id.id,
+            'company_type': 'person',
+            'type': 'contact',
+            'street': company_id.street,
+            'street2': company_id.street2,
+            'city': company_id.city,
+            'zip': company_id.zip,
+            'country_id': company_id.country_id.id,
             'name': name,
             'email': email,
             'profession': data.get('data[profession]'),
             'about_us': data.get('data[about_us]')
         }
         
-        partner = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
-        if (not partner):
+        partner_id = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
+        if (not partner_id):
            partner_id = request.env['res.partner'].sudo().create( contact )
-        return False if partner else partner_id
+        return partner_id
         
-    def createInvoiceDLNA(self, data):
+    def createInvoiceDLNA(self, data, company_id, partner_id):
+        invoice_name =  data.get('data[invoice_name]')
+        if (not invoice_name):
+            return
+        
+        name = ' '.join([data.get('data[invoice_name]'), data.get('data[invoice_lastname]')])
         invoice_address = {
-            'name': data.get('data[invoice_name]'),
-            'vat': data.get('data[invoice_vat]'),
+            'name': name,
+            'parent_id': company_id.id,
+            'company_type': 'person',
+            'type': 'invoice',
             'street': data.get('data[invoice_address1]'),
             'street2': data.get('data[invoice_address2]'),
-            'zip': data.get('data[invoice_postaldate]')
+            'city': data.get('data[invoice_city]'),
+            'zip': data.get('data[invoice_postalcode]'),
+            'country_id':  int(data.get('data[invoice_country]')),
+            'comment': data.get('data[invoice_additional]')
         }
+        partner_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', name) ], limit = 1)
+        if (not partner_id):
+           partner_id = request.env['res.partner'].sudo().create( invoice_address )
+        return partner_id

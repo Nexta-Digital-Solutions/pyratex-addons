@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="mldna" name="mldna">
-         <div class="modal fade show" style="z-index: 1600" id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+         <div class="modal fade show" style="z-index: 1600" id="modal_lnda" data-toogle="modal_lnda" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                              <div class = "logo" style = "padding-left:35%">
-                                <img src = "/ecommerce_login/static/img/logo_pyratex.png"/>
+                              <div class="logo" style="padding-left:35%">
+                                <img src="/ecommerce_login/static/img/logo_pyratex.png"/>
                               </div>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
                           </div>
                           <div class="modal-body">
-                            <div class = "col-sd-6">
+                            <div class="col-sd-6">
                           <span>
 PYRATEX® is a start-up company which invests heavily in Research &amp; Development in order to bring innovative fiber solutions to the market as scalable high-quality fabrics, ready to be used by designers and brands. PYRATEX® products are based on various sources of creativity and specific expertises. 
 We often work with new brands, people from the industry who are launching new innovative projects and who confide in PYRATEX® to bring them to market.
@@ -32,16 +32,16 @@ BETWEEN
 <div class="col-sd-6 mt-2">
   <span><strong>WHEREAS</strong></span>
 </div>
-<div class = "col-sd-6">
+<div class="col-sd-6">
   <span>
   The Parties intend to enter into negotiations with regard to a possible future collaboration relating to the use of sustainable and innovative fabrics (the “P rpo e”), and have agreed to comply with this agreement in connection with the disclosure or delivery of documents, components, parts, information, drawings, data, sketches, specifications, techniques, processes, inventions, fabric/fibers/yarns/textile/product samples and other materials, material compositions of the goods, label s rules, technical specification, notes, summaries, etc., both written and oral, of a secret, confidential or proprietary nature, including without limitation any and all information relating to marketing, finance, forecasts, invention, research, any proprietary information, design, know-how, trademarks, trade secret, any supportive or incidental information, and any and all subject matter claimed in or disclosed by any patent application (the “C	         a  I	a       ”) in order to execute the Purpose.(B) In the course of discussing the Project, the Parties may disclose confidential information about their business and operation to each other. Therefore, the Parties have agreed to enter into this non-disclosure agreement (the “A	”) to set out the terms upon which the Party disclosing confidential information (“Dicloing Par”) is prepared to discuss the Project and disclose information to the Party receiving such confidential information (“Receiving Par ”).
   </span>
 </div>
-<div class = "col-sd-6 mt-2">
+<div class="col-sd-6 mt-2">
 <span><strong>NOW IT IS HEREBY AGREED as follows:</strong></span>
 <ol>
   <li>The Parties for their mutual benefit and pursuant to a working relationship which has been or may be established, hereby agrees:</li>
-<ol type = "i">
+<ol type="i">
   <li>
   to hold the Confidential Information in strict confidence and to take all reasonable precautions to protect such Confidential Information;
   </li>
@@ -65,19 +65,19 @@ BETWEEN
       <thead>
         <tr>
           <th scope="col">signed by</th>
-          <th scope="col"></th>
+          <th scope="col"/>
           <th scope="col">customer</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><img src = "/ecommerce_login/static/img/signature_pyratex.png" class ="img-fluid sign-pyratex"/></td>
-          <td></td>
+          <td><img src="/ecommerce_login/static/img/signature_pyratex.png" class="img-fluid sign-pyratex"/></td>
+          <td/>
           <td>
             <div class="flex-row">
               <div class="wrapper">
-                <canvas id='blank' style='display:none'></canvas>
-                <canvas id="signature-pad" name = "signature-pad" width="400" height="200"></canvas>
+                <canvas id="blank" style="display:none"/>
+                <canvas id="signature-pad" name="signature-pad" width="400" height="200"/>
               </div>
             </div>
           </td>
@@ -87,12 +87,12 @@ BETWEEN
             <span>PYRATES  mar  fabric  S.L.<br/></span>
             <span>Regina Polanco - CEO</span>
           </td>
-          <td></td>
-          <td><input id = "position" name = "position" type = "text" placeholder = "position*"/></td>
+          <td/>
+          <td><input id="position" name="position" type="text" placeholder="position*"/></td>
         </tr>
       </tbody>
     </table>
-    <div id="liveAlertPlaceholder"></div>
+    <div id="liveAlertPlaceholder"/>
   </div>
 
   </div>
@@ -100,7 +100,7 @@ BETWEEN
 
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id = "modal_save" class="btn btn-secondary">Next</button>
+                            <button type="button" id="modal_save" class="btn btn-secondary">Next</button>
                           </div>
                         </div>
                       </div>

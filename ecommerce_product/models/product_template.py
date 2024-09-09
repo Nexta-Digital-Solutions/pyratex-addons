@@ -37,11 +37,15 @@ class ProductTemplate(models.Model):
             combination=combination, product_id=product_id, add_qty=add_qty, pricelist=pricelist,
             parent_combination=parent_combination, only_template=only_template)
 
+        product = self.env['product.product'].sudo().browse(combination_info['product_id']) or self
+        qty_available = product.qty_available or 0
+        
+        combination_info.update( qty_available=qty_available )
+        
+        """
         if self.env.context.get('website_id'):
-            product = self.env['product.product'].browse(combination_info['product_id']) or self
             partner = self.env.user.partner_id
             company_id = current_website.company_id
-            qty_available = product.qty_available or 0
             fpos_id = self.env['website'].sudo()._get_current_fiscal_position_id(partner)
             fiscal_position = self.env['account.fiscal.position'].sudo().browse(fpos_id)
             product_taxes = product.sudo().taxes_id.filtered(lambda x: x.company_id == company_id)
@@ -81,6 +85,5 @@ class ProductTemplate(models.Model):
                 prevent_zero_price_sale=prevent_zero_price_sale,
                 compare_list_price=compare_list_price
             )
-
+        """
         return combination_info
-
