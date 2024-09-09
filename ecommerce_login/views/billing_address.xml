@@ -9,15 +9,7 @@
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="invoice_lastname" name = "invoice_lastname" placeholder="Last name*"/>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="invoice_company" name = "invoice_company" placeholder="Company Name*"/>
-            </div>
-            <div class="form-group col-md-6">
-                <input type="text" class="form-control" id="invoice_vat" name = "invoice_vat" placeholder="VAT Number*"/>
-            </div>
-        </div>
+        </div>  
         <div class="form-group">
             <input type="text" class="form-control" id="invoice_phone" name = "invoice_phone" placeholder="Phone number*"/>
         </div>

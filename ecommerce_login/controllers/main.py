@@ -87,7 +87,6 @@ class AuthSignupHome(Home):
     def createUserDLNA(self, data, parent_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
         email = data.get('data[email]')
-        #country = request.env['res.country'].search([ ('id', '=',  int(data.get('data[country]'))) ])
         user_data = {
             'name': name,
             'login': email,
@@ -109,12 +108,10 @@ class AuthSignupHome(Home):
         return user
     
     def createCompanyDLNA(self, data):
-        vat = data.get('data[company_vat]')
         company = data.get('data[company]')
-        company_id = request.env['res.partner'].sudo().search([ '|',('vat', '=', vat), ('name', 'ilike', company) ], limit = 1)
+        company_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', company) ], limit = 1)
         contact = {
             'company_type': 'company',
-            'vat': vat,
             'name': company,
             'street': data.get('data[address1]'),
             'street2': data.get('data[address2]'),
@@ -153,7 +150,6 @@ class AuthSignupHome(Home):
         
     def createInvoiceDLNA(self, data, company_id, partner_id):
         invoice_name =  data.get('data[invoice_name]')
-        email = partner_id.email
         if (not invoice_name):
             return
         
@@ -162,8 +158,6 @@ class AuthSignupHome(Home):
             'parent_id': company_id.id,
             'company_type': 'person',
             'type': 'invoice',
-            'email': email,
-            'x_studio_vat2': data.get('data[invoice_vat]'),
             'street': data.get('data[invoice_address1]'),
             'street2': data.get('data[invoice_address2]'),
             'city': data.get('data[invoice_city]'),
@@ -171,7 +165,7 @@ class AuthSignupHome(Home):
             'country_id':  int(data.get('data[invoice_country]')),
             'comment': data.get('data[invoice_additional]')
         }
-        partner_id = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
+        partner_id = request.env['res.partner'].sudo().search([ ('name', 'iline', name) ], limit = 1)
         if (not partner_id):
            partner_id = request.env['res.partner'].sudo().create( contact )
         return partner_id
