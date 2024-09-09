@@ -168,5 +168,5 @@ class AuthSignupHome(Home):
         }
         partner_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', name) ], limit = 1)
         if (not partner_id):
-           partner_id = request.env['res.partner'].sudo().create( contact )
+           partner_id = request.env['res.partner'].sudo().create( invoice_address )
         return partner_id
