@@ -22,9 +22,6 @@ class SaleOrder(models.Model):
         # all_stock = all(line.product_id.producttype_id and line.product_id.producttype_id.name == "Swatches" or
         #                          line.product_id.producttype_id.name == "Fabrics" for line in order_lines)
 
-    def _get_delivery_methods(self):
-        return self.env['delivery.carrier'].sudo().search([('website_published', '=', True)])
-
         # ATENCION SOLO FALLA EN LOCAL!!!!
         if all_swatches:
             values["x_studio_type_of_order"] = "e-shop Swatches"
@@ -32,6 +29,8 @@ class SaleOrder(models.Model):
             values["x_studio_type_of_order"] = "e-shop Stock"
         return values
 
+    def _get_delivery_methods(self):
+        return self.env['delivery.carrier'].sudo().search([('website_published', '=', True)])
 class SaleOrder(models.Model):
     _inherit = 'sale.order.line'
 
