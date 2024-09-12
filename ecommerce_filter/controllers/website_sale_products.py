@@ -1,5 +1,5 @@
-from odoo.addons.website_sale.controllers.main import WebsiteSale,TableCompute
-from odoo.addons.website_sale.controllers.main import WebsiteSale as ws
+from odoo.addons.website_sale.controllers.main import TableCompute
+from odoo.addons.website_sale_delivery.controllers.main import WebsiteSaleDelivery as ws
 from odoo import fields, http, SUPERUSER_ID, tools, _
 from datetime import datetime
 from werkzeug.exceptions import NotFound
@@ -9,7 +9,7 @@ from odoo.addons.website.controllers.main import QueryURL
 from odoo.tools import lazy
 
 
-class ProductsFilter(WebsiteSale, TableCompute, http.Controller):
+class ProductsFilter(ws, TableCompute, http.Controller):
 
     def _get_search_options(
             self, category=None, product=None, attrib_values=None, pricelist=None, min_price=0.0, max_price=0.0, conversion_rate=1,
