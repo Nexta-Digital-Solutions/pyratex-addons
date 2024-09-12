@@ -160,7 +160,7 @@ class ProductsFilter(ws, TableCompute, http.Controller):
         if colorgroup_set:
             search_product = search_product.filtered(lambda template: template.product_variant_ids.filtered(
                 lambda product: colorgroup_set in product.mapped(
-                    'product_template_attribute_value_ids.product_attribute_value_id.colorgroup_id.id')))
+                    'product_template_attribute_value_ids.product_attribute_value_id.colorgroup_id.id') and product.is_published))
             product_count = len(search_product)
         filter_by_price_enabled = website.is_view_active('website_sale.filter_products_price')
         if filter_by_price_enabled:
