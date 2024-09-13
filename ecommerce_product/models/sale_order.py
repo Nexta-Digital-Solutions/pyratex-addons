@@ -31,6 +31,7 @@ class SaleOrder(models.Model):
 
     def _get_delivery_methods(self):
         return self.env['delivery.carrier'].sudo().search([('website_published', '=', True)])
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order.line'
 
