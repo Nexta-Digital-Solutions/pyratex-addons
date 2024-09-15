@@ -49,7 +49,7 @@
                                      t-options="{                                 &quot;widget&quot;: &quot;monetary&quot;,                                 &quot;display_currency&quot;: (pricelist or product).currency_id                             }"/>
                                 <div class="oe_price" style="white-space: nowrap;" t-out="combination_info['price']"
                                      t-options="{                                 &quot;widget&quot;: &quot;monetary&quot;,                                 &quot;display_currency&quot;: (pricelist or product).currency_id                             }"/>
-                                <span class="js_raw_price d-none" t-out="combination_info['price']"/>
+                                <span class="js_raw_price d-none" t-if = "combination_info['price'] > 0" t-out="combination_info['price']"/>
                                 <p class="css_not_available_msg alert alert-warning">Option not available</p>
 
                                 <a role="button" href="#" class="js_add btn btn-primary btn-sm">
