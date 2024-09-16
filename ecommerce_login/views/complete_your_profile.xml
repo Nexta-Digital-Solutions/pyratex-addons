@@ -27,13 +27,13 @@
 
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number*" required = "required"/>
+                                <input type="text" class="form-control" id="phone" name = "phone" placeholder="Phone number*" required = "required" maxlength="10" size = "10"/>
                             </div>
                             <div class="form-group">
-                                <input type="text" v-model = "address1" class="form-control" id="address1" name = "address1" placeholder="Address 1*" required = "required" />
+                                <input type="text" v-model = "address1" class="form-control" id="address1" name = "address1" placeholder="Address 1*" required = "required" maxlength="35" size ="35" />
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" id="address2" name = "address2" placeholder="Address 2"/>
+                                <input type="text" class="form-control" id="address2" name = "address2" placeholder="Address 2" maxlength="35" size ="35"/>
                             </div>
                             <div class="form-group">
                                 <input type="text" class="form-control" id="additional" name = "additional_instructions" 
