@@ -74,19 +74,7 @@ class WebsiteSaleCart(ProductsFilter):
                 'price_total': line_id.product_qty * float(price_reduce)
             })
 
-        """ Incremento el precio del product Fabric - añadir 25 % adicional al pvp"""
-        is_fabric = request.env['product.product'].search([ ('id','=', product_id), ('producttype_id.name','ilike','fabric') ])
-        if (is_fabric):
-            line_id = request.env['sale.order.line'].browse(values['line_id'])
-            price_unit = line_id.price_unit
-            percentage_additional = int(request.env['ir.config_parameter'].get_param('Fabric Percentage', 1))
-            price_reduce = price_unit * (1 + percentage_additional / 100) / (1 + line_id.tax_id.amount /100 )
-            line_id.update ({
-                'price_reduce': price_reduce,
-                'price_tax': float(price_unit - price_reduce),
-                'price_subtotal': float(price_reduce),
-                'price_total': line_id.product_qty * float(price_reduce)
-            })
+       
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
@@ -124,3 +112,70 @@ class WebsiteSaleCart(ProductsFilter):
             }
         )
         return values
+    
+    @http.route(['/shop/cart'], type='http', auth="public", website=True, sitemap=False)
+    def cart(self, access_token=None, revive='', **post):
+        """
+        Main cart management + abandoned cart revival
+        access_token: Abandoned cart SO access token
+        revive: Revival method when abandoned cart. Can be 'merge' or 'squash'
+        """
+        order = request.website.sale_get_order()
+        if order and order.state != 'draft':
+            request.session['sale_order_id'] = None
+            order = request.website.sale_get_order()
+
+        request.session['website_sale_cart_quantity'] = order.cart_quantity
+
+        values = {}
+        if access_token:
+            abandoned_order = request.env['sale.order'].sudo().search([('access_token', '=', access_token)], limit=1)
+            if not abandoned_order:  # wrong token (or SO has been deleted)
+                raise NotFound()
+            if abandoned_order.state != 'draft':  # abandoned cart already finished
+                values.update({'abandoned_proceed': True})
+            elif revive == 'squash' or (revive == 'merge' and not request.session.get('sale_order_id')):  # restore old cart or merge with unexistant
+                request.session['sale_order_id'] = abandoned_order.id
+                return request.redirect('/shop/cart')
+            elif revive == 'merge':
+                abandoned_order.order_line.write({'order_id': request.session['sale_order_id']})
+                abandoned_order.action_cancel()
+            elif abandoned_order.id != request.session.get('sale_order_id'):  # abandoned cart found, user have to choose what to do
+                values.update({'access_token': abandoned_order.access_token})
+
+        values.update({
+            'website_sale_order': order,
+            'date': fields.Date.today(),
+            'suggested_products': [],
+        })
+        if order:
+            values.update(order._get_website_sale_extra_values())
+            order.order_line.filtered(lambda l: l.product_id and not l.product_id.active).unlink()
+            values['suggested_products'] = order._cart_accessories()
+            values.update(self._get_express_shop_payment_values(order))
+            
+            self.addPercentageProductFabric(values)
+
+        if post.get('type') == 'popover':
+            # force no-cache so IE11 doesn't cache this XHR
+            return request.render("website_sale.cart_popover", values, headers={'Cache-Control': 'no-cache'})
+
+        return request.render("website_sale.cart", values)
+    
+    def addPercentageProductFabric(self, values):
+        order = values.get('website_sale_order')
+        percentage_additional = int(request.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+        for line in order.order_line:
+            if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
+                price_unit = line.price_unit * (1 + percentage_additional / 100) 
+                price_reduce = price_unit
+                tax = line.tax_id.amount
+                price_reduce_taxinc = price_unit * (1 + tax /100 )
+                line.update ({
+                    'price_unit': price_unit,
+                    'price_reduce': price_reduce_taxinc,
+                    'price_tax': float(price_unit - price_reduce_taxinc),
+                    'price_subtotal': float(price_reduce_taxinc),
+                    'price_reduce_taxinc': price_reduce_taxinc,
+                    'price_total': line.product_qty * float(price_reduce)
+                })
