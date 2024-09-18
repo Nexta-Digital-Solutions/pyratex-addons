@@ -41,6 +41,15 @@ class ProductTemplate(models.Model):
         qty_available = product.qty_available or 0
         
         combination_info.update( qty_available=qty_available )
+       
+        """ fabrics """
+        if (product.producttype_id.name.lower() == "fabrics"):
+            percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+            price = round(combination_info['price'] * (1 + percentage_additional / 100),2)
+            list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
+            base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
+
+            combination_info.update( price = price, list_price = list_price, base_unit_price = base_unit_price)
         
         """
         if self.env.context.get('website_id'):
@@ -87,3 +96,78 @@ class ProductTemplate(models.Model):
             )
         """
         return combination_info
+    
+    def _get_sales_prices(self, pricelist):
+        pricelist.ensure_one()
+        partner_sudo = self.env.user.partner_id
+
+        # Try to fetch geoip based fpos or fallback on partner one
+        fpos_id = self.env['website']._get_current_fiscal_position_id(partner_sudo)
+        fiscal_position = self.env['account.fiscal.position'].sudo().browse(fpos_id)
+
+        sales_prices = pricelist._get_products_price(self, 1.0)
+        show_discount = pricelist.discount_policy == 'without_discount'
+        show_strike_price = self.env.user.has_group('website_sale.group_product_price_comparison')
+
+        base_sales_prices = self.price_compute('list_price', currency=pricelist.currency_id)
+
+        res = {}
+        for template in self:
+            price_reduce = sales_prices[template.id]
+            price_reduce = self.addpercentageProductPrice(template, price_reduce)
+
+            product_taxes = template.sudo().taxes_id.filtered(lambda t: t.company_id == t.env.company)
+            taxes = fiscal_position.map_tax(product_taxes)
+
+            template_price_vals = {
+                'price_reduce': price_reduce
+            }
+            
+            base_price = None
+            price_list_contains_template = pricelist.currency_id.compare_amounts(price_reduce, base_sales_prices[template.id]) != 0
+
+            if template.compare_list_price and show_strike_price:
+                # The base_price becomes the compare list price and the price_reduce becomes the price
+                base_price = template.compare_list_price
+                if not price_list_contains_template:
+                    price_reduce = base_sales_prices[template.id]
+                    template_price_vals.update(price_reduce=price_reduce)
+                if template.currency_id != pricelist.currency_id:
+                    base_price = template.currency_id._convert(
+                        base_price,
+                        pricelist.currency_id,
+                        self.env.company,
+                        fields.Datetime.now(),
+                        round=False
+                    )
+            elif show_discount and price_list_contains_template:
+                base_price = base_sales_prices[template.id]
+
+            base_price = self.addpercentageProductPrice(template, base_price)
+            if base_price and base_price != price_reduce:
+                if not template.compare_list_price:
+                    # Compare_list_price are never tax included
+                    base_price = self._price_with_tax_computed(
+                        base_price, product_taxes, taxes, self.env.company.id,
+                        pricelist, template, partner_sudo,
+                    )
+                template_price_vals['base_price'] = base_price
+               
+            template_price_vals['price_reduce'] = self._price_with_tax_computed(
+                template_price_vals['price_reduce'], product_taxes, taxes, self.env.company.id,
+                pricelist, template, partner_sudo,
+            )
+
+            res[template.id] = template_price_vals
+
+        return res
+    
+    def addpercentageProductPrice(self, template, price):
+        try:
+            if (template.categ_id.parent_id.name.lower() == "fabric"):
+                percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+                price_new = round(price * (1 + percentage_additional / 100),2)
+                return price_new
+            return price
+        except Exception:
+            return price
