@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
             values["price_unit"] = kwargs.get('price_unit')
 
         order_lines = order_line.order_id.order_line
-        all_swatches = all(line.product_id.producttype_id and line.product_id.producttype_id.name == "Swatches" or
+        all_swatches = all(line.product_id.producttype_id and line.product_id.producttype_id.name and line.product_id.producttype_id.name == "Swatches" or
                            line.product_id.producttype_id.name == "Swatchpacks" for line in order_lines)
         # all_stock = all(line.product_id.producttype_id and line.product_id.producttype_id.name == "Swatches" or
         #                          line.product_id.producttype_id.name == "Fabrics" for line in order_lines)
