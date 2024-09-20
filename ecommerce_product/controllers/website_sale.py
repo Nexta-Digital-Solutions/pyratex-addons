@@ -166,16 +166,17 @@ class WebsiteSaleCart(ProductsFilter):
         order = values.get('website_sale_order')
         percentage_additional = int(request.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
         for line in order.order_line:
-            if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
-                price_unit = line.price_unit * (1 + percentage_additional / 100) 
-                price_reduce = price_unit
-                tax = line.tax_id.amount
-                price_reduce_taxinc = price_unit * (1 + tax /100 )
-                line.update ({
-                    'price_unit': price_unit,
-                    'price_reduce': price_reduce_taxinc,
-                    'price_tax': float(price_unit - price_reduce_taxinc),
-                    'price_subtotal': float(price_reduce_taxinc),
-                    'price_reduce_taxinc': price_reduce_taxinc,
-                    'price_total': line.product_qty * float(price_reduce)
-                })
+            if line.product_id.categ_id.parent_id.name:
+                if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
+                    price_unit = line.price_unit * (1 + percentage_additional / 100)
+                    price_reduce = price_unit
+                    tax = line.tax_id.amount
+                    price_reduce_taxinc = price_unit * (1 + tax /100 )
+                    line.update ({
+                        'price_unit': price_unit,
+                        'price_reduce': price_reduce_taxinc,
+                        'price_tax': float(price_unit - price_reduce_taxinc),
+                        'price_subtotal': float(price_reduce_taxinc),
+                        'price_reduce_taxinc': price_reduce_taxinc,
+                        'price_total': line.product_qty * float(price_reduce)
+                    })
