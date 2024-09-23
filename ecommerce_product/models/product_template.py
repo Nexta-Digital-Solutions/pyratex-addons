@@ -184,4 +184,4 @@ class ProductTemplate(models.Model):
                     return price_new
                 return price
         except Exception:
-            return price
+            return price if price else 0
