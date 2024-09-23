@@ -35,7 +35,7 @@
             </div>
 
             <!--Muestra el precio de los productos-->
-            <div t-if="not user_id.partner_id.name == 'Public user' and product.producttype_id.name != 'Swatch' and template_price_vals['price_reduce'] >0"
+            <div t-if="not user_id.partner_id.name == 'Public user' and product.producttype_id.name != 'Swatch' and (template_price_vals and template_price_vals['price_reduce'] >0)"
                  class="product_price" itemprop="offers"
                  itemscope="itemscope" itemtype="http://schema.org/Offer">
                 <!-- 
