@@ -1,6 +1,7 @@
 from odoo import api, fields, models, _
 from odoo.fields import Command
 from itertools import groupby
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
