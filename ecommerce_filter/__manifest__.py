@@ -12,10 +12,10 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.0.6',
+    'version': '16.0.0.7',
     'license': 'LGPL-3',
 
-    'depends': ['base', 'website_sale', 'website_sale_delivery'],
+    'depends': ['base', 'website_sale', 'website_sale_delivery', 'ecommerce_product'],
 
     'data': [
         'views/filmstrip_categories_category_views.xml',
