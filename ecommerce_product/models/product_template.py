@@ -43,13 +43,20 @@ class ProductTemplate(models.Model):
         combination_info.update( qty_available=qty_available )
        
         """ fabrics """
-        if (product.producttype_id.name.lower() == "fabrics"):
-            percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
-            price = round(combination_info['price'] * (1 + percentage_additional / 100),2)
-            list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
-            base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
+        if product.producttype_id.name:
+            if (product.producttype_id.name.lower() == "fabrics"):
+                # percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1)) or 0
+                try:
+                    percentage_additional = int(
+                        self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+                except ValueError:
+                    percentage_additional = 0
+                if percentage_additional != 0:
+                    price = round(combination_info['price'] * (1 + percentage_additional / 100),2)
+                    list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
+                    base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
 
-            combination_info.update( price = price, list_price = list_price, base_unit_price = base_unit_price)
+                combination_info.update( price = price, list_price = list_price, base_unit_price = base_unit_price)
         
         """
         if self.env.context.get('website_id'):
@@ -164,10 +171,17 @@ class ProductTemplate(models.Model):
     
     def addpercentageProductPrice(self, template, price):
         try:
-            if (template.categ_id.parent_id.name.lower() == "fabric"):
-                percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
-                price_new = round(price * (1 + percentage_additional / 100),2)
-                return price_new
-            return price
+            if template.categ_id.parent_id.name:
+                if (template.categ_id.parent_id.name.lower() == "fabric"):
+                    try:
+                        percentage_additional = int(
+                            self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+                    except ValueError:
+                        percentage_additional = 0
+                    # percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
+                    if percentage_additional > 0:
+                        price_new = round(price * (1 + percentage_additional / 100),2)
+                    return price_new
+                return price
         except Exception:
             return price
