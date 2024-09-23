@@ -261,14 +261,8 @@ class ProductsFilter(ws, TableCompute, http.Controller):
                 layout_mode = 'grid'
             request.session['website_sale_shop_layout_mode'] = layout_mode
 
-        products_prices = lazy(lambda: products._get_sales_prices(pricelist))
 
-
-        product_count = len(products) 
-        pager = website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
-        offset = pager['offset']
-        products = products[offset:offset + ppg]
-        
+        products_prices = lazy(lambda: products._get_sales_prices(pricelist) or {})
 
         values = {
             'search': fuzzy_search_term or search,
