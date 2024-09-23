@@ -138,7 +138,7 @@ class SaleOrder(models.Model):
         if (type_of_order):
             invoice_vals_list[0].update({ 
                                          'journal_id': type_of_order.journal_id.id,
-                                         'x_studio_type_of_invoice: 'e-shop'
+                                         'x_studio_type_of_invoice': 'e-shop'
                                         })
         moves = self.env['account.move'].sudo().with_context(default_move_type='out_invoice').create(invoice_vals_list)
 
