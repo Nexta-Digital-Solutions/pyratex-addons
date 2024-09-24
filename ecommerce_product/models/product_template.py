@@ -39,8 +39,9 @@ class ProductTemplate(models.Model):
 
         product = self.env['product.product'].sudo().browse(combination_info['product_id']) or self
         qty_available = product.qty_available or 0
+        virtual_available = product.virtual_available or 0
         
-        combination_info.update( qty_available=qty_available )
+        combination_info.update( qty_available=qty_available, virtual_available = virtual_available )
        
         """ fabrics """
         if product.producttype_id.name:
