@@ -11,7 +11,7 @@ odoo.define('ecommerce_product.VariantMixin', function (require) {
         var $optional_price = $parent.find(".oe_optional:first .oe_currency_value");
         var $qty_available = $parent.find(".oe_qty_available");
 
-        $qty_available.text(parseInt(Math.trunc(combination.qty_available)));
+        $qty_available.text(parseInt(Math.trunc(combination.virtual_available)));
 
         var $qty = $parent.find(".quantity");
         var $qty_message = $parent.find('.oe_message_stock');
