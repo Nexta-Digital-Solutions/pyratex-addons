@@ -78,7 +78,7 @@ $(document).on('click', '#o_add_to_Cart', async function () {
         const packPrice = window.selectedPackPrice;
         console.log('Pack Price:', packPrice);
 
-        const resultIdOpenPack = await getIdFromProductName('Swatch');
+        const resultIdOpenPack = await getIdFromProductName('Open Pack');
         console.log('Result ID Open Pack:', resultIdOpenPack);
 
         if (resultIdOpenPack.length === 0) {
