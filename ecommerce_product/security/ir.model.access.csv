@@ -30,3 +30,4 @@ mrp.access_mrp_all_users,mrp.bom all_users,mrp.model_mrp_bom,,1,0,0,0
 stock.access_stock_location_all_users,stock.location all_users,stock.model_stock_location,,1,0,0,0
 stock.access_stock_warehouse_all_users,stock.warehouse all_users,stock.model_stock_warehouse,,1,0,0,0
 stock.access_stock_move_all_users,stock.move all_users,stock.model_stock_move,,1,0,0,0
+product_pack.access_product_pack_line_portal,product.pack.line,product_pack.model_product_pack_line,base.group_portal,1,0,0,0

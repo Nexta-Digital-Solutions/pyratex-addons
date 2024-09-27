@@ -18,7 +18,8 @@
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
                 'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp',
-                'account_accountant'],
+                'account_accountant',
+                'sale_product_pack'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -45,7 +46,6 @@
         'views/website/products_item_custom.xml',
         'views/website/products_custom.xml',
         'views/website/product_price_custom.xml',
-        'views/website/website_search_box_hide.xml',
         'views/website/dynamic_filter.xml',
         'views/website/product_details.xml',
         'views/website/variants_selector.xml',
