@@ -55,9 +55,11 @@ class ProductTemplate(models.Model):
                 if percentage_additional != 0:
                     price = round(combination_info['price'] * (1 + percentage_additional / 100),2)
                     list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
-                    base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
+                    if ('base_unit_price' in combination_info):
+                        base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
+                        combination_info.update( base_unit_price = base_unit_price)
 
-                combination_info.update( price = price, list_price = list_price, base_unit_price = base_unit_price)
+                combination_info.update( price = price, list_price = list_price)
         
         """
         if self.env.context.get('website_id'):
