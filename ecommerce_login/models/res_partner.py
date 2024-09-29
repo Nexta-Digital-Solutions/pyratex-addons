@@ -64,7 +64,13 @@ class ResPartner(models.Model):
             outfile.write(output.getbuffer())
             outfile.close()
 			
-            dic = {}
+            dic = {
+             'name'   : data['data[name]'],
+             'lastname': data['data[lastname]'],
+             'address1': ' '.join({ data['data[address1]'], data['data[address2]'] }),
+             'postalcode': data['data[postalcode]'],
+            }
+            
             template_render = self.template_renderer(temp_file, dic, signature_file)
             temp_file_name_pdf = template_render['name'] + ".pdf"
 
