@@ -18,6 +18,9 @@ from odoo.addons.payment import utils as payment_utils
 from odoo.tools.json import scriptsafe as json_scriptsafe
 
 class WebsiteSaleCart(ProductsFilter):
+    
+   
+    
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update_json(
         self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
@@ -47,34 +50,17 @@ class WebsiteSaleCart(ProductsFilter):
             **kw
         )
         
-        """type_of_order: prevalece el de fabrics"""
-        saleorder_line_ids = order.order_line if order.order_line else False
-        if (saleorder_line_ids and ((set_qty  and set_qty > 0 ) or (add_qty and add_qty > 0))):
-            type_of_order_fabrics = saleorder_line_ids.filtered(lambda x: isinstance(x.product_id.product_tmpl_id.producttype_id.name, str)
-            and x.product_id.product_tmpl_id.producttype_id.name.lower() == "fabrics")
-            type_of_order = type_of_order_fabrics[0].product_id.product_tmpl_id.producttype_id.type_of_order \
-                            if type_of_order_fabrics else saleorder_line_ids[0].product_id.product_tmpl_id.producttype_id.type_of_order if  order.order_line else False
-           
-            type_of_order_current = type_of_order if not order.x_studio_type_of_order else order.x_studio_type_of_order
-            type_of_order_fabrics = request.env['product.type'].sudo().search([ ('name','=','Fabrics') ], limit = 1).type_of_order
-            if (type_of_order_current == type_of_order_fabrics 
-                and type_of_order !=  type_of_order_fabrics):
-                type_of_order = type_of_order_fabrics
-            order.update({
-                'x_studio_type_of_order': type_of_order 
-            })
+        self.setTypeofOrder(order, set_qty, add_qty)
         
-        if (price_unit):
+        if (price_unit ):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
-            price_reduce = price_unit / (1 + line_id.tax_id.amount /100 )
+            price_reduce = price_unit  / (1 + line_id.tax_id.amount /100 )
             line_id.update ({
                 'price_reduce': price_reduce,
                 'price_tax': float(price_unit - price_reduce),
                 'price_subtotal': float(price_reduce),
                 'price_total': line_id.product_qty * float(price_reduce)
-            })
-
-       
+            })       
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
@@ -82,7 +68,7 @@ class WebsiteSaleCart(ProductsFilter):
             request.website.sale_reset()
             return values
 
-        parent_pack = request.env['product.product'].search([('name', '=', 'Swatches')], limit=1)
+        parent_pack = request.env['product.product'].search([('name', '=', 'Open Pack')], limit=1)
         if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
             swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
@@ -111,6 +97,13 @@ class WebsiteSaleCart(ProductsFilter):
                 'website_sale_order': order,
             }
         )
+        
+        """
+        if (line_id):
+            values.update ({ 'website_sale_order': order })
+            self.addPercentageProductFabric(values, order.cart_quantity)
+            values['amount'] = order.cart_quantity * order.amount_total
+        """
         return values
     
     @http.route(['/shop/cart'], type='http', auth="public", website=True, sitemap=False)
@@ -154,6 +147,7 @@ class WebsiteSaleCart(ProductsFilter):
             values['suggested_products'] = order._cart_accessories()
             values.update(self._get_express_shop_payment_values(order))
             
+            self. setTypeofOrder(order, order.cart_quantity, 0)
             self.addPercentageProductFabric(values)
 
         if post.get('type') == 'popover':
@@ -162,11 +156,11 @@ class WebsiteSaleCart(ProductsFilter):
 
         return request.render("website_sale.cart", values)
     
-    def addPercentageProductFabric(self, values):
+    def addPercentageProductFabric(self, values, qty = False):
         order = values.get('website_sale_order')
         percentage_additional = int(request.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
         for line in order.order_line:
-            if line.product_id.categ_id.parent_id.name:
+            if line.product_id.categ_id.parent_id.name and (not line.check_price or qty):
                 if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
                     price_unit = line.price_unit * (1 + percentage_additional / 100)
                     price_reduce = price_unit
@@ -175,8 +169,27 @@ class WebsiteSaleCart(ProductsFilter):
                     line.update ({
                         'price_unit': price_unit,
                         'price_reduce': price_reduce_taxinc,
-                        'price_tax': float(price_unit - price_reduce_taxinc),
-                        'price_subtotal': float(price_reduce_taxinc),
+                        'price_tax': float(price_reduce_taxinc - price_unit),
+                        'price_subtotal': float(price_unit),
                         'price_reduce_taxinc': price_reduce_taxinc,
-                        'price_total': line.product_qty * float(price_reduce)
+                        'price_total': line.product_qty * price_reduce_taxinc,
+                        'check_price': True
                     })
+                    
+    def setTypeofOrder(self, order, set_qty, add_qty):
+        """type_of_order: prevalece el de fabrics"""
+        saleorder_line_ids = order.order_line if order.order_line else False
+        if (saleorder_line_ids and ((set_qty  and set_qty > 0 ) or (add_qty and add_qty > 0))):
+            type_of_order_fabrics = saleorder_line_ids.filtered(lambda x: isinstance(x.product_id.product_tmpl_id.producttype_id.name, str)
+            and x.product_id.product_tmpl_id.producttype_id.name.lower() == "fabrics")
+            type_of_order = type_of_order_fabrics[0].product_id.product_tmpl_id.producttype_id.type_of_order \
+                            if type_of_order_fabrics else saleorder_line_ids[0].product_id.product_tmpl_id.producttype_id.type_of_order if  order.order_line else False
+           
+            type_of_order_current = type_of_order if not order.x_studio_type_of_order else order.x_studio_type_of_order
+            type_of_order_fabrics = request.env['product.type'].sudo().search([ ('name','=','Fabrics') ], limit = 1).type_of_order
+            if (type_of_order_current == type_of_order_fabrics 
+                and type_of_order !=  type_of_order_fabrics):
+                type_of_order = type_of_order_fabrics
+            order.update({
+                'x_studio_type_of_order': type_of_order 
+            })
