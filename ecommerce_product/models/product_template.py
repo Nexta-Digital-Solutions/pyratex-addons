@@ -166,8 +166,9 @@ class ProductTemplate(models.Model):
             template_price_vals['price_reduce'] = self._price_with_tax_computed(
                 template_price_vals['price_reduce'], product_taxes, taxes, self.env.company.id,
                 pricelist, template, partner_sudo,
-            )
-
+            ) 
+          
+            template_price_vals['price_reduce'] = template_price_vals['price_reduce'] * (1 +  product_taxes[0].amount /100 )
             res[template.id] = template_price_vals
 
         return res
