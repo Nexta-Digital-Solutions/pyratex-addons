@@ -2,7 +2,7 @@
     <template id="variants_selector" inherit_id="sale.variants">
         <xpath expr="//ul//t//li//strong" position="replace">
             <t t-set="published_variants" t-value="ptal.product_tmpl_id.product_variant_ids.mapped('product_template_attribute_value_ids.name')" groups="base.group_user"/>
-            <t t-set="published_variants" t-value="ptal.product_tmpl_id.product_variant_ids.filtered(lambda x: x.is_published).mapped('product_template_attribute_value_ids.name')" groups="base.group_portal"/>
+            <t t-set="published_variants" t-value="ptal.product_tmpl_id.product_variant_ids.filtered(lambda x: x.is_published and x.qty_available >=0 ).mapped('product_template_attribute_value_ids.name')" groups="base.group_portal"/>
             <strong t-if="published_variants" t-field="ptal.attribute_id.name" class="attribute_name"/>
         </xpath>
         <xpath expr="//t[@t-if][1]" position="replace">
