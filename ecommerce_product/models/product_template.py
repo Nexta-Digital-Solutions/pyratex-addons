@@ -170,7 +170,11 @@ class ProductTemplate(models.Model):
                 pricelist, template, partner_sudo,
             ) 
           
-            template_price_vals['price_reduce'] = template_price_vals['price_reduce'] * (1 +  product_taxes[0].amount /100 )
+            try:
+                template_price_vals['price_reduce'] = template_price_vals['price_reduce'] * (1 +  product_taxes[0].amount /100 )
+            except Exception as e:
+                pass
+            
             res[template.id] = template_price_vals
 
         return res
