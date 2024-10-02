@@ -115,17 +115,23 @@
         <!--        Muestra un botón u otro según si es pack o no-->
 
         <xpath expr="//a[@id='add_to_cart']" position="replace">
-            <a role="button" id="add_to_cart"
-               t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"
-               href="#">
-                <i class="fa fa-shopping-cart me-2"/>
-                <span t-if="product.producttype_id.name != 'Swatches'" style="font-weight: bold">ADD TO CART</span>
-                <span t-if="product.producttype_id.name == 'Swatches'" style="font-weight: bold">ADD SWATCH PACK TO THE
-                    CART
-                </span>
-            </a>
+            <t t-if = "product.producttype_id.name != 'Swatches'">
+                <a role="button" id="add_to_cart"
+                t-attf-class="btn btn-primary js_check_product a-submit flex-grow-1 #{'btn-lg' if ctaSizeBig else ''}"
+                href="#">
+                    <i class="fa fa-shopping-cart me-2"/>
+                    <span t-if="product.producttype_id.name != 'Swatches'" style="font-weight: bold">ADD TO CART</span>
+                    <!-- <span t-if="product.producttype_id.name == 'Swatches'" style="font-weight: bold">ADD SWATCH PACK TO THE
+                        CART
+                    </span> -->
+                </a>
+            </t>
         </xpath>
 
+        <xpath expr = "//div[@id='o_wsale_cta_wrapper']" position = "attributes">
+            <attribute name="t-att-class">'hidden' if  product.producttype_id.name == "Swatches" else 'visible'</attribute> 
+        </xpath>
+       
 
         <!--            <div t-foreach="product.product_variant_ids.mapped('product_template_attribute_value_ids')" t-as="variant">-->
         <!--                <t t-if="variant.html_color">-->
@@ -194,6 +200,7 @@
             <attribute name="t-if">1!=1</attribute>
         </xpath>
 
+       
 
     </template>
 </odoo>

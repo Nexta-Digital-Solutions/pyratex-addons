@@ -61,7 +61,9 @@ class ProductTemplate(models.Model):
 
                 combination_info.update( price = price, list_price = list_price)
         
-        """
+        price = combination_info['price'] * (1 + product.taxes_id[0].amount / 100 )
+        combination_info.update (price = price)    
+
         if self.env.context.get('website_id'):
             partner = self.env.user.partner_id
             company_id = current_website.company_id
@@ -104,7 +106,7 @@ class ProductTemplate(models.Model):
                 prevent_zero_price_sale=prevent_zero_price_sale,
                 compare_list_price=compare_list_price
             )
-        """
+         
         return combination_info
     
     def _get_sales_prices(self, pricelist):
@@ -166,8 +168,13 @@ class ProductTemplate(models.Model):
             template_price_vals['price_reduce'] = self._price_with_tax_computed(
                 template_price_vals['price_reduce'], product_taxes, taxes, self.env.company.id,
                 pricelist, template, partner_sudo,
-            )
-
+            ) 
+          
+            try:
+                template_price_vals['price_reduce'] = template_price_vals['price_reduce'] * (1 +  product_taxes[0].amount /100 )
+            except Exception as e:
+                pass
+            
             res[template.id] = template_price_vals
 
         return res
