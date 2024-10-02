@@ -90,13 +90,10 @@ $(document).on('click', '#o_add_to_Cart', async function () {
         console.log('Products to add to cart:', productsOpenPack);
 
         for (const record of productsOpenPack) {
-             try {
-        await AddProductOpenPackToCart(record.id, 1, record.list_price, this);
-        console.log('Added product to cart:', record);
-    } catch (err) {
-        console.error('Error adding product:', record, err);
-    }
-}
+            await AddProductOpenPackToCart(record.id, 1, record.list_price, this);
+            console.log('Added product to cart:', record);
+        }
+        console.log('All products added to product pack successfully.');
 
     } catch (error) {
         Swal.fire({
@@ -110,7 +107,7 @@ $(document).on('click', '#o_add_to_Cart', async function () {
 
 
     async function AddProductOpenPackToCart (product_id, qty, price_unit, ev) {
-        console.log('1. Adding to cart:', { product_id, qty, price_unit });
+
         const data = await rpc.query({ 
             route: "/shop/cart/update_json",
             params: {
@@ -119,7 +116,6 @@ $(document).on('click', '#o_add_to_Cart', async function () {
                 price_unit: price_unit
             }
         });
-        console.log('Response from server:', data);
 
         const $navButton = $('header .o_wsale_my_cart').first();
         const imgContainer = $('#products_grid')
