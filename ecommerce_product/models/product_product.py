@@ -33,7 +33,7 @@ class ProductProduct(models.Model):
     #         else:
     #             template.colorgroup_id = False
     def get_open_pack(self, product_name):
-        product = self.env.search([('name', '=', product_name)], limit=1)
+        product = self.search([('name', '=', product_name)], limit=1)
         if product:
             return product.id
         else:
