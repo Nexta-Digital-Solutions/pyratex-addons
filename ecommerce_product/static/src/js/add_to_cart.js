@@ -25,7 +25,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
             let result;
     
             await rpc.query({
-                model: 'product.product',
+                model: 'product.template',
                 method: 'search_read',
                 args: [[ ['product_tmpl_id','=', productId]], ['id', 'list_price'] ]
             }).then(function (data) {
@@ -38,7 +38,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     async function setPackPrice(id, price) {
         console.log('Setting pack price. ID:', id, 'Price:', price);
         const result = await rpc.query({
-            model: 'product.product',
+            model: 'product.template',
             method: 'write',
             args: [[id], {list_price: parseFloat(price)}]
         });
