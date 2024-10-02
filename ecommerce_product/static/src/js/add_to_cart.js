@@ -14,7 +14,8 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         await rpc.query({
             model: 'product.product',
             method: 'get_open_pack',
-			args: [[ ['name','ilike', ProductName]], ['id'] ]
+			args: [ProductName]
+//			args: [[ ['name','ilike', ProductName]], ['id'] ]
         }).then(function (data) {
             console.log('Data', data);
             result = data});
