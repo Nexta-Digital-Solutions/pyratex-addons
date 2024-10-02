@@ -21,7 +21,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         return result;
         };
 
-        async function getIdFromProducTemplateId(productId) {
+        async function getIdFromProductTemplateId(productId) {
             let result;
     
             await rpc.query({
@@ -38,7 +38,7 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
     async function setPackPrice(id, price) {
         console.log('Setting pack price. ID:', id, 'Price:', price);
         const result = await rpc.query({
-            model: 'product.template',
+            model: 'product.product',
             method: 'write',
             args: [[id], {list_price: parseFloat(price)}]
         });
@@ -70,7 +70,7 @@ $(document).on('click', '#o_add_to_Cart', async function () {
     try {
         console.log('Starting to fetch product IDs');
         for (const record of selectedProductIds) {
-            const product_id = await getIdFromProducTemplateId(record);
+            const product_id = await getIdFromProductTemplateId(record);
             product_ids.push(product_id[0]);
         }
         console.log('Fetched Product IDs:', product_ids);
