@@ -17,9 +17,7 @@ from odoo.addons.ecommerce_filter.controllers.website_sale_products import Produ
 from odoo.addons.payment import utils as payment_utils
 from odoo.tools.json import scriptsafe as json_scriptsafe
 
-class WebsiteSaleCart(ProductsFilter):
-    
-   
+class WebsiteSaleProducts(ProductsFilter):
     
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update_json(
@@ -40,7 +38,7 @@ class WebsiteSaleCart(ProductsFilter):
         if no_variant_attribute_values:
             no_variant_attribute_values = json_scriptsafe.loads(no_variant_attribute_values)
 
-        values = order._cart_update(
+        values = order.sudo()._cart_update(
             product_id=product_id,
             line_id=line_id,
             add_qty=add_qty,
@@ -54,12 +52,13 @@ class WebsiteSaleCart(ProductsFilter):
         
         if (price_unit ):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
-            price_reduce = price_unit  / (1 + line_id.tax_id.amount /100 )
+            price_reduce = price_unit  / (1 + line_id.tax_id[0].amount /100 )
             line_id.update ({
-                'price_reduce': price_reduce,
+                #'price_reduce': price_reduce,
+                'price_unit': price_reduce,
                 'price_tax': float(price_unit - price_reduce),
                 'price_subtotal': float(price_reduce),
-                'price_total': line_id.product_qty * float(price_reduce)
+                #'price_total': line_id.product_qty * float(price_reduce)
             })       
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
@@ -71,7 +70,7 @@ class WebsiteSaleCart(ProductsFilter):
         parent_pack = request.env['product.product'].search([('name', '=', 'Open Pack')], limit=1)
         # parent_pack = request.env['product.product'].search([('id', '=', 1262)], limit=1)
         # if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-        if parent_pack and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+        if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
             swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
             for line in swatches_lines:
                 line.unlink()
@@ -195,3 +194,4 @@ class WebsiteSaleCart(ProductsFilter):
             order.update({
                 'x_studio_type_of_order': type_of_order 
             })
+            
