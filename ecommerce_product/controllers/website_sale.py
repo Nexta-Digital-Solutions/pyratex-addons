@@ -50,6 +50,7 @@ class WebsiteSaleProducts(ProductsFilter):
         
         self.setTypeofOrder(order, set_qty, add_qty)
         
+        """
         if (price_unit ):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
             price_reduce = price_unit  / (1 + line_id.tax_id[0].amount /100 )
@@ -60,7 +61,7 @@ class WebsiteSaleProducts(ProductsFilter):
                 'price_subtotal': float(price_reduce),
                 #'price_total': line_id.product_qty * float(price_reduce)
             })       
-
+        """
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
         if not order.cart_quantity:
@@ -149,7 +150,7 @@ class WebsiteSaleProducts(ProductsFilter):
             values.update(self._get_express_shop_payment_values(order))
             
             self. setTypeofOrder(order, order.cart_quantity, 0)
-            self.addPercentageProductFabric(values)
+            #self.addPercentageProductFabric(values)
 
         if post.get('type') == 'popover':
             # force no-cache so IE11 doesn't cache this XHR
@@ -163,9 +164,9 @@ class WebsiteSaleProducts(ProductsFilter):
         for line in order.order_line:
             if line.product_id.categ_id.parent_id.name and (not line.check_price or qty):
                 if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
+                    tax = line.tax_id.amount
                     price_unit = line.price_unit * (1 + percentage_additional / 100)
                     price_reduce = price_unit
-                    tax = line.tax_id.amount
                     price_reduce_taxinc = price_unit * (1 + tax /100 )
                     line.update ({
                         'price_unit': price_unit,
