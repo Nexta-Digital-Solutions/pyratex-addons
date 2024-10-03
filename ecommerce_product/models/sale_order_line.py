@@ -31,7 +31,8 @@ class SaleOrderLine(models.Model):
                 
     def addPercentageProductFabric(self, line, price):
         percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
-        if (line.product_id.categ_id.parent_id.name.lower() == "fabric"):
+        if (line.product_id.categ_id.name.lower() == "fabric" 
+            or (line.product_id.categ_id.parent_id and line.product_id.categ_id.parent_id.name.lower() == "fabric")):
                 price_unit = price * (1 + percentage_additional / 100) 
                 price_unit = price_unit * (1 + line.product_id.taxes_id[0].amount / 100)
                 return price_unit

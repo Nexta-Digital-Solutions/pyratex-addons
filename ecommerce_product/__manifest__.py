@@ -13,16 +13,17 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.1.2',
+    'version': '16.0.1.3',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
                 'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp',
                 'account_accountant',
-                'sale_product_pack'],
+                'sale_product_pack', 'uom', 'website_payment'],
 
     'data': [
         'security/ir.model.access.csv',
+        'security/record_rules.xml',
         'views/odoo/product_template_form_view_custom.xml',
         'views/odoo/product_attribute_view_form_custom.xml',
         # 'views/odoo/product_template_only_form_view_custom.xml',
