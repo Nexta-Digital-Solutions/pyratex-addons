@@ -54,15 +54,16 @@ class ProductTemplate(models.Model):
                     percentage_additional = 0
                 if percentage_additional != 0:
                     price = round(combination_info['price'] * (1 + percentage_additional / 100),2)
-                    list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
+                    #list_price = round(combination_info['list_price'] * (1 + percentage_additional / 100),2)
                     if ('base_unit_price' in combination_info):
                         base_unit_price =  round(combination_info['base_unit_price'] * (1 + percentage_additional / 100),2)
                         combination_info.update( base_unit_price = base_unit_price)
 
-                combination_info.update( price = price, list_price = list_price)
-        
-        price = combination_info['price'] * (1 + product.taxes_id[0].amount / 100 )
-        combination_info.update (price = price)    
+                combination_info.update( price = price)
+       
+        #tax = (1 + product.taxes_id[0].amount / 100 ) if product.taxes_id else 1
+        #price = combination_info['price'] *  tax
+        #combination_info.update (price = price)    
 
         if self.env.context.get('website_id'):
             partner = self.env.user.partner_id
@@ -106,7 +107,7 @@ class ProductTemplate(models.Model):
                 prevent_zero_price_sale=prevent_zero_price_sale,
                 compare_list_price=compare_list_price
             )
-         
+
         return combination_info
     
     def _get_sales_prices(self, pricelist):
@@ -164,17 +165,17 @@ class ProductTemplate(models.Model):
                         pricelist, template, partner_sudo,
                     )
                 template_price_vals['base_price'] = base_price
-               
+            """  
             template_price_vals['price_reduce'] = self._price_with_tax_computed(
                 template_price_vals['price_reduce'], product_taxes, taxes, self.env.company.id,
                 pricelist, template, partner_sudo,
             ) 
-          
+        
             try:
                 template_price_vals['price_reduce'] = template_price_vals['price_reduce'] * (1 +  product_taxes[0].amount /100 )
             except Exception as e:
                 pass
-            
+            """ 
             res[template.id] = template_price_vals
 
         return res
@@ -188,7 +189,6 @@ class ProductTemplate(models.Model):
                             self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
                     except ValueError:
                         percentage_additional = 0
-                    # percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
                     if percentage_additional > 0:
                         price_new = round(price * (1 + percentage_additional / 100),2)
                     return price_new
