@@ -51,8 +51,8 @@ class WebsiteSaleProducts(ProductsFilter):
         self.setTypeofOrder(order, set_qty, add_qty)
         
         if (price_unit ):
-            line_id = request.env['sale.order.line'].browse(values['line_id'])
-            line_id.update ({
+            line_id = request.env['sale.order.line'].sudo().browse(values['line_id'])
+            line_id.sudo().update ({
                 'price_unit': price_unit,
             })       
         
