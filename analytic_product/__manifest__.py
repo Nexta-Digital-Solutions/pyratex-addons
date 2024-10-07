@@ -14,6 +14,7 @@
 
     'category': 'Accounting',
     'version': '16.0.1.1',
+    'license': 'LGPL-3',
 
     'depends': [
         'purchase',

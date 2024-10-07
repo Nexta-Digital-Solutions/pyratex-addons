@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 class ProductTemplateAnalyticNew(models.Model):
     _name = 'product.template.analytic.new'
+    _description = 'Product Template Analytic'
 
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     product_template_id = fields.Many2one('product.template', string='Product Template')
@@ -207,6 +208,7 @@ class ProductTemplateAnalyticNew(models.Model):
 class ProductTemplateAnalytic(models.Model):
     """Old model, not used anymore"""
     _name = 'product.template.analytic'
+    _description = 'Product Template Analytic (obsolete)'
 
     analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     product_template_id = fields.Many2one('product.template', string='Product Template')
