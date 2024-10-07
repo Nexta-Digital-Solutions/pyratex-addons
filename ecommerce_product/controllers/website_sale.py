@@ -50,18 +50,12 @@ class WebsiteSaleProducts(ProductsFilter):
         
         self.setTypeofOrder(order, set_qty, add_qty)
         
-        """
         if (price_unit ):
             line_id = request.env['sale.order.line'].browse(values['line_id'])
-            price_reduce = price_unit  / (1 + line_id.tax_id[0].amount /100 )
             line_id.update ({
-                #'price_reduce': price_reduce,
-                'price_unit': price_reduce,
-                'price_tax': float(price_unit - price_reduce),
-                'price_subtotal': float(price_reduce),
-                #'price_total': line_id.product_qty * float(price_reduce)
+                'price_unit': price_unit,
             })       
-        """
+        
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
         if not order.cart_quantity:
