@@ -281,7 +281,7 @@ class ProductsFilter(ws, TableCompute, http.Controller):
             'structure_set': structure_set,
             'property_set': property_set,
             'usage_set': usage_set,
-            'availablemeters_set': availablemeters_set,
+            'availablemeters_set': availablemeters_set.id if availablemeters_set else False,
             'producttype_set': producttype_set,
             'careinstructions_set': careinstructions_set,
             'certification_set': certification_set,
