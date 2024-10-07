@@ -167,7 +167,7 @@
             <div class="container">
                 <div class="d-flex overflow-auto">
                     <div class="row justify-content-start flex-nowrap">
-                        <t t-foreach="product.pack_line_ids" t-as="pack">
+                        <t t-foreach="product.sudo().pack_line_ids" t-as="pack">
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                                 <div class="text-center">
                                     <img t-if="pack.product_id.image_1920" class="img-fluid"

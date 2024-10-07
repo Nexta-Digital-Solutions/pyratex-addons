@@ -140,7 +140,8 @@ class AuthSignupHome(Home):
             'name': name,
             'email': email,
             'profession': data.get('data[profession]'),
-            'about_us': data.get('data[about_us]')
+            'about_us': data.get('data[about_us]'),
+            'user_id': 10
         }
         
         partner_id = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
