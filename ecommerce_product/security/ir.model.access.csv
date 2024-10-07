@@ -33,3 +33,4 @@ stock.access_stock_move_all_users,stock.move all_users,stock.model_stock_move,,1
 product_pack.access_product_pack_line_portal,product.pack.line,product_pack.model_product_pack_line,base.group_portal,1,0,0,0
 sale.access_sale_order_line_portal,sale.order.line.portal,sale.model_sale_order_line,base.group_portal,1,1,1,0
 sale.access_sale_order_portal,sale.order.portal,sale.model_sale_order,base.group_portal,1,1,1,0
+mrp_subcontracting.access_subcontracting_portal_product,subcontracting.portal.product,product.model_product_product,base.group_portal,1,1,1,0
