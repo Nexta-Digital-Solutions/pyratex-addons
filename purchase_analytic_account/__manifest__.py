@@ -14,6 +14,7 @@
 
     'category': 'Sale',
     'version': '16.0.0.1',
+    'license': 'LGPL-3',
 
     'depends': [
         'purchase',
