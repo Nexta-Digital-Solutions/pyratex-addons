@@ -45,7 +45,8 @@ class ProductTemplate(models.Model):
        
         """ fabrics """
         if product.producttype_id.name:
-            if (product.categ_id.parent_id.name.lower() == "fabric"):
+            if (product.categ_id.parent_id.name.lower() == "fabric" and 
+                self.user_has_groups('base.group_portal')):
                 # percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1)) or 0
                 try:
                     percentage_additional = int(
@@ -183,7 +184,8 @@ class ProductTemplate(models.Model):
     def addpercentageProductPrice(self, template, price):
         try:
             if template.categ_id.parent_id.name:
-                if (template.categ_id.parent_id.name.lower() == "fabric"):
+                if (template.categ_id.parent_id.name.lower() == "fabric" and 
+                    self.user_has_groups('base.group_portal')):
                     try:
                         percentage_additional = int(
                             self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1))
