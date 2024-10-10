@@ -45,7 +45,7 @@ class ProductTemplate(models.Model):
        
         """ fabrics """
         if product.producttype_id.name:
-            if (product.producttype_id.name.lower() == "fabrics"):
+            if (product.categ_id.parent_id.name.lower() == "fabric"):
                 # percentage_additional = int(self.env['ir.config_parameter'].sudo().get_param('Fabric Percentage', 1)) or 0
                 try:
                     percentage_additional = int(
