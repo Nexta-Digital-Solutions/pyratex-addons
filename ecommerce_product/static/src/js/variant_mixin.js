@@ -2,6 +2,7 @@ odoo.define('ecommerce_product.VariantMixin', function (require) {
     'use strict';
 
     var VariantMixin = require('sale.VariantMixin');
+    const session = require('web.session');
 
     VariantMixin._onChangeCombination = function (ev, $parent, combination) {
 
@@ -16,12 +17,17 @@ odoo.define('ecommerce_product.VariantMixin', function (require) {
         var $qty = $parent.find(".quantity");
         var $qty_message = $parent.find('.oe_message_stock');
 
-        if (parseInt($qty_available.text()) < parseInt($qty.val())) {
-            $qty.val(parseInt(Math.trunc(combination.qty_available)));
-            $qty_message.css('display', 'none');
-        } else {
-            $qty_message.css('display', 'none');
-        }      
+        if (session.user_has_group('base.group_portal').then( has_group =>  {
+
+            if(has_group) {
+                if (parseInt($qty_available.text()) < parseInt($qty.val())) {
+                    $qty.val(parseInt(Math.trunc(combination.qty_available)));
+                    $qty_message.css('display', 'none');
+                } else {
+                    $qty_message.css('display', 'none');
+                } 
+            }
+        })); 
 
         $price.text(self._priceToStr(combination.price));
         $default_price.text(self._priceToStr(combination.list_price));
