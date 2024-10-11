@@ -85,6 +85,17 @@ $(document).on('click', '#o_add_to_Cart', async function () {
             throw new Error('Customized Swatch not found');
         }
 
+        const isOpenPackInCart = await checkIfProductInCart(resultIdOpenPack[0].id);
+        if (isOpenPackInCart) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Swatchpack',
+                text: 'You can only order one Swatch Pack for each order. If you need a larger size, please remove the previous Swatchpack from the shopping cart before adding a new pack',
+            });
+            console.error('Open Pack is already in the cart.');
+            return;
+        }
+
         resultIdOpenPack[0].list_price = packPrice;
         const productsOpenPack = [resultIdOpenPack[0]].concat(product_ids);
         console.log('Products to add to cart:', productsOpenPack);
