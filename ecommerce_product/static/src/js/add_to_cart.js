@@ -54,6 +54,24 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
         }
         
     });
+   async function checkIfProductInCart(productId) {
+    let isInCart = false;
+
+    // Obtener el carrito actual
+    await rpc.query({
+        route: '/shop/cart',
+    }).then(function (data) {
+        console.log('Current cart data:', data);
+
+        data.order_lines.forEach(function (orderLine) {
+            if (orderLine.product_id[0] === productId) {
+                isInCart = true;
+            }
+        });
+    });
+
+    return isInCart;
+}
 
     // Esta funcion es para el pack abierto
 $(document).on('click', '#o_add_to_Cart', async function () {
