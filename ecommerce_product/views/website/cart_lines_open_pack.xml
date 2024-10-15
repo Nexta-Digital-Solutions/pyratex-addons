@@ -3,7 +3,7 @@
     <!-- Disable product pack quantity in cart -->
     <template id="cart_lines_open_pack" inherit_id="website_sale.cart_lines" active="True" customize_show="True"
               name="Open Pack Cart">
-        <xpath expr="//table//tbody//t//tr//td[hasclass('td-qty')]]" position="replace">
+        <xpath expr="//table//tbody//t//tr//td[hasclass('td-qty')]" position="replace">
             <td t-if="line.product_id.producttype_id.name != 'Swatches'" class="text-center td-qty">
                 <div class="css_quantity input-group mx-auto justify-content-center">
                     <t t-if="not line._is_not_sellable_line()">
