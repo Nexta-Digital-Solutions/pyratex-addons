@@ -52,6 +52,7 @@
         'views/website/variants_selector.xml',
         'views/website/configure_optional_products_custom.xml',
         'views/website/optional_product_items_custom.xml',
+        'views/website/cart_lines_open_pack.xml',
         # 'views/website/cart_packs.xml',
         'views/website/product_alternatives_price.xml',
         'data/system_parameter.xml'
