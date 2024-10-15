@@ -42,6 +42,9 @@
                     </t>
                 </div>
             </td>
+            <td class="text-center" t-else="">
+                <span class="w-100" t-esc="int(line.product_uom_qty)"/>
+            </td>
         </xpath>
     </template>
 </odoo>
