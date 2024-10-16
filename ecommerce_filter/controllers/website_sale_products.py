@@ -19,7 +19,7 @@ class ProductsFilter(ws, TableCompute, http.Controller):
         if post.get('availablemeters', False):
             avail_meters = request.env['product.available.meters'].sudo().search([('id', '=', int(post.get('availablemeters')))])
             product_available_meters = request.env['product.template'].sudo().search(
-            [('qty_available', '<=', avail_meters.max), ('qty_available', '>=', avail_meters.min)])
+            [('virtual_available', '<=', avail_meters.max), ('virtual_available', '>=', avail_meters.min)])
         res = {
             'displayDescription': True,
             'displayDetail': True,
@@ -236,8 +236,8 @@ class ProductsFilter(ws, TableCompute, http.Controller):
                         if (not availablemeters_set):
                             products_with_variants.append(product.id)
                         else:
-                            stock_product_variant = request.env['stock.quant'].sudo().search([ ('product_id', '=', product_variant.id),
-                                                                                        ('quantity', '>=', availablemeters_set.min ), ('quantity', '<=', availablemeters_set.max),                                                              ('location_id', '=', location_id.id)])
+                            stock_product_variant = request.env['product.product'].sudo().search([ ('id', '=', product_variant.id),
+                                                                                        ('virtual_available', '>=', availablemeters_set.min ), ('virtual_available', '<=', availablemeters_set.max),                                                              ('location_id', '=', location_id.id)])
                             if (stock_product_variant):
                                 products_with_variants.append(product.id)
             products = products.search([ ('id','in',products_with_variants) ])
