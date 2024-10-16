@@ -13,13 +13,13 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.1.4',
+    'version': '16.0.1.5',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
                 'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp',
                 'account_accountant',
-                'sale_product_pack', 'uom', 'website_payment', 'mrp_subcontracting'],
+                'sale_product_pack', 'uom', 'website_payment', 'mrp_subcontracting', 'portal'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -55,7 +55,8 @@
         'views/website/cart_lines_open_pack.xml',
         # 'views/website/cart_packs.xml',
         'views/website/product_alternatives_price.xml',
-        'data/system_parameter.xml'
+        'data/system_parameter.xml',
+        'views/website/portal_templates.xml'
 
     ],
     'demo': [
