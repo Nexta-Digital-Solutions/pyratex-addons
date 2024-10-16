@@ -21,7 +21,7 @@ odoo.define('ecommerce_product.VariantMixin', function (require) {
 
             if(has_group) {
                 if (parseInt($qty_available.text()) < parseInt($qty.val())) {
-                    $qty.val(parseInt(Math.trunc(combination.qty_available)));
+                    $qty.val(parseInt(Math.trunc(combination.virtual_available)));
                     $qty_message.css('display', 'none');
                 } else {
                     $qty_message.css('display', 'none');
