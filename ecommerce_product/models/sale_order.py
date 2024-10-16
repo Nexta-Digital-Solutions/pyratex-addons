@@ -2,6 +2,7 @@ from odoo import api, fields, models, _
 from odoo.fields import Command
 from itertools import groupby
 from odoo.exceptions import AccessError, UserError, ValidationError
+from datetime import datetime, timedelta
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -154,6 +155,16 @@ class SaleOrder(models.Model):
                 values={'self': move, 'origin': move.line_ids.sale_line_ids.order_id},
                 subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_note'))
         return moves
+
+
+    def _cron_delete_saleorder_lines(self, days):
+        date_to_delete = fields.Date.context_today(self) - timedelta(days= days)
+        saleorder_ids = self.search([ ('x_studio_type_of_order','in',['e-shop Stock','e-shop Swatches']), ('state', '=','draft'),
+                                      ('order_line','!=',False ) ])
+        for saleorder in saleorder_ids:
+            if (saleorder.create_date.date() <= date_to_delete):
+                saleorder.order_line.unlink()
+        return True
 
 
 class SaleOrder(models.Model):
