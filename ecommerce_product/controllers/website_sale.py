@@ -20,8 +20,7 @@ from odoo.tools.json import scriptsafe as json_scriptsafe
 class WebsiteSaleProducts(ProductsFilter):
     
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
-    def cart_update_json(
-        self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
+    def cart_update_json(self, product_id, line_id=None, add_qty=None, set_qty=None, display=True,
         product_custom_attribute_values=None, no_variant_attribute_values=None, price_unit = None,**kw
     ):
         order = request.website.sale_get_order(force_create=True)
@@ -69,9 +68,11 @@ class WebsiteSaleProducts(ProductsFilter):
             for line in open_swatches_lines:
                 line.unlink()
 
+        product = request.env['product.product'].sudo().browse(product_id)
+
         closed_pack = order.order_line.filtered(lambda l: l.product_id.pack_ok == True)
 
-        if closed_pack and product_id.id in closed_pack.mapped('product_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+        if closed_pack and product.id in closed_pack.mapped('product_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
 
             # closed_swatches_lines = order.order_line.filtered(lambda l: l.pack_parent_line_id.id in closed_pack.mapped('id'))
             closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id)
