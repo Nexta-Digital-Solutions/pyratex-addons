@@ -46,16 +46,18 @@ odoo.define('ecommerce_product.remove_from_cart', function (require) {
      * @private
      * @param {Event} ev
      */
-     _onClickDeleteProduct: function (ev) {
-            ev.preventDefault();
-            var $row = $(ev.currentTarget).closest('tr');
-            var productName = $row.find('.td-product_name').text().trim();
-            console.log('Product antes:', productName);
 
-            if (productName === 'Swatches') {
-                $row.find('.js_quantity').val(0).trigger('change');
-                console.log('Product:', productName);
-            }
-        },
+//     _onClickDeleteProduct: function (ev) {
+//            ev.preventDefault();
+//            var $row = $(ev.currentTarget).closest('tr');
+//            var productName = $row.find('.td-product_name').text().trim();
+//            console.log('Product antes:', productName);
+//
+//            if (productName === 'Swatches') {
+//                $row.find('.js_quantity').val(0).trigger('change');
+//                console.log('Product:', productName);
+//            }
+//        },
+
 });
 });
