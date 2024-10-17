@@ -62,12 +62,17 @@ class WebsiteSaleProducts(ProductsFilter):
             request.website.sale_reset()
             return values
 
-        parent_pack = request.env['product.product'].search([('name', '=', 'Open Pack')], limit=1)
+        open_pack = request.env['product.product'].search([('name', '=', 'Open Pack')], limit=1)
+        closed_pack = request.env['product.product'].search([('pack_ok', '=', True)], limit=1)
         # parent_pack = request.env['product.product'].search([('id', '=', 1262)], limit=1)
         # if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-        if parent_pack and product_id == parent_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-            swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
-            for line in swatches_lines:
+        if open_pack and product_id == open_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+            open_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id == False)
+            for line in open_swatches_lines:
+                line.unlink()
+        elif closed_pack and product_id == closed_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+            closed_swatches_lines = order.order_line.filtered(lambda l: l.pack_parent_line_id.name == closed_pack)
+            for line in closed_swatches_lines:
                 line.unlink()
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
