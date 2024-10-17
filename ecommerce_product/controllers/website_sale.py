@@ -70,17 +70,15 @@ class WebsiteSaleProducts(ProductsFilter):
                 line.unlink()
 
         closed_pack = order.order_line.filtered(lambda l: l.product_id.pack_ok == True)
-        print("Closed Pack encontrado:", closed_pack)
-        if closed_pack and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-            print("Product ID del producto modificado:", product_id)
+
+        if closed_pack and product_id.id in closed_pack.mapped('product_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+
             # closed_swatches_lines = order.order_line.filtered(lambda l: l.pack_parent_line_id.id in closed_pack.mapped('id'))
-            closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
-            print("Líneas 'Swatches' encontradas para eliminar:", closed_swatches_lines)
+            closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id)
+
             for line in closed_swatches_lines:
-                print(f"Eliminando línea {line.id} del producto {line.product_id.name}")
                 line.unlink()
-        else:
-            print("Las condiciones no se cumplieron, no se eliminó ninguna línea.")
+
 
         request.session['website_sale_cart_quantity'] = order.cart_quantity
 
