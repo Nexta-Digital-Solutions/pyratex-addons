@@ -70,6 +70,7 @@ class WebsiteSaleProducts(ProductsFilter):
             for line in open_swatches_lines:
                 line.unlink()
 
+        all_closed_packs = request.env['product.product'].sudo().search([('pack_ok', '=', True)])
 
         product = request.env['product.product'].sudo().browse(product_id)
         # CORRECTO ID 11145
@@ -79,10 +80,8 @@ class WebsiteSaleProducts(ProductsFilter):
         _logger.error(f'CLOSED PACK: {closed_pack.name}')
         _logger.error(f'CLOSED PACK: {closed_pack.product_id}')
 
-        # if closed_pack and product.id == closed_pack.product_id.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-        if not closed_pack and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-
-            closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id)
+        if product in all_closed_packs and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+            closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
 
             for line in closed_swatches_lines:
                 line.unlink()
