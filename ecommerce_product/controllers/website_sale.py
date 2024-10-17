@@ -17,6 +17,8 @@ from odoo.addons.ecommerce_filter.controllers.website_sale_products import Produ
 from odoo.addons.payment import utils as payment_utils
 from odoo.tools.json import scriptsafe as json_scriptsafe
 
+_logger = logging.getLogger(__name__)
+
 class WebsiteSaleProducts(ProductsFilter):
     
     @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
@@ -70,16 +72,12 @@ class WebsiteSaleProducts(ProductsFilter):
 
 
         product = request.env['product.product'].sudo().browse(product_id)
+        _logger.debug(f'Buscando el producto con ID: {product}')
 
         closed_pack = order.order_line.filtered(lambda l: l.product_template_id.pack_ok == True)
+        _logger.debug(f'Buscando el producto con ID: {closed_pack}')
 
-        # if closed_pack and product.id in closed_pack.mapped('product_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-        #
-        #     closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id)
-        #
-        #     for line in closed_swatches_lines:
-        #         line.unlink()
-        if closed_pack and product.id in closed_pack.mapped('product_tmpl_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+        if closed_pack and product.id in closed_pack.mapped('product_template_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
 
             closed_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches" and l.pack_parent_line_id)
 
