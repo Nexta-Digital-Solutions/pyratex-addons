@@ -63,14 +63,16 @@ class WebsiteSaleProducts(ProductsFilter):
             return values
 
         open_pack = request.env['product.product'].search([('name', '=', 'Open Pack')], limit=1)
-        closed_pack = request.env['product.product'].search([('pack_ok', '=', True)], limit=1)
 
         if open_pack and product_id == open_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
             open_swatches_lines = order.order_line.filtered(lambda l: l.product_id.producttype_id.name == "Swatches")
             for line in open_swatches_lines:
                 line.unlink()
-        elif closed_pack and product_id == closed_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
-            closed_swatches_lines = order.order_line.filtered(lambda l: l.pack_parent_line_id == closed_pack)
+
+        closed_pack = request.env['product.product'].search([('pack_ok', '=', True)], limit=1)
+
+        if closed_pack and product_id == closed_pack.id and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
+            closed_swatches_lines = order.order_line.filtered(lambda l: l.pack_parent_line_id.id == closed_pack)
             for line in closed_swatches_lines:
                 line.unlink()
 
