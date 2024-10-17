@@ -72,11 +72,13 @@ class WebsiteSaleProducts(ProductsFilter):
 
 
         product = request.env['product.product'].sudo().browse(product_id)
-        _logger.info(_("Buscando el producto con ID:") % product)
+        # _logger.info(_("Buscando el producto con ID:") % product)
+        _logger.error(f'ID DEL PRODUCTO: {product}')
 
         closed_pack = order.order_line.filtered(lambda l: l.product_template_id.pack_ok == True)
-        _logger.error(f'CLOSED PACK: {closed_pack}')
-        _logger.info(_("CLOSED PACK:") % closed_pack)
+        _logger.error(f'CLOSED PACK: {closed_pack.name}')
+        _logger.error(f'CLOSED PACK: {closed_pack.product_template_id}')
+        # _logger.info(_("CLOSED PACK:") % closed_pack)
 
         if closed_pack and product.id in closed_pack.mapped('product_template_id').ids and (set_qty == 0 or (add_qty and values['quantity'] == 0)):
 
