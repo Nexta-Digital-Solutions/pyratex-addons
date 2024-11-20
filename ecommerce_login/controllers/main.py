@@ -109,7 +109,7 @@ class AuthSignupHome(Home):
     
     def createCompanyDLNA(self, data):
         company = data.get('data[company]')
-        company_id = request.env['res.partner'].sudo().search([ ('name', 'ilike', company) ], limit = 1)
+        company_id = request.env['res.partner'].sudo().search([ ('name', '=', company) ], limit = 1)
         contact = {
             'company_type': 'company',
             'name': company,
@@ -127,7 +127,7 @@ class AuthSignupHome(Home):
     def createContactDLNA(self, data, signature, company_id):
         name = ' '.join([data.get('data[name]'), data.get('data[lastname]')])
         email = data.get('data[email]')
-        
+        fiscal_position_id = request.env['account.fiscal.position'].sudo().search([('name','=', 'EU privado')], limit = 1)
         contact = {
             'parent_id': company_id.id,
             'company_type': 'person',
@@ -146,7 +146,8 @@ class AuthSignupHome(Home):
         
         partner_id = request.env['res.partner'].sudo().search([ ('email', '=', email) ], limit = 1)
         if (not partner_id):
-           partner_id = request.env['res.partner'].sudo().create( contact )
+            partner_id = request.env['res.partner'].sudo().create( contact )
+            partner_id.update ({ 'property_account_position_id': fiscal_position_id.id if fiscal_position_id else False })
         return partner_id
         
     def createInvoiceDLNA(self, data, company_id, partner_id):
