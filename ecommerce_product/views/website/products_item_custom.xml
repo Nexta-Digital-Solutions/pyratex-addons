@@ -61,8 +61,8 @@
         <xpath expr="//form" position="inside">
             <div class="container">
                 <t t-if="product.producttype_id and product.producttype_id.name == 'Swatches'">
-                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary mr-2 w-100 "
-                            style="background-color: blue; border-radius: 10px; color: white;"
+                    <button id="o_add_to_the_pack" name="pack" class="btn btn-primary mr-2 w-100 swatches-color-btn"
+                            style="border-radius: 10px; color: white;"
                             t-attf-data-product-id="{{product.id}}">Add to the Pack
                     </button>
                 </t>

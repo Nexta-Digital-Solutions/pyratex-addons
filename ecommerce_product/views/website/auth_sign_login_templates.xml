@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="ecommerce_product.signup" inherit_id="web.login" name="portal_signup">
+            <xpath expr="//div[@class='justify-content-between mt-2 d-flex small']" position="replace">
+                <div class="justify-content-between mt-2 d-flex small">
+                    <a t-if="signup_enabled" style = "font-size:large" t-attf-href="/web/signup?{{ keep_query() }}">Don't have an account?</a>
+                    <a t-if="reset_password_enabled" style = "font-size:large"  t-attf-href="/web/reset_password?{{ keep_query() }}">Reset Password</a>
+                </div>
+            </xpath>
+        </template>
+</odoo>
