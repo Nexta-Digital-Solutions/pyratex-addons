@@ -13,13 +13,14 @@
     'website': "https://nextads.es/",
 
     'category': 'Ecommerce',
-    'version': '16.0.1.7',
+    'version': '16.0.1.9',
     'license': 'LGPL-3',
 
     'depends': ['base', 'website_sale', 'product', 'website', 'web',
                 'stock','barcodes', 'web_studio', 'sale_product_configurator', 'mrp',
                 'account_accountant',
-                'sale_product_pack', 'uom', 'website_payment', 'mrp_subcontracting', 'portal'],
+                'sale_product_pack', 'uom', 'website_payment', 'mrp_subcontracting', 'portal',
+                'auth_signup'],
 
     'data': [
         'security/ir.model.access.csv',
@@ -58,6 +59,7 @@
         'data/system_parameter.xml',
         'views/website/portal_templates.xml',
         'views/website/website_search_box_hide.xml',
+        'views/website/auth_sign_login_templates.xml',
         'data/cron.xml'
 
     ],
@@ -66,8 +68,10 @@
     'assets': {
         'web.assets_backend': [
             'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
-            'ecommerce_product/static/src/js/variant_mixin.js'  # para sale_order
-        ],
+            'ecommerce_product/static/src/js/variant_mixin.js',
+            'ecommerce_product/static/src/js/product_configurator_modal.js'
+        ]
+        ,
         'web.assets_frontend': [
             'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
             'ecommerce_product/static/src/scss/style.css',
@@ -78,7 +82,8 @@
             'ecommerce_product/static/src/js/add_to_cart.js',
             # 'ecommerce_product/static/src/js/website_sale.js',
             'ecommerce_product/static/src/js/remove_from_cart.js',
-            'ecommerce_product/static/src/js/variant_mixin.js'
+            'ecommerce_product/static/src/js/variant_mixin.js',
+            'ecommerce_product/static/src/js/product_configurator_modal.js'
 
         ]
 

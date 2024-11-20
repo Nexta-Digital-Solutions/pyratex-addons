@@ -23,3 +23,6 @@ body {
   text-align: center;
   transition: background-color 0.05s ease-in-out, border-color 0.05s ease-in-out, box-shadow 0.05s ease-in-out;
  }
+ .swatches-color-btn {
+    background-color: grey ! important;
+ }
