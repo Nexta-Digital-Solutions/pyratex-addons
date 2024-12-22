@@ -204,7 +204,7 @@ class ProductTemplate(models.Model):
         if (record_openpack):
             record_openpack.sudo().update( { 
                                             'product_template_id': [ (6,0, product_ids) ],
-                                            'pack_name_id': pack_name_id 
+                                            'pack_name_id': int(pack_name_id)
                                         })
         else:
             user_openpack.sudo().create ({
