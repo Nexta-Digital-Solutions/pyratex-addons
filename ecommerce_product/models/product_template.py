@@ -202,7 +202,10 @@ class ProductTemplate(models.Model):
         user_openpack = self.env['user.open.pack']
         record_openpack = user_openpack.sudo().search( [('user_id','=', user_id)])
         if (record_openpack):
-            record_openpack.sudo().update( { 'product_template_id': [ (6,0, product_ids) ] })
+            record_openpack.sudo().update( { 
+                                            'product_template_id': [ (6,0, product_ids) ],
+                                            'pack_name_id': pack_name_id 
+                                        })
         else:
             user_openpack.sudo().create ({
                 'user_id': user_id,
