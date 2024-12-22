@@ -166,7 +166,16 @@ $(document).on('click', '#o_add_to_Cart', async function () {
         const $navButton = $('header .o_wsale_my_cart').first();
         const imgContainer = $('#products_grid')
         wSaleUtils.animateClone($navButton, imgContainer, 25, 40);
-        wSaleUtils.updateCartNavBar(data);  
+        wSaleUtils.updateCartNavBar(data);
+        removeUserPack();
         
+    }
+
+    async function removeUserPack(){
+        await rpc.query({
+            model: 'product.template',
+            method: 'removeUserOpenPack',
+			args: [[ []], session.user_id ]
+        })
     }
 });

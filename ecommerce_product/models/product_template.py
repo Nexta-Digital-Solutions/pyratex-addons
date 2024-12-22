@@ -209,3 +209,6 @@ class ProductTemplate(models.Model):
                 'product_template_id': [ (6, 0, product_ids) ],
                 'pack_name_id': int(pack_name_id)
             })
+    
+    def removeUserOpenPack(self, user_id):
+       self.env['user.open.pack'].sudo().search( [('user_id','=', user_id)]).unlink()
