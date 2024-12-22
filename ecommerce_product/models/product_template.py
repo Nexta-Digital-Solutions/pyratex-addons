@@ -197,3 +197,18 @@ class ProductTemplate(models.Model):
                 return price
         except Exception:
             return price if price else 0
+        
+    def saveProductOpenPack(self,product_ids, user_id, pack_name_id):
+        user_openpack = self.env['user.open.pack']
+        record_openpack = user_openpack.sudo().search( [('user_id','=', user_id)])
+        if (record_openpack):
+            record_openpack.sudo().update( { 'product_template_id': [ (6,0, product_ids) ] })
+        else:
+            user_openpack.sudo().create ({
+                'user_id': user_id,
+                'product_template_id': [ (6, 0, product_ids) ],
+                'pack_name_id': int(pack_name_id)
+            })
+    
+    def removeUserOpenPack(self, user_id):
+       self.env['user.open.pack'].sudo().search( [('user_id','=', user_id)]).unlink()

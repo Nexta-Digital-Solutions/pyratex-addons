@@ -2,8 +2,32 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
     "use strict";
 
     const session = require('web.session');
+    const rpc = require('web.rpc');
     let selectedProductIds = [];
     let packElementsNumber = 0;
+
+    $( document ).ready(async function() {
+        if (document.querySelector('#o_add_to_the_pack')){
+            const user_id = session.user_id;
+            const result = await rpc.query({
+                model: 'user.open.pack',
+                method: 'search_read',
+                args: [[ [ 'user_id','=', user_id ] ], ['product_template_id', 'pack_name_id']]
+            });
+            let el = document.querySelector('#select-openpack');
+            let openpack_value = result[0].pack_name_id ? result[0].pack_name_id[0] : el.value;
+            $('#select-openpack').val(openpack_value).change();
+            result[0].product_template_id.forEach((element) => {
+                if (! isNaN(element)){
+                    addToThePack(element);
+                }
+            });
+        }
+
+
+    });
+
+
 
     $(document).on('click', '#o_add_to_the_pack', async function (event) {
         event.preventDefault();
@@ -45,6 +69,16 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
 
         packElementsNumber++;
 //        console.log('Suma', packElementsNumber);
+        saveProductId(selectedProductIds);
+    }
+
+    async function saveProductId(productIds){
+        const pack_name_id = document.querySelector('#select-openpack').value;
+        await rpc.query({
+            model: 'product.template',
+            method: 'saveProductOpenPack',
+            args: [[ [] ], productIds, session.user_id, pack_name_id ],
+        });
     }
 
     function removeProductFromPack(productIdToRemove) {
@@ -53,6 +87,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
             selectedProductIds.splice(indexToRemove, 1);
             packElementsNumber--;
             $(`#product_${productIdToRemove}`).remove();
+            saveProductId(selectedProductIds);
         }
     }
 
@@ -83,7 +118,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
 
 
     async function getMaxPackElementsNumber() {
-        const selectedOpenPackId = $('select[name="openpack"]').val();
+        const selectedOpenPackId = $('#select-openpack').val();
         if (selectedOpenPackId) {
             const rpc = require('web.rpc');
             const result = await rpc.query({
@@ -98,7 +133,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
         }
     }
 
-    $(document).on('change', 'select[name="openpack"]', async function () {
+    $(document).on('change', '#select-openpack', async function () {
         packElementsNumber = 0;
         selectedProductIds = [];
     });
