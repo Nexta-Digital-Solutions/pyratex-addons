@@ -7,7 +7,6 @@ odoo.define('ecommerce_product.add_to_cart', function (require) {
 
     const getSelectedProductIds = require('ecommerce_product.add_to_the_pack').getSelectedProductIds;
 
-
         async function getIdFromProductName(ProductName) {
         let result;
 
