@@ -207,4 +207,12 @@ class WebsiteSaleProducts(ProductsFilter):
             order.update({
                 'x_studio_type_of_order': type_of_order 
             })
-            
+           
+           
+    @http.route(['/shop/cart/getOpenPackCount'], type='json', auth="user", methods=['POST'], website=True, csrf=False)
+    def getOpenPackCount(self, **kw):
+        order = request.website.sale_get_order(force_create=False)
+        is_openPack = True if order.order_line.filtered(lambda x: x.product_id.name == 'Open Pack') else False
+        return is_openPack
+        
+         
