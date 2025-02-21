@@ -15,7 +15,7 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
                 args: [[ [ 'user_id','=', user_id ] ], ['product_template_id', 'pack_name_id']]
             });
             let el = document.querySelector('#select-openpack');
-            let openpack_value = result[0].pack_name_id ? result[0].pack_name_id[0] : el.value;
+            let openpack_value = result[0] ? result[0].pack_name_id[0] : el.value;
             $('#select-openpack').val(openpack_value).change();
             result[0].product_template_id.forEach((element) => {
                 if (! isNaN(element)){
