@@ -5,7 +5,7 @@ odoo.define('ecommerce_product.show_pack_price', function (require) {
 
     $(document).ready(async function() {
         const packs = await getOpenPacks();
-        const firstPack = packs[0];
+        const firstPack = packs ? packs[0] : false;
         if (firstPack) {
             $('#select-openpack').val(firstPack.id).change();
         }
