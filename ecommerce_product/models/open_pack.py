@@ -9,25 +9,9 @@ class OpenPack(models.Model):
     price = fields.Float(string='Precio')
     elements_number = fields.Integer(string='Número de elementos')
 
-    # @api.model
-    # def read(self):
-    #     records = self.search([])
-    #
-    #     result = []
-    #     for record in records:
-    #         values = {
-    #             'id': record.id,
-    #             'name': record.name,
-    #             'price': record.price,
-    #         }
-    #         result.append(values)
-    #
-    #     return result
-
-
     @api.model
     def get_results(self):
-        records = self.search([])
+        records = self.sudo().search([])
 
         result = []
         for record in records:
