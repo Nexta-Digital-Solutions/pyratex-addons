@@ -17,14 +17,16 @@ odoo.define('ecommerce_product.add_to_the_pack', function (require) {
                 });
             
                 let el = document.querySelector('#select-openpack');
-                let openpack_value = result[0] ? result[0].pack_name_id[0] : el.value;
-                $('#select-openpack').val(openpack_value).change();
-                if ((result && result.length)>0) {
-                    result[0].product_template_id.forEach((element) => {
-                        if (! isNaN(element)){
-                            addToThePack(element);
-                        }
-                    });
+                if (el){
+                    let openpack_value = result[0] ? (result.length)>0 && result[0].pack_name_id[0] : el.value;
+                    $('#select-openpack').val(openpack_value).change();
+                    if ((result && result.length)>0) {
+                        result[0].product_template_id.forEach((element) => {
+                            if (! isNaN(element)){
+                                addToThePack(element);
+                            }
+                        });
+                    }
                 }
             }
         }
