@@ -3,7 +3,9 @@
 
         <xpath expr="//t[@t-foreach='product.optional_product_ids']" position="replace">
             <t t-foreach="product.optional_product_ids" t-as="product">
-                <t t-if="product.is_published == True">
+                <t t-set="show_product" t-value="product.is_published or not product.is_published"  groups="base.group_user"/>
+                <t t-set="show_product" t-value="product.is_published" groups="base.group_portal"/>
+                <t t-if="show_product">
                     <tr class="o_select_options">
                         <td colspan="5">
                             <h4>Available Options:</h4>
