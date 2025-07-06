@@ -16,6 +16,35 @@ class ProductTemplate(models.Model):
     certification_id = fields.Many2many('certification', string='Certification')
     composition_id = fields.Many2many('composition', string='Composition')
 
+    def _get_possible_combinations(self, parent_combination=None, necessary_values=None):
+        
+        self.ensure_one()
+
+        if not self.active:
+            return _("The product template is archived so no combination is possible.")
+
+        necessary_values = necessary_values or self.env['product.template.attribute.value']
+        necessary_attribute_lines = necessary_values.mapped('attribute_line_id')
+        attribute_lines = self.valid_product_template_attribute_line_ids.filtered(lambda ptal: ptal not in necessary_attribute_lines)
+
+        if not attribute_lines and self._is_combination_possible(necessary_values, parent_combination):
+            yield necessary_values
+
+        product_template_attribute_values_per_line = [
+            ptal.product_template_value_ids._only_active()
+            for ptal in attribute_lines
+        ]
+
+        for partial_combination in self._cartesian_product(product_template_attribute_values_per_line, parent_combination):
+            combination = partial_combination + necessary_values
+            if self._is_combination_possible(combination, parent_combination):
+                if ((self.user_has_groups('base.group_user')) or \
+                    (combination.ptav_product_variant_ids.is_published and not self.user_has_groups('base.group_user'))):
+                    yield combination
+
+        return _("There are no remaining possible combination.")
+
+
     def _get_combination_info(self, combination=False, product_id=False, add_qty=1, pricelist=False, parent_combination=False, only_template=False):
         """Override for website, where we want to:
             - take the website pricelist if no pricelist is set
